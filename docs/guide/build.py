@@ -7,7 +7,7 @@ Reads docs/guide/src/*.md (front matter + Markdown) and writes:
   docs/guide/docx/<slug>.docx   editable Word copies (needs pandoc)
 PDFs are made afterwards by pdf.js (needs Node and playwright-core), see README in this folder.
 """
-import html, json, pathlib, re, subprocess, sys
+import html, json, os, pathlib, re, subprocess, sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 SRC = HERE / 'src'
@@ -86,7 +86,11 @@ HEAD = '''<!doctype html>
 <header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
 <a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
 '''
-FOOT = '''<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+# Optional site branding for a mirror: EXPTIX_BRAND_FILE=/path/brand.json with keys "footer_html" and "printfoot".
+_brand = json.loads(pathlib.Path(os.environ['EXPTIX_BRAND_FILE']).read_text()) if os.environ.get('EXPTIX_BRAND_FILE') else {}
+BY = _brand.get('footer_html', '<span>ExpTix · free and open-source hotel operations · GNU AGPL v3</span>')
+PRINTFOOT = _brand.get('printfoot', 'ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX')
+FOOT = '''<footer class="foot"><div class="in">''' + BY + '''
 <span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
 </body></html>
 '''
@@ -120,7 +124,7 @@ def page(meta, body_html, siblings):
                f'<a href="src/{f}.md">⬇ Markdown</a>'
                f'<button type="button" onclick="print()">🖨 {E(ui.get("print", "Print"))}</button></div>')
     out.append(f'<div class="body">{body_html}</div>')
-    out.append('<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>')
+    out.append(f'<p class="printfoot">{E(PRINTFOOT)}</p>')
     out.append('</article>')
     if fig:
         src, cap, phone = fig
