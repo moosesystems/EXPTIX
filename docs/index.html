@@ -121,6 +121,34 @@ nav.top .links a.gh{color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:
 .role b{display:block;font-size:1.05rem;margin:8px 0 4px}
 .role span{color:var(--muted);font-size:.93rem}
 .role .e{font-size:1.6rem}
+.role{font:inherit;color:inherit;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.role:hover,.role:focus-visible{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow);outline:none}
+.role em{display:block;margin-top:10px;font-style:normal;font-weight:800;font-size:.86rem;color:var(--primary)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .role em{color:var(--teal)}}
+:root[data-theme="dark"] .role em{color:var(--teal)}
+.roles-note{text-align:center;color:var(--muted);margin:22px 0 0;font-size:.95rem}
+dialog.rd{width:min(1180px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:0;border-radius:20px;background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:auto}
+dialog.rd::backdrop{background:rgba(6,14,17,.72);backdrop-filter:blur(4px)}
+.rd-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--card);border-bottom:1px solid var(--line)}
+.rd-head .e{font-size:2rem}.rd-head h3{margin:0;font-size:1.4rem;line-height:1.2}.rd-head p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.rd-head .x{margin-left:auto;border:1px solid var(--line);background:transparent;color:var(--ink);width:40px;height:40px;border-radius:999px;font-size:1.1rem;cursor:pointer;flex:none}
+.rd-nav{display:flex;gap:6px;flex:none}.rd-nav button{border:1px solid var(--line);background:transparent;color:var(--ink);height:40px;padding:0 12px;border-radius:999px;cursor:pointer;font:inherit;font-size:.85rem;font-weight:700}
+.rd-body{padding:22px 24px 28px}
+.rd-view{background:#0B171C;border-radius:14px;display:flex;align-items:center;justify-content:center;height:min(52vh,560px);overflow:hidden}
+.rd-view img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.rd-view.phone-shot img{height:100%;border-radius:22px;border:6px solid #1c2a30;box-sizing:border-box}
+.rd-cap{margin:10px 0 0;color:var(--muted);font-size:.93rem;min-height:1.5em}
+.rd-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.rd-thumbs button{flex:none;width:118px;height:74px;padding:0;border-radius:10px;border:2px solid var(--line);background:#0B171C;cursor:pointer;overflow:hidden}
+.rd-thumbs button[aria-current="true"]{border-color:var(--accent)}
+.rd-thumbs img{width:100%;height:100%;object-fit:cover;object-position:top}
+.rd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.rd-grid section{padding:18px;border:1px solid var(--line);border-radius:14px}
+.rd-grid h4{margin:0 0 6px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.rd-grid p,.rd-grid li{color:var(--muted);font-size:.95rem;margin:0}
+.rd-grid ol,.rd-grid ul{margin:0;padding-left:20px}.rd-grid li+li{margin-top:6px}
+.rd-grid .wide{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;gap:18px;background:rgba(240,162,59,.07);border-color:rgba(240,162,59,.35)}
+@media (max-width:820px){.rd-grid{grid-template-columns:1fr}.rd-grid .wide{grid-column:auto;grid-template-columns:1fr}.rd-nav{display:none}.rd-head{padding:14px 16px}.rd-body{padding:16px}.rd-view{height:auto;aspect-ratio:4/3}}
 
 /* split blocks */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
@@ -317,20 +345,21 @@ footer .by img{height:20px;width:auto}
 
 <section style="padding-top:0">
   <div class="wrap">
-    <div class="section-head reveal">
+    <div class="section-head reveal" id="roles">
       <div class="eyebrow">For every role</div>
       <h2>Everyone sees exactly what they need.</h2>
     </div>
     <div class="roles">
-      <div class="role reveal"><span class="e">🌟</span><b>General manager</b><span>The whole property, SLAs, guest sentiment and costs.</span></div>
-      <div class="role reveal"><span class="e">🛎️</span><b>Front desk</b><span>Log anything a guest asks for and answer "where is my towel?"</span></div>
-      <div class="role reveal"><span class="e">🧹</span><b>Housekeeping</b><span>My rooms, my order, rush and DND, one-tap status.</span></div>
-      <div class="role reveal"><span class="e">🔧</span><b>Engineering</b><span>Work orders, PM, assets, parts and vendors.</span></div>
-      <div class="role reveal"><span class="e">👨‍🍳</span><b>Kitchen and F&amp;B</b><span>Temperatures, allergies, the 86 list and BEOs.</span></div>
-      <div class="role reveal"><span class="e">🛡️</span><b>Security</b><span>Incidents, patrols, keys and lost and found.</span></div>
-      <div class="role reveal"><span class="e">🧰</span><b>Contractors</b><span>Only their jobs. Nothing about guests.</span></div>
-      <div class="role reveal"><span class="e">🔍</span><b>Auditors</b><span>Read-only access to records and the audit trail.</span></div>
+      <button type="button" class="role reveal" data-role="gm" aria-haspopup="dialog"><span class="e">🌟</span><b>General manager</b><span>The whole property, SLAs, guest sentiment and costs.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="fd" aria-haspopup="dialog"><span class="e">🛎️</span><b>Front desk</b><span>Log anything a guest asks for and answer "where is my towel?"</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="hk" aria-haspopup="dialog"><span class="e">🧹</span><b>Housekeeping</b><span>My rooms, my order, rush and DND, one-tap status.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="eng" aria-haspopup="dialog"><span class="e">🔧</span><b>Engineering</b><span>Work orders, PM, assets, parts and vendors.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="kit" aria-haspopup="dialog"><span class="e">👨‍🍳</span><b>Kitchen and F&B</b><span>Temperatures, allergies, the 86 list and BEOs.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="sec" aria-haspopup="dialog"><span class="e">🛡️</span><b>Security</b><span>Incidents, patrols, keys and lost and found.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="con" aria-haspopup="dialog"><span class="e">🧰</span><b>Contractors</b><span>Only their jobs. Nothing about guests.</span><em>See their screen →</em></button>
+      <button type="button" class="role reveal" data-role="aud" aria-haspopup="dialog"><span class="e">🔍</span><b>Auditors</b><span>Read-only access to records and the audit trail.</span><em>See their screen →</em></button>
     </div>
+    <p class="roles-note">Tap a role to see their screens, what they do, and what they get told about.</p>
   </div>
 </section>
 
@@ -409,6 +438,23 @@ php -S localhost:8080 -t public public/index.php</pre>
   </div>
 </section>
 
+<dialog class="rd" id="roleDlg" aria-labelledby="rdTitle">
+  <div class="rd-head"><span class="e" id="rdE"></span><div><h3 id="rdTitle"></h3><p id="rdWho"></p></div>
+    <div class="rd-nav" style="margin-left:auto"><button type="button" id="rdPrev">← Prev role</button><button type="button" id="rdNext">Next role →</button></div>
+    <button type="button" class="x" id="rdClose" aria-label="Close" style="margin-left:6px">✕</button></div>
+  <div class="rd-body">
+    <div class="rd-view" id="rdView"><img id="rdImg" alt=""></div>
+    <p class="rd-cap" id="rdCap"></p>
+    <div class="rd-thumbs" id="rdThumbs" role="tablist" aria-label="Screens"></div>
+    <div class="rd-grid">
+      <section><h4>What</h4><p id="rdWhat"></p></section>
+      <section><h4>Why it matters</h4><p id="rdWhy"></p></section>
+      <section><h4>How</h4><ol id="rdHow"></ol></section>
+      <section class="wide"><div><h4>Gets told about</h4><ul id="rdNotify"></ul></div><div><h4>Good to know</h4><p id="rdExtra"></p></div></div>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap">
     <span class="by"><img src="images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
@@ -434,6 +480,36 @@ php -S localhost:8080 -t public public/index.php</pre>
   if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   els.forEach(e => io.observe(e));
+})();
+</script>
+<script>
+(() => {
+  const ROLES = [{"id": "gm", "e": "🌟", "t": "General manager", "who": "General managers, hotel managers and owners on site.", "what": "Every department, every room and every report in one place. The home screen shows who is behind before anyone has to tell you.", "why": "Real numbers instead of hallway guesses. \"Room 317 has had six plumbing calls this month\" tells you where to spend money, and the SLA clock tells you which team needs help today.", "how": ["Start the day on Home: tap any red number to see those jobs.", "Pick 7, 30 or 90 days in Reports and print it for the morning meeting.", "Post an announcement and it appears on every staff member's Home screen.", "Set the rules once: SLAs, routing words, checklists and who gets told what."], "notify": ["Any SLA breach on a high-priority job", "Life-safety and critical engineering jobs the moment they are logged", "Escalations when a job sits too long", "Low guest ratings, through the front office"], "extra": "Notifications arrive in the bell, as web push on a phone, or by email, SMS, Teams or Slack. You choose with notification rules.", "img": [{"f": "gm-dashboard", "c": "Home: open, overdue and breached work, live room status and announcements", "p": 0}, {"f": "gm-notifications", "c": "The bell: SLA breaches, life-safety jobs and escalations land here first", "p": 0}, {"f": "gm-reports", "c": "Reports: response times, SLA misses, ratings, repeat-problem rooms, labour and parts", "p": 0}]}, {"id": "fd", "e": "🛎️", "t": "Front desk", "who": "Guest service agents, PBX and night audit.", "what": "You are the hotel's ears. You log what guests ask for and can see every department's progress, so you can answer \"where is my towel?\" without a phone call.", "why": "The guest request clock starts the moment you tap Create. If it runs late, managers hear about it. When it is done, you can call the guest back with confidence.", "how": ["Tap New, tap a quick pick such as Extra towels or Room too cold, type the room.", "Tick VIP when it applies. VIP jobs alert the front office leads.", "Filter Rooms to Due in, tick Rush on the room you need next. Housekeeping sees it instantly.", "Log complaints with what you gave back, so managers see every recovery and its cost."], "notify": ["VIP requests", "Low guest ratings (1 or 2 stars) that need a callback", "Replies from guests on their tracking page"], "extra": "Guests who scan the room QR code get a tracking page with Received, On its way, In progress and Completed, plus a chat and a star rating.", "img": [{"f": "frontdesk-dashboard", "c": "Home: guest requests, arrivals ready and what is overdue", "p": 0}, {"f": "frontdesk-new-request", "c": "New request: quick picks, the room, the guest, done in seconds", "p": 0}, {"f": "frontdesk-ticket", "c": "The job: who has it, the SLA clock, the checklist and the guest link", "p": 0}, {"f": "frontdesk-guest-tracking", "c": "What the guest sees on their phone: a live tracking page", "p": 1}]}, {"id": "hk", "e": "🧹", "t": "Housekeeping", "who": "Executive housekeepers, supervisors, room attendants, housepersons and laundry.", "what": "Each room is a coloured square: red dirty, orange being cleaned, blue clean, green inspected. Gold borders are today's arrivals, a lightning bolt means rush.", "why": "Front desk and housekeeping finally look at the same picture. Every tap gets a guest into a room sooner, and nobody is marked late for a room with Do Not Disturb.", "how": ["Attendants: tick On shift, open My rooms, do gold rooms first.", "Tap a room, Start cleaning, then Clean. That is the whole job.", "Something broken? Tap the room, Report a problem. The room is filled in for you.", "Supervisors: tap Auto-assign. Rooms are shared fairly by credits, keeping floors together."], "notify": ["Rush rooms from the front desk", "Guest requests for towels, pillows and service", "Repairs reported in their rooms, until fixed"], "extra": "Built for gloves and busy hands: big buttons, pictures and colours, very little reading. It installs on any phone from the browser, no app store.", "img": [{"f": "housekeeping-board", "c": "The housekeeping board: every room colour coded, with attendant workload", "p": 0}, {"f": "housekeeping-mobile-board", "c": "On the phone: the same board, big tiles, one tap to change status", "p": 1}, {"f": "housekeeping-mobile-my-work", "c": "My work: only the rooms and jobs given to me", "p": 1}, {"f": "housekeeping-inspections", "c": "Inspections: checklists that turn every failed line into a job", "p": 0}]}, {"id": "eng", "e": "🔧", "t": "Engineering", "who": "Chief engineers, supervisors, maintenance technicians and outside trades.", "what": "Every \"please fix this\" in the building, plus the jobs that come back on a schedule: dryer vents monthly, fire pump weekly. ExpTix creates PM jobs by itself.", "why": "Fixing before it breaks is cheaper and guests never notice. Time and parts add up on each machine, so the chief can show which one to replace. Inspectors get proof the PM was done.", "how": ["Open My work. Red stripes are most urgent.", "Start, fix, log minutes and parts, Resolve with a note. Parts come off stock by themselves.", "Check Room and Asset history first. A repeat icon means the real problem may be elsewhere.", "Raise a purchase request; the manager approves it; tap Received when it arrives."], "notify": ["Urgent and critical work orders", "Out-of-range temperatures on kitchen equipment", "PM jobs that slip past their window", "Vendor insurance and paperwork about to expire"], "extra": "Sensors can post readings straight in. A failing cooler or a boiler alarm becomes a work order without anyone typing.", "img": [{"f": "engineering-dashboard", "c": "Home: open work orders, overdue PM and rooms out of order", "p": 0}, {"f": "engineering-notifications", "c": "The bell: urgent jobs, escalations and out-of-range equipment", "p": 0}, {"f": "engineering-pm", "c": "Preventive maintenance: schedules that open their own jobs", "p": 0}, {"f": "engineering-assets", "c": "Assets: every machine with its history, cost and status", "p": 0}, {"f": "engineering-mobile-my-work", "c": "A technician's phone: my jobs, most urgent first", "p": 1}]}, {"id": "kit", "e": "👨‍🍳", "t": "Kitchen and F&B", "who": "Chefs, cooks, stewards, servers, banquets and in-room dining.", "what": "Every cold and hot unit has a tile. Orange means a check is due, red means unsafe. Plus the 86 list, allergy alerts and every banquet event order.", "why": "A warm walk-in is caught before the food is lost, and the health inspector gets a clean, signed log instead of a wet clipboard. Allergies are the one thing nobody can get wrong.", "how": ["Food safety, tap the unit, type the temperature, Save.", "Out of range? Write what you did. An urgent job opens for the kitchen and engineering.", "Add to the 86 list with a substitute. Servers see it on Home, guests see it on their QR page.", "Save a BEO and every team gets its own task: setup, kitchen, AV, housekeeping."], "notify": ["Out-of-range readings, as push to the chef", "Temperature checks coming due", "Allergy alerts on events and room service", "Event tasks for their team"], "extra": "Logs and checks are kept against the HACCP plan points you define, with who logged each reading and when.", "img": [{"f": "kitchen-dashboard", "c": "The chef's home: the kitchen's open jobs, overdue counts and announcements", "p": 0}, {"f": "kitchen-notifications", "c": "The bell: a cooler read 9.4 °C and ExpTix opened an urgent job by itself", "p": 0}, {"f": "kitchen-food-safety", "c": "Food safety: every fridge, freezer and hot box with safe ranges and checks due", "p": 0}, {"f": "kitchen-events", "c": "Events and BEOs: each event creates tasks for every team involved", "p": 0}, {"f": "kitchen-mobile-food", "c": "A cook's phone: tap a unit, type the reading, save", "p": 1}]}, {"id": "sec", "e": "🛡️", "t": "Security", "who": "Security leads and officers, loss prevention and duty managers.", "what": "Incident reports for anything that went wrong, key control for master keys and radios, and a lost and found the front desk can search in seconds.", "why": "Insurers, the police and the workers' compensation board may ask. A clear report written right away protects the guest, the staff and the hotel. A missing master key shows who had it last.", "how": ["Safety first. Then Incident reports, New: what, when, where, who, what you did, photos.", "Serious incidents alert managers immediately.", "Log every master key that leaves the desk and when it came back.", "Found items: what, where, which room, and where it is stored."], "notify": ["New incident reports, by email to the security inbox", "Life-safety jobs", "Lost item enquiries from the front desk"], "extra": "Incident reports are kept with the audit trail, so nobody can quietly edit one after the fact.", "img": [{"f": "security-dashboard", "c": "Home: security's open jobs, overdue counts and announcements", "p": 0}, {"f": "security-incidents", "c": "Incident reports: every fall, theft, alarm and medical call", "p": 0}, {"f": "security-keys", "c": "Key control: every master key and radio, out and back", "p": 0}, {"f": "security-lost-found", "c": "Lost and found: logged, stored and returned with a trail", "p": 0}, {"f": "security-mobile-my-work", "c": "An officer's phone: my jobs with the SLA clock, most urgent first", "p": 1}]}, {"id": "con", "e": "🧰", "t": "Contractors", "who": "Elevator, HVAC, fire, pest control and other outside trades.", "what": "Outside companies sign in and see only the jobs assigned to them or their trade. No guest names, no other departments.", "why": "The hotel gets before-and-after photos, times and parts on the record. The contractor gets signed off and paid faster.", "how": ["Open My work.", "Start when you arrive and add before and after photos.", "Log time and parts.", "Resolve with a note on what you did."], "notify": ["New jobs assigned to them", "Comments from engineering on their jobs"], "extra": "Access is a normal user with the Contractor role. Untick Active when the contract ends and their history stays.", "img": [{"f": "contractor-dashboard", "c": "A contractor's home: only the jobs given to them", "p": 0}, {"f": "contractor-mobile-my-work", "c": "On their own phone: start, photo, log time, resolve", "p": 1}]}, {"id": "aud", "e": "🔍", "t": "Auditors", "who": "Owners' representatives, brand standards, insurers and compliance reviewers.", "what": "Everything: jobs, rooms, food safety logs, incidents, reports, the audit log and the security page. All buttons are greyed out.", "why": "Proof without risk. Reviewers see the real records and cannot change them by accident. Each audit line is chained to the one before, so tampering shows.", "how": ["Start with Reports, Food safety and completed checklists.", "Open the audit log and press Verify integrity.", "Filter by person, action or date.", "Read the control map on Security and compliance."], "notify": ["Nothing by default. Auditors look; they are not paged."], "extra": "Give auditors a dated account and switch it off when the review ends.", "img": [{"f": "auditor-dashboard", "c": "The auditor's view: everything visible, nothing editable", "p": 0}, {"f": "auditor-audit-log", "c": "The audit log: every sign-in and change, hash-chained and verifiable", "p": 0}, {"f": "auditor-compliance", "c": "Security and compliance: controls mapped to NIST SP 800-53 and 800-63B", "p": 0}]}];
+  const dlg = document.getElementById('roleDlg'); if (!dlg || !dlg.showModal) return;
+  const $ = id => document.getElementById(id), el = (t, x) => { const n = document.createElement(t); n.textContent = x; return n; };
+  let cur = 0, opener = null;
+  const pick = (r, i) => {
+    const im = r.img[i]; $('rdImg').src = 'images/roles/' + im.f + '.jpg'; $('rdImg').alt = im.c; $('rdCap').textContent = im.c;
+    $('rdView').classList.toggle('phone-shot', !!im.p);
+    [...$('rdThumbs').children].forEach((b, j) => b.setAttribute('aria-current', j === i ? 'true' : 'false'));
+  };
+  const show = idx => {
+    cur = (idx + ROLES.length) % ROLES.length; const r = ROLES[cur];
+    $('rdE').textContent = r.e; $('rdTitle').textContent = r.t; $('rdWho').textContent = r.who;
+    $('rdWhat').textContent = r.what; $('rdWhy').textContent = r.why; $('rdExtra').textContent = r.extra;
+    $('rdHow').replaceChildren(...r.how.map(x => el('li', x))); $('rdNotify').replaceChildren(...r.notify.map(x => el('li', x)));
+    $('rdThumbs').replaceChildren(...r.img.map((im, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', im.c);
+      const t = document.createElement('img'); t.src = 'images/roles/' + im.f + '.jpg'; t.alt = ''; t.loading = 'lazy'; b.append(t); b.onclick = () => pick(r, i); return b; }));
+    pick(r, 0); dlg.scrollTop = 0;
+  };
+  document.querySelectorAll('.role[data-role]').forEach(b => b.addEventListener('click', () => {
+    opener = b; show(ROLES.findIndex(r => r.id === b.dataset.role)); dlg.showModal(); try { history.replaceState(null, '', '#role-' + b.dataset.role); } catch (e) {}
+  }));
+  $('rdClose').onclick = () => dlg.close(); $('rdPrev').onclick = () => show(cur - 1); $('rdNext').onclick = () => show(cur + 1);
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  document.addEventListener('keydown', e => { if (!dlg.open) return; if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+  dlg.addEventListener('close', () => { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} if (opener) opener.focus(); });
+  const m = location.hash.match(/^#role-([a-z]+)$/); if (m) { const i = ROLES.findIndex(r => r.id === m[1]); if (i >= 0) { show(i); dlg.showModal(); } }
 })();
 </script>
 </body>
