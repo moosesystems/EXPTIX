@@ -13,6 +13,7 @@
 <p align="center">
   <b><a href="https://moosesystems.github.io/EXPTIX/">Website</a></b> ·
   <b><a href="#-run-it-in-5-minutes">Quick start</a></b> ·
+  <b><a href="https://moosesystems.github.io/EXPTIX/guide/">How-to guides</a></b> ·
   <b><a href="docs/DEPLOYMENT.md">Deployment guide</a></b> ·
   <b><a href="#-features">Features</a></b> ·
   <b><a href="CONTRIBUTING.md">Contribute</a></b>
@@ -98,6 +99,7 @@ Start production installs with `php app/bin/cli.php create-admin` instead of the
 
 ## 📚 Documentation
 
+- **[How-to-use guides](https://moosesystems.github.io/EXPTIX/guide/)** ([source](docs/guide/src)): printable one-page sheets for every role from room attendant to CFO and VP of operations, playbooks from a three-room lodge to a 3,000-room group, a 90-day rollout plan, FAQs and a glossary. Frontline sheets also in French, Spanish and Tagalog. Each one as a web page, PDF and Word file.
 - **[Deployment guide](docs/DEPLOYMENT.md):** requirements, local trial, Linux servers, shared hosting, sub-folders, every setting, cron, notifications, integrations and webhooks, API tokens and MCP, the security checklist, backups, upgrades and troubleshooting.
 - **Staff how-to guide:** `/HowTo.html` on every install. Each screen explained by role, with a 10-minute GM tour.
 - **API reference:** `/docs` and `/api/openapi.json` on every install.

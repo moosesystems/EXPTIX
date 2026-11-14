@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VP of operations · ExpTix guides</title><meta name="description" content="One operating model across every property">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-sheet group-leaders">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Supervisors, managers and executives</p>
+<div class="doc"><article>
+<div class="titleblock">
+<h1>VP of operations</h1>
+<p class="sub">One operating model across every property</p>
+<div class="chips"><span class="chip k">One-page sheet</span><span class="chip">For: VPs of hospitality operations and regional directors for a group or chain</span></div></div>
+<div class="dl"><a href="pdf/sheet-vp-operations.pdf">⬇ PDF to print</a><a href="docx/sheet-vp-operations.docx">⬇ Word</a><a href="src/sheet-vp-operations.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="recommendation">Recommendation</h2>
+<p>Standardise the rules first. Pilot at one property, lock the
+templates, then roll out in waves. Same categories, SLAs and checklists
+everywhere means the numbers compare.</p>
+<h2 id="the-honest-fact-one-install-per-property">The honest fact: one
+install per property</h2>
+<p>ExpTix runs one property per install today. Multi-property in one
+install is on the roadmap, not built. A 12-hotel group runs 12 installs,
+with one operating model:</p>
+<ul>
+<li><strong>Same rules everywhere:</strong> one master set of
+departments, request categories (with routing keywords), SLA policies,
+checklist templates and PM schedules.</li>
+<li><strong>Copying templates:</strong> there is no export button for
+templates yet. Your IT team copies them between installs through the
+REST API, or someone re-enters them from the master list.</li>
+<li><strong>Central reporting:</strong> each install exposes its reports
+and records through the API and a ticket CSV export. Feed them into your
+BI tool for a portfolio view.</li>
+<li><strong>Naming conventions:</strong> the same department codes,
+category and SLA names at every property, so reports line up.</li>
+</ul>
+<h2 id="brand-standard-inspections">Brand-standard inspections</h2>
+<p>Build your brand standard as checklist templates. Every ✕ becomes a
+job, scores appear in <strong>Reports</strong>, and brand reviewers get
+read-only <strong>Auditor</strong> accounts.</p>
+<h2 id="kpis-to-compare-properties">KPIs to compare properties</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average response and resolve time</td>
+<td><strong>Reports</strong>, by department and priority</td>
+</tr>
+<tr>
+<td>SLA misses</td>
+<td><strong>Reports</strong></td>
+</tr>
+<tr>
+<td>Guest rating (out of 5) and complaints</td>
+<td><strong>Reports</strong>, guest section</td>
+</tr>
+<tr>
+<td>Service recovery cost</td>
+<td><strong>Reports</strong>, guest section</td>
+</tr>
+<tr>
+<td>PM on time</td>
+<td><strong>Reports</strong>, PM</td>
+</tr>
+<tr>
+<td>Inspection average score and passes</td>
+<td><strong>Reports</strong>, inspections</td>
+</tr>
+<tr>
+<td>Repeat-problem rooms</td>
+<td><strong>Reports</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="phased-rollout">Phased rollout</h2>
+<ol type="1">
+<li><strong>Pilot property (90 days):</strong> one or two departments
+first, usually Housekeeping and Engineering. Pilot integrations in mock
+mode.</li>
+<li><strong>Lock the master templates</strong> from what the pilot
+taught you.</li>
+<li><strong>Wave 1:</strong> two or three properties with strong local
+managers.</li>
+<li><strong>Wave 2 and later:</strong> the rest, in groups your IT team
+can support.</li>
+</ol>
+<h2 id="governance">Governance</h2>
+<ul>
+<li><strong>Template owner:</strong> one person (often in your office)
+owns the master categories, SLAs and checklists.</li>
+<li><strong>Change control:</strong> properties propose changes; the
+owner approves, updates the master list, and pushes it to every install
+on a set schedule.</li>
+<li><strong>Local freedom:</strong> properties may add local categories,
+never rename shared ones.</li>
+</ul>
+<h2 id="honest-limits">Honest limits</h2>
+<ul>
+<li>No single sign-on yet (Entra ID and Google are on the roadmap). Each
+install has its own user accounts.</li>
+<li>Opera Cloud and Canary links are beta and untested against live
+systems.</li>
+<li>The screens are English only today.</li>
+<li>No vendor support contract: plan your own IT or provider support
+across the portfolio.</li>
+</ul>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+<figure class="fig desk"><img src="../images/roles/gm-reports.jpg" alt="Reports export to CSV for portfolio comparison" loading="lazy"><figcaption>Reports export to CSV for portfolio comparison</figcaption></figure>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

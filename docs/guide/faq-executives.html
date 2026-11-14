@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive questions · ExpTix guides</title><meta name="description" content="Cost, data, risk, support and how to try it">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-faq group-faq">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Questions and answers</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Executive questions</h1>
+<p class="sub">Cost, data, risk, support and how to try it</p>
+<div class="chips"><span class="chip k">FAQ</span><span class="chip">For: Owners, CEOs, CFOs, VPs and general managers</span></div></div>
+<div class="dl"><a href="pdf/faq-executives.pdf">⬇ PDF to print</a><a href="docx/faq-executives.docx">⬇ Word</a><a href="src/faq-executives.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="what-does-exptix-cost">What does ExpTix cost?</h2>
+<p>There is no licence fee and no per-user or per-room charge. You pay
+for hosting, setup time, training and support, whether from your own IT
+or a provider you choose. Small properties run on ordinary shared
+hosting; large ones need their own server.</p>
+<h2 id="will-it-save-us-money">Will it save us money?</h2>
+<p>We do not promise savings. ExpTix shows you where money goes: labour
+and parts per job and per machine, service recovery cost, repeat-problem
+rooms and PM on time. Measure your own results over a pilot and decide
+on those numbers.</p>
+<h2 id="who-owns-the-data">Who owns the data?</h2>
+<p>You do. ExpTix runs on your server or your provider’s, and the data
+sits in your own database. Nobody else holds a copy unless you send it
+somewhere.</p>
+<h2 id="what-guest-data-does-it-store">What guest data does it
+store?</h2>
+<p>Only what the work needs: guest name, room, confirmation number,
+contact details when a guest gives them, preferences and allergy notes.
+It does not store payment card numbers; minibar charges are recorded as
+amounts. When a room goes vacant after departure, ExpTix clears the
+guest name and reservation details from the room.</p>
+<h2 id="what-about-privacy-law">What about privacy law?</h2>
+<p>You choose where it is hosted, so you can meet your data residency
+rules. Before going live, agree guest data retention and a privacy
+notice for the QR portal. The deployment guide’s checklist covers
+this.</p>
+<h2 id="is-it-secure">Is it secure?</h2>
+<p>It ships with strong password hashing (Argon2id), lockout after 5
+wrong tries, optional or forced two-step sign-in, session time-outs,
+scoped API tokens, encrypted integration secrets and a hash-chained
+audit log. The controls are mapped to NIST SP 800-53 Rev. 5 and SP
+800-63B on a built-in page. Security also depends on how you host it:
+run a vulnerability scan or penetration test before real guest data goes
+in.</p>
+<h2 id="who-supports-it">Who supports it?</h2>
+<p>There is no vendor support contract. Support comes from your own IT,
+an IT provider of your choice, or the open-source community. Decide this
+before you pilot.</p>
+<h2 id="what-does-the-agpl-licence-mean-for-us">What does the AGPL
+licence mean for us?</h2>
+<p>You may use, change and share ExpTix, including commercially. Using
+it unmodified only requires keeping the copyright and licence notices.
+If you change the code and let people use your changed version over a
+network, you must offer those users your changed source code.</p>
+<h2 id="how-big-a-property-can-it-handle">How big a property can it
+handle?</h2>
+<p>It has been tested with a 182-room demo hotel. A property of 500 or
+more rooms should run MySQL on a proper server and pilot one or two
+departments first.</p>
+<h2 id="can-one-install-run-our-whole-group">Can one install run our
+whole group?</h2>
+<p>Not yet. One install runs one property. A group runs one install per
+property, with the same templates and central reporting through the API
+or CSV into your BI tool. Multi-property in one install is on the
+roadmap.</p>
+<h2 id="what-is-on-the-roadmap">What is on the roadmap?</h2>
+<p>Multi-property installs, single sign-on (Entra ID, Google),
+translations of the app, live door lock and building system connectors,
+and a Docker image. These are plans, not dates.</p>
+<h2 id="does-it-work-with-our-pms">Does it work with our PMS?</h2>
+<p>ExpTix runs without a PMS. The Oracle Opera Cloud and Canary links
+are beta: written to the vendors’ documented patterns and not yet tested
+against live systems. Every link has a mock mode for safe testing.</p>
+<h2 id="how-do-we-pilot-it">How do we pilot it?</h2>
+<p>Install it, load the demo hotel and take the 10-minute GM tour. Then
+set up one or two departments on a fresh database and run them for 90
+days. Measure with <strong>Reports</strong> at 30, 60 and 90 days
+against your baseline.</p>
+<h2 id="what-if-we-stop-using-it">What if we stop using it?</h2>
+<p>Your data is in your own database. Export the ticket list to CSV from
+<strong>Reports</strong>, or pull any records through the API. You keep
+the database itself, too.</p>
+<h2 id="is-it-ready">Is it ready?</h2>
+<p>Version 0.9 is feature complete for one property and ready for
+pilots. Treat the first property as a pilot, not a full rollout.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

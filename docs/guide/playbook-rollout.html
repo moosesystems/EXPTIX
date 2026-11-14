@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rollout plan · ExpTix guides</title><meta name="description" content="30, 60 and 90 days from install to everyday use">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-playbook group-size">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › By property size</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Rollout plan</h1>
+<p class="sub">30, 60 and 90 days from install to everyday use</p>
+<div class="chips"><span class="chip k">Playbook</span><span class="chip">For: GMs, department managers, champions and IT at any size of property</span></div></div>
+<div class="dl"><a href="pdf/playbook-rollout.pdf">⬇ PDF to print</a><a href="docx/playbook-rollout.docx">⬇ Word</a><a href="src/playbook-rollout.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="the-plan-in-one-line">The plan in one line</h2>
+<p>Pick champions, set it up, pilot one department, train with the
+one-page sheets, go live, then measure. Do not switch the whole property
+on in one day.</p>
+<p>This plan works at any size. A small lodge will move faster. A large
+hotel will repeat days 31 to 60 for each department.</p>
+<h2 id="days-1-to-30-prepare">Days 1 to 30: prepare</h2>
+<h3 id="pick-champions">Pick champions</h3>
+<p>Choose one champion per department: a respected frontline person or
+supervisor who likes trying things, not only the manager. Champions:</p>
+<ul>
+<li>help set up their department’s quick picks and checklists,</li>
+<li>learn it first and answer “how do I” questions on shift,</li>
+<li>tell you what is not working, honestly.</li>
+</ul>
+<p>Give them time for it on the schedule.</p>
+<h3 id="set-it-up">Set it up</h3>
+<ol type="1">
+<li><strong>Install.</strong> IT follows the deployment guide: HTTPS,
+cron, backups, <code>demo_mode</code> off, the first administrator with
+MFA.</li>
+<li><strong>Explore the demo.</strong> Load the demo hotel on a separate
+test install so managers can click around without risk. Start the real
+system on a fresh database.</li>
+<li><strong>Configure,</strong> in this order: departments, users,
+locations, room types and rooms, SLA policies, request categories,
+checklist templates, assets and PM, food safety points, notification
+rules, room QR codes. The playbook for your size gives time
+estimates.</li>
+<li><strong>Pick the pilot department.</strong> Choose one with clear
+work and a willing manager. Engineering is often a good first choice.
+Housekeeping and front office go together, because the board needs
+both.</li>
+<li><strong>Set a baseline.</strong> Write down how you track work today
+and what you know about it (for example, how many guest complaints last
+month). You will compare against ExpTix numbers later.</li>
+</ol>
+<h2 id="days-31-to-60-pilot-one-department">Days 31 to 60: pilot one
+department</h2>
+<ol type="1">
+<li><strong>Train the pilot team</strong> (see the training plan
+below).</li>
+<li><strong>Go live in the pilot department only.</strong> Other
+departments keep their old way for now, but anyone can report a job to
+the pilot team with <strong>+ New</strong>.</li>
+<li><strong>Stand-up each morning, 10 minutes.</strong> What went wrong
+yesterday? Fix categories, keywords, checklists and SLAs as you go.</li>
+<li><strong>Watch the numbers weekly.</strong> <strong>Reports</strong>,
+7 days: open and overdue jobs, SLA misses, unassigned jobs.</li>
+<li><strong>Tune notification rules.</strong> Ask the team which alerts
+they ignore. Remove or narrow those rules.</li>
+<li><strong>Decide by day 60.</strong> Is the pilot team working from
+ExpTix without paper? If yes, move on. If no, find out why and fix it
+first.</li>
+</ol>
+<h2 id="days-61-to-90-go-live-and-measure">Days 61 to 90: go live and
+measure</h2>
+<ol type="1">
+<li><strong>Bring on the next departments,</strong> one or two at a
+time.</li>
+<li><strong>Put the guest QR codes out</strong> once housekeeping and
+front office are live.</li>
+<li><strong>Retire the old habits</strong> (see below).</li>
+<li><strong>Measure.</strong> Use 30-day <strong>Reports</strong> for
+response and resolve times, SLA misses, guest ratings, repeat-problem
+rooms and PM on time. Compare with your baseline. Report what changed,
+not what you hoped.</li>
+<li><strong>Hand over.</strong> Name the person who owns ExpTix day to
+day, and their backup.</li>
+</ol>
+<h2 id="training-plan-by-role">Training plan by role</h2>
+<p>Use the one-page sheets from this library. Keep sessions short and on
+the floor, with phones in hand. Each person installs ExpTix with
+<strong>Add to Home Screen</strong>, turns on push in <strong>My
+account</strong> and taps <strong>Send a test</strong> before the
+session ends.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Role</th>
+<th>Sheets</th>
+<th>Minutes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everyone, first day</td>
+<td><a href="sheet-first-day-everyone.html">First day</a></td>
+<td>15</td>
+</tr>
+<tr>
+<td>Room attendants</td>
+<td><a href="sheet-room-attendant.html">Room attendant</a></td>
+<td>20</td>
+</tr>
+<tr>
+<td>Housepersons and laundry</td>
+<td><a href="sheet-houseperson-laundry.html">Houseperson and
+laundry</a></td>
+<td>15</td>
+</tr>
+<tr>
+<td>Maintenance techs</td>
+<td><a href="sheet-maintenance-tech.html">Maintenance tech</a></td>
+<td>30</td>
+</tr>
+<tr>
+<td>Cooks and stewards</td>
+<td><a href="sheet-cook-steward.html">Cook and steward</a></td>
+<td>20</td>
+</tr>
+<tr>
+<td>Servers and F&amp;B</td>
+<td><a href="sheet-server-fb.html">Server and F&amp;B</a></td>
+<td>15</td>
+</tr>
+<tr>
+<td>Front desk</td>
+<td><a href="sheet-front-desk-agent.html">Front desk agent</a></td>
+<td>45</td>
+</tr>
+<tr>
+<td>Security officers</td>
+<td><a href="sheet-security-officer.html">Security officer</a></td>
+<td>20</td>
+</tr>
+<tr>
+<td>Contractors</td>
+<td><a href="sheet-contractor.html">Contractor</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td>Supervisors</td>
+<td><a href="sheet-supervisor.html">Supervisor</a></td>
+<td>45</td>
+</tr>
+<tr>
+<td>Department managers</td>
+<td><a href="sheet-department-manager.html">Department manager</a></td>
+<td>60, plus setup time</td>
+</tr>
+<tr>
+<td>GM</td>
+<td><a href="sheet-general-manager.html">General manager</a>, the
+10-minute GM tour in the staff guide</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Administrator</td>
+<td><a href="sheet-it-admin.html">IT administrator</a>, the deployment
+guide</td>
+<td>Half a day</td>
+</tr>
+</tbody>
+</table>
+<p>The minutes are a planning guide, not a test. Room attendant and
+first-day sheets also come in French, Spanish and Tagalog. The app
+screens themselves are English only today, so point to the button names
+in <strong>bold</strong> on the sheet while people tap.</p>
+<p>A good session: show it once, have them do it twice, then let them
+report a real job.</p>
+<h2 id="go-live-checklist">Go-live checklist</h2>
+<p>Tick every line before a department goes live.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><code>demo_mode</code> is
+<code>false</code>, HTTPS works, cron runs every minute.</label></li>
+<li><label><input type="checkbox" />Daily backup runs and is copied off
+the server. A restore has been tested.</label></li>
+<li><label><input type="checkbox" />Managers and above have MFA
+on.</label></li>
+<li><label><input type="checkbox" />Every person in the department has
+their own account, with the right role and departments.</label></li>
+<li><label><input type="checkbox" />Everyone has installed it on their
+phone and received a test push.</label></li>
+<li><label><input type="checkbox" />Request categories and keywords
+route test jobs to the right team.</label></li>
+<li><label><input type="checkbox" />SLA policies have been agreed with
+the department manager.</label></li>
+<li><label><input type="checkbox" />Notification rules have been tested:
+the right people get the right alerts, and nobody gets all of
+them.</label></li>
+<li><label><input type="checkbox" />Checklists and PM schedules for the
+department are entered.</label></li>
+<li><label><input type="checkbox" />For housekeeping: room types have
+credits, and <strong>Auto-assign</strong> has been tried.</label></li>
+<li><label><input type="checkbox" />For the guest portal: a test request
+from a printed room QR code reached the right team.</label></li>
+<li><label><input type="checkbox" />Integrations in use are tested in
+<strong>Mock</strong> mode. Beta links (Opera, Canary) are not live
+without a supervised test.</label></li>
+<li><label><input type="checkbox" />The champion knows who to call when
+something goes wrong.</label></li>
+<li><label><input type="checkbox" />Everyone knows that in a real
+emergency they call 911 and use the radio first.</label></li>
+</ul>
+<h2 id="retiring-the-radio-and-the-clipboard">Retiring the radio and the
+clipboard</h2>
+<p>People trust what they already use. Replace it step by step, and say
+why.</p>
+<ol type="1">
+<li><strong>Explain the reason.</strong> Jobs get lost between shifts.
+ExpTix makes sure every job has an owner, a deadline and a record. It is
+a safety net, not a way to watch people.</li>
+<li><strong>Run both for a short, fixed time.</strong> Two weeks at
+most. Paper running alongside forever means two systems and twice the
+work.</li>
+<li><strong>Set the date and keep it.</strong> “From Monday, the work
+order clipboard goes.” Announce it on <strong>Announcements</strong> and
+in the <strong>Shift logbook</strong>.</li>
+<li><strong>Keep the radio for what radios are good at.</strong>
+Emergencies and “come here now”. The rule: if it needs doing later, it
+goes in ExpTix.</li>
+<li><strong>Make logging easier than not logging.</strong> A front desk
+agent who gets a radio call says “I will put it in ExpTix” and does, so
+the caller sees it works.</li>
+<li><strong>Thank people in public.</strong> Use inspection scores and
+the reports to recognise good work.</li>
+<li><strong>Fix complaints fast.</strong> If a button or category annoys
+people, change it this week. Nothing builds trust faster.</li>
+<li><strong>Keep the old logs.</strong> Archive the paper you retire.
+Inspectors and insurers can still ask for it.</li>
+</ol>
+<h2 id="measure-do-not-promise">Measure, do not promise</h2>
+<p>Do not promise savings or speed-ups before you start. Measure
+instead: take a baseline in the first four weeks of use, then compare
+month to month in <strong>Reports</strong>. Let the numbers make the
+case.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

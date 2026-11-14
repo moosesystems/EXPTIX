@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Group or chain · ExpTix guides</title><meta name="description" content="Many properties, one way of working">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-playbook group-size">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › By property size</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Group or chain</h1>
+<p class="sub">Many properties, one way of working</p>
+<div class="chips"><span class="chip k">Playbook</span><span class="chip">For: VPs of operations, regional managers, group IT and owners of hotel groups</span></div></div>
+<div class="dl"><a href="pdf/size-group-chain.pdf">⬇ PDF to print</a><a href="docx/size-group-chain.docx">⬇ Word</a><a href="src/size-group-chain.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="who-this-is-for">Who this is for</h2>
+<p>You run a group of properties. Picture a 12-hotel group with 3,000
+rooms: a few large city hotels, several mid-size properties and a couple
+of remote lodges. You want every property working the same way, and you
+want one view of how they are doing.</p>
+<h2 id="the-limit-stated-plainly">The limit, stated plainly</h2>
+<p><strong>ExpTix is one property per install today.</strong> A group
+runs one install per property. Multi-property in one install is on the
+roadmap. It is not built.</p>
+<p>So, today:</p>
+<ul>
+<li>each property has its own address, database, users and
+settings,</li>
+<li>a person who works at two properties has an account on each,</li>
+<li>there is no group dashboard inside ExpTix,</li>
+<li>settings are not shared or copied between installs
+automatically.</li>
+</ul>
+<p>Everything below is how to run a portfolio well inside that limit.
+When multi-property support arrives, a group that has already
+standardized its settings will have far less to clean up.</p>
+<h2 id="the-model-a-gold-template-property">The model: a gold template
+property</h2>
+<p>Pick one install as your <strong>gold template</strong>. This is
+where the group’s standard way of working lives. It can be a real
+property that runs well, or a non-guest install used only for
+standards.</p>
+<p>The gold template holds:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What to standardize</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Departments</td>
+<td>Same codes and names everywhere (for example HK, ENG, FO, KIT).
+Properties switch off what they do not have, but never rename a
+code.</td>
+</tr>
+<tr>
+<td>SLA policies</td>
+<td>Group standard timers per priority, plus the guest amenity and
+complaint promises.</td>
+</tr>
+<tr>
+<td>Request categories</td>
+<td>Same names, ticket types, default priorities and auto-route
+keywords. Properties may add local ones.</td>
+</tr>
+<tr>
+<td>Checklist templates</td>
+<td>Brand room inspection, opening and closing checks, fire and life
+safety rounds, HACCP.</td>
+</tr>
+<tr>
+<td>PM schedules</td>
+<td>Standard tasks and frequencies per asset type.</td>
+</tr>
+<tr>
+<td>Notification rules</td>
+<td>The group pattern: who hears about what, at which minimum
+priority.</td>
+</tr>
+<tr>
+<td>Room types</td>
+<td>Same codes and cleaning credits for the same kind of room.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="copying-the-template-to-a-new-install">Copying the template to a
+new install</h3>
+<p>There is no button that clones settings from one install to another.
+Use one of two ways:</p>
+<ol type="1">
+<li><strong>Manual copy.</strong> Recreate the settings in the new
+install’s admin screens, working from a printed or exported list of the
+gold template. Fine for a handful of properties.</li>
+<li><strong>A script against the REST API.</strong> The API’s Records
+endpoints (see <code>/docs</code> on any install) list and create
+departments, SLA policies, categories, checklist templates, PM schedules
+and notification rules. A short script reads them from the gold install
+and creates them on the new one. Record ids differ between installs, so
+the script must map references (for example a category’s department and
+SLA policy) by code or name, not by id. Use a dedicated user and a token
+with the right scopes, and delete the token when the job is done.</li>
+</ol>
+<p>Whichever way you choose, write down what was copied and when. Keep
+the script in your own version control.</p>
+<h2 id="naming-and-numbering-conventions">Naming and numbering
+conventions</h2>
+<p>Set these once at group level and never change them per property.</p>
+<ul>
+<li><strong>Property code.</strong> Each install sets
+<code>property_code</code>, which prefixes every ticket number. Use a
+short, unique code per property, for example <code>DTN</code> for a
+downtown hotel and <code>LKS</code> for a lakeside resort. Tickets then
+read <code>DTN-000123</code> and <code>LKS-000123</code>, so nobody
+confuses a job from one hotel with another in email, reports or BI.</li>
+<li><strong>Property name, time zone, currency.</strong> Set
+<code>property_name</code>, <code>timezone</code> and
+<code>currency</code> correctly on each install.</li>
+<li><strong>Department codes.</strong> Identical across properties, as
+above.</li>
+<li><strong>Room types.</strong> Same code for the same product.</li>
+<li><strong>Locations.</strong> One pattern for building, floor and area
+names.</li>
+<li><strong>Usernames.</strong> One pattern for the whole group, so a
+person’s name is easy to find in any install’s <strong>Audit
+log</strong>.</li>
+<li><strong>Web addresses.</strong> One pattern, for example a
+sub-domain per property code.</li>
+</ul>
+<h2 id="central-reporting">Central reporting</h2>
+<p>There is no group report inside ExpTix. Build one outside it.</p>
+<ol type="1">
+<li><strong>CSV export.</strong> Each property’s
+<strong>Reports</strong> page exports tickets to CSV (up to 500 per
+download). Good for a monthly look, not for a feed.</li>
+<li><strong>REST API into a BI tool.</strong> For each property, create
+a dedicated read-only user (the Auditor role sees every department and
+changes nothing) and a token with only the <code>read</code> scope and
+an expiry. Your BI tool pulls tickets from each install, 500 per page
+with <code>limit</code> and <code>offset</code>, and tags each row with
+its property code. The code is already in every ticket number.</li>
+<li><strong>Outbound webhooks.</strong> Each install can send events to
+an HTTPS endpoint you run. Every payload carries the property code.
+Verify the signature.</li>
+</ol>
+<p>Build the same few measures for every property, from the same fields:
+response and resolve times, SLA misses by priority, guest ratings,
+complaints and recovery value, repeat-problem rooms, PM on time. Compare
+properties of a similar size and type, and compare each property with
+its own baseline. Do not publish savings figures before you have
+measured them.</p>
+<h2 id="the-regional-admin-model">The regional admin model</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Level</th>
+<th>Who</th>
+<th>What they own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group</td>
+<td>VP of operations, group IT</td>
+<td>The gold template, conventions, change control, BI, security
+standards</td>
+</tr>
+<tr>
+<td>Region</td>
+<td>Regional administrator (one person can cover several
+properties)</td>
+<td>Installs, upgrades, backups, integrations and users for their
+properties</td>
+</tr>
+<tr>
+<td>Property</td>
+<td>GM and a local champion</td>
+<td>Daily use, local categories, training, feedback</td>
+</tr>
+</tbody>
+</table>
+<p>The regional administrator holds an Administrator account on each
+property in their region, with MFA forced. Property GMs manage their own
+staff in <strong>Users</strong>. Group leaders who want to look but not
+touch get the Auditor role on each install.</p>
+<h2 id="rollout-waves">Rollout waves</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Wave</th>
+<th>Properties</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>The gold template, on a test install</td>
+<td>Build and test the standard settings</td>
+</tr>
+<tr>
+<td>1</td>
+<td>One mid-size property with a strong GM</td>
+<td>Prove the template in real use. Follow the <a
+href="playbook-rollout.html">rollout plan</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Two or three similar properties</td>
+<td>Prove the copy process and the training</td>
+</tr>
+<tr>
+<td>3 onward</td>
+<td>The rest, in groups of similar properties</td>
+<td>Steady rollout</td>
+</tr>
+</tbody>
+</table>
+<p>Large properties follow the <a href="size-large-hotel.html">large
+hotel playbook</a>, with a department-by-department pilot and a load
+test. Small or remote ones follow the <a
+href="size-small-lodge.html">small lodge playbook</a> and may switch off
+most departments.</p>
+<p>Feed what each wave learns back into the gold template before the
+next wave starts.</p>
+<h2 id="governance-and-change-control">Governance and change
+control</h2>
+<p>Settings drift unless someone owns them.</p>
+<ol type="1">
+<li><strong>One owner for the template.</strong> Changes to
+group-standard settings go through them.</li>
+<li><strong>A simple change request.</strong> What changes, why, which
+properties, who approves.</li>
+<li><strong>Test, then copy.</strong> Change the gold template first,
+check it on the test install, then copy it out with the same script or
+checklist.</li>
+<li><strong>Local changes are allowed, within limits.</strong>
+Properties may add categories or checklists. They may not change
+department codes, standard SLAs or group notification rules without
+approval.</li>
+<li><strong>Same version everywhere.</strong> Upgrade the test install
+first, then all properties in a short window. Read
+<code>CHANGELOG.md</code> each time.</li>
+<li><strong>Quarterly review.</strong> Compare each install’s settings
+with the template and fix drift.</li>
+<li><strong>Security standards.</strong> HTTPS, MFA for managers, daily
+off-server backups, <code>app.key</code> stored separately, the audit
+webhook to your log platform, a regular <strong>Verify
+integrity</strong> check.</li>
+</ol>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Starting all properties at once.</strong> You learn nothing
+before the mistakes are everywhere.</li>
+<li><strong>Letting each property invent its own categories.</strong>
+Reports cannot be compared.</li>
+<li><strong>Shared admin passwords across installs.</strong> Each
+administrator has their own account on each install.</li>
+<li><strong>Expecting single sign-on.</strong> It is on the roadmap
+(Entra ID, Google), not built. Plan on separate passwords with MFA.</li>
+<li><strong>Expecting the app in other languages.</strong> The screens
+are English only today. Translate printed guides now.</li>
+<li><strong>No support plan.</strong> ExpTix is free software with no
+vendor support contract. Group IT or a chosen IT provider must own
+it.</li>
+</ul>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

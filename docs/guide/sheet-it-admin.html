@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IT administrator · ExpTix guides</title><meta name="description" content="Keep it running, keep it safe, keep it backed up">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-sheet group-leaders">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Supervisors, managers and executives</p>
+<div class="doc"><article>
+<div class="titleblock">
+<h1>IT administrator</h1>
+<p class="sub">Keep it running, keep it safe, keep it backed up</p>
+<div class="chips"><span class="chip k">One-page sheet</span><span class="chip">For: The person who runs ExpTix: hotel IT or your IT provider</span></div></div>
+<div class="dl"><a href="pdf/sheet-it-admin.pdf">⬇ PDF to print</a><a href="docx/sheet-it-admin.docx">⬇ Word</a><a href="src/sheet-it-admin.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="what-you-own">What you own</h2>
+<p>The install, the users, the links to other systems, the backups and
+the updates. For installing ExpTix, read the deployment guide. This
+sheet covers running it.</p>
+<h2 id="your-first-week">Your first week</h2>
+<ol type="1">
+<li>Sign in as the first administrator, change the temporary password
+and turn on MFA in <strong>My account</strong>.</li>
+<li>Work through the deployment guide’s security checklist before real
+guest data goes in. Make sure <code>demo_mode</code> is off.</li>
+<li>Set MFA as required for managers and up
+(<code>security.mfa_required_ranks_at_or_above</code> at 70 or
+lower).</li>
+<li>Check the cron job runs every minute. Without it, SLA timers and
+alerts stall overnight.</li>
+<li>Schedule the daily backup and copy it off the server. Test a restore
+once.</li>
+<li>Print <strong>Room QR codes</strong>: pick a floor,
+<strong>Print</strong>. Add public areas such as the lobby, pool and
+gym.</li>
+</ol>
+<h2 id="people">People</h2>
+<ul>
+<li><strong>Add a person:</strong> <strong>Users</strong>, <strong>+
+New</strong>. Name, username, role, department (and extra departments if
+they float). Copy the temporary password and hand it over in person. It
+is shown once.</li>
+<li><strong>Forgot password:</strong> open the user, <strong>Reset
+password</strong>.</li>
+<li><strong>Locked out</strong> after 5 wrong tries:
+<strong>Unlock</strong>, or they wait 15 minutes.</li>
+<li><strong>Lost phone:</strong> <strong>Reset MFA</strong>.</li>
+<li><strong>Someone leaves:</strong> untick Active. Never delete people,
+so their history stays.</li>
+<li>Give each person the lowest role that does the job. Use
+<strong>Auditor</strong> for anyone who only needs to look.</li>
+</ul>
+<h2 id="integrations">Integrations</h2>
+<ol type="1">
+<li>Start every integration in <strong>Mock</strong> mode. It behaves
+like the other system without credentials.</li>
+<li>Enter the vendor’s details, switch Mock to Live,
+<strong>Save</strong>. Secrets are encrypted and never shown again.</li>
+<li>Set a webhook secret on every integration with an inbound URL.</li>
+<li>Opera Cloud and Canary are beta and not yet tested against live
+systems. Pilot them carefully, with the vendor’s help.</li>
+<li>Email, SMS (Twilio), Teams, Slack and webhooks are set up as
+notification channels. See the deployment guide.</li>
+</ol>
+<h2 id="api-and-mcp">API and MCP</h2>
+<p><strong>API and MCP</strong>: name the token, pick who it acts as,
+tick scopes (read, write, mcp, admin), set an expiry, <strong>Create
+token</strong>. It is shown once. A token acts with that user’s role, so
+make a dedicated user with the least role an assistant needs. Everything
+it does is logged under its token.</p>
+<h2 id="weekly-and-monthly">Weekly and monthly</h2>
+<ul>
+<li>Check the backup ran and the copy left the server.</li>
+<li>Run <strong>Verify integrity</strong> on the <strong>Audit
+log</strong>, or schedule the weekly audit check.</li>
+<li>Review <strong>Users</strong>: anyone who left still Active?</li>
+<li>Review API tokens: revoke the ones nobody uses.</li>
+<li>Apply security updates to PHP, the web server and the database.</li>
+</ul>
+<h2 id="updates">Updates</h2>
+<p>Read <code>CHANGELOG.md</code>, take a backup, pull the new code, run
+<code>migrate</code>, reload PHP. <code>migrate</code> never drops
+anything, so it is safe to repeat. Full steps are in the deployment
+guide.</p>
+<h2 id="honest-limits">Honest limits</h2>
+<ul>
+<li>No single sign-on yet (Entra ID and Google are on the roadmap).
+Accounts live in ExpTix.</li>
+<li>No vendor support contract. You, your IT provider or the community
+support it.</li>
+<li>Back up <code>app.key</code> separately. Without it, saved
+integration secrets cannot be read.</li>
+</ul>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+<figure class="fig desk"><img src="../images/roles/auditor-compliance.jpg" alt="Security and compliance page" loading="lazy"><figcaption>Security and compliance page</figcaption></figure>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

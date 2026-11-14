@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manager questions · ExpTix guides</title><meta name="description" content="Routing, timers, reports and running a team in ExpTix">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-faq group-faq">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Questions and answers</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Manager questions</h1>
+<p class="sub">Routing, timers, reports and running a team in ExpTix</p>
+<div class="chips"><span class="chip k">FAQ</span><span class="chip">For: Supervisors, department managers and general managers</span></div></div>
+<div class="dl"><a href="pdf/faq-managers.pdf">⬇ PDF to print</a><a href="docx/faq-managers.docx">⬇ Word</a><a href="src/faq-managers.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="how-does-exptix-decide-which-department-gets-a-job">How does
+ExpTix decide which department gets a job?</h2>
+<p>It matches the words in the job against the <strong>auto-route
+keywords</strong> on each request category. The best match sets the
+department, category and default priority. Words like “flood”, “smoke”
+or “stuck in elevator” raise the priority to Urgent.</p>
+<h2 id="what-happens-when-no-keyword-matches">What happens when no
+keyword matches?</h2>
+<p>The job goes to the front office at Normal priority, so a person can
+send it on. If this happens often, add keywords to your categories.</p>
+<h2 id="who-can-change-categories-and-keywords">Who can change
+categories and keywords?</h2>
+<p>Department managers and above, under <strong>Request
+categories</strong>. Each category also sets the ticket type, default
+priority, SLA policy, checklist, and whether guests see it on the QR
+portal.</p>
+<h2 id="who-can-change-the-sla-timers">Who can change the SLA
+timers?</h2>
+<p>The GM and administrator. Department managers can read the SLA
+policies and propose changes. Each policy sets respond-by, resolve-by,
+how long after a breach to escalate, and to whom.</p>
+<h2 id="what-happens-when-a-job-runs-late">What happens when a job runs
+late?</h2>
+<p>At 80% of the time, ExpTix sends a warning. At the due time the job
+is breached. After the escalation time, it goes to the role or person on
+the SLA policy (in the demo, the manager or the GM).</p>
+<h2 id="who-hears-about-what">Who hears about what?</h2>
+<p><strong>Notification rules</strong> decide: the event (job created,
+SLA breached, temperature out of range, incident reported and more), the
+department, the minimum priority, the channel and who. Department
+managers can read the rules; the GM or administrator saves them.</p>
+<h2 id="which-channels-can-alerts-use">Which channels can alerts
+use?</h2>
+<p>In-app bell, web push to phones, email, SMS (Twilio), Microsoft
+Teams, Slack and webhooks. Each person also chooses their own channels
+in <strong>My account</strong>.</p>
+<h2 id="how-do-i-give-out-housekeeping-work">How do I give out
+housekeeping work?</h2>
+<p><strong>Rooms</strong>, <strong>Auto-assign</strong>. ExpTix shares
+rooms between attendants on shift by room credits, keeping floors
+together. Adjust by hand with <strong>Select rooms</strong> and
+<strong>Assign</strong>.</p>
+<h2 id="does-exptix-do-staff-scheduling">Does ExpTix do staff
+scheduling?</h2>
+<p>It has a simple staff schedule and a calendar for events, PM and
+scheduled work. It is not a full workforce or payroll system. <strong>On
+shift</strong> is what decides who gets new jobs.</p>
+<h2 id="can-outside-contractors-use-it">Can outside contractors use
+it?</h2>
+<p>Yes. Give them the Contractor role. They see only jobs given to them
+or their department, nothing about guests or other teams. They log time,
+parts and photos, which makes sign-off faster.</p>
+<h2 id="do-we-need-a-pms">Do we need a PMS?</h2>
+<p>No. Without a PMS link, staff set occupied or vacant, due in and due
+out by hand. The board is then only as accurate as those taps, and
+minibar charges stay in ExpTix.</p>
+<h2 id="does-it-work-with-opera-cloud-and-canary">Does it work with
+Opera Cloud and Canary?</h2>
+<p>There are links for both, but they are beta: written to the vendors’
+documented patterns and not yet tested against live systems. Pilot them
+in mock mode first.</p>
+<h2 id="what-if-our-internet-is-poor-or-goes-down">What if our internet
+is poor or goes down?</h2>
+<p>ExpTix is a web app and needs a connection to save work. Pages are
+light and work on slow links, but there is no full offline mode. Keep a
+paper fallback for outages and log the jobs once you are back
+online.</p>
+<h2 id="what-reports-do-i-get">What reports do I get?</h2>
+<p><strong>Reports</strong> for 7, 30 or 90 days: volume, response and
+resolve times, SLA misses, guest ratings, repeat-problem rooms, costly
+machines, PM on time, inspections, food safety readings, labour and
+parts. You can print it or export the ticket list to CSV.</p>
+<h2 id="how-do-i-see-who-read-the-logbook">How do I see who read the
+logbook?</h2>
+<p>Each <strong>Shift logbook</strong> note shows read receipts. Staff
+tap <strong>Mark read</strong> at the start of a shift.</p>
+<h2 id="how-do-guest-ratings-work">How do guest ratings work?</h2>
+<p>When a QR portal request is done, the guest can rate it from 1 to 5
+stars. A 1 or 2 alerts the front office for a callback. Averages appear
+in <strong>Reports</strong>.</p>
+<h2 id="how-do-i-record-what-we-gave-a-guest-back">How do I record what
+we gave a guest back?</h2>
+<p>Open the complaint and fill in Resolution and service recovery: what
+you did and what it cost. The totals show in
+<strong>Reports</strong>.</p>
+<h2 id="how-do-purchase-approvals-work">How do purchase approvals
+work?</h2>
+<p>Staff raise a purchase request with an amount. A department manager
+or higher approves or rejects it, and ExpTix records who and when. There
+are no dollar limits built in, so set your own policy.</p>
+<h2 id="is-it-in-other-languages">Is it in other languages?</h2>
+<p>The screens are English only today. Translations are on the roadmap.
+Printed guides can be translated now.</p>
+<h2 id="can-we-use-it-for-more-than-one-hotel">Can we use it for more
+than one hotel?</h2>
+<p>One install runs one property today. A group runs one install per
+property, with shared templates and central reporting. Multi-property in
+one install is on the roadmap.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

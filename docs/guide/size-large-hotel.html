@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Large hotel or resort · ExpTix guides</title><meta name="description" content="300 to 1,000+ rooms, phased by department">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-playbook group-size">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › By property size</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Large hotel or resort</h1>
+<p class="sub">300 to 1,000+ rooms, phased by department</p>
+<div class="chips"><span class="chip k">Playbook</span><span class="chip">For: General managers, directors of operations, department heads and IT at large hotels and resorts</span></div></div>
+<div class="dl"><a href="pdf/size-large-hotel.pdf">⬇ PDF to print</a><a href="docx/size-large-hotel.docx">⬇ Word</a><a href="src/size-large-hotel.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="who-this-is-for">Who this is for</h2>
+<p>You run 300 to 1,000 or more rooms: a convention hotel, a 500-room
+resort with several pools and outlets, or a property spread over several
+buildings. You have many departments, three shifts, outside contractors,
+a banquet operation and people who want the numbers in their own BI
+tool.</p>
+<h2 id="be-honest-about-scale-first">Be honest about scale first</h2>
+<p>ExpTix has been tested with a 182-room demo hotel. It has not been
+proven at 500 or 1,000 rooms. That does not mean it will not work. It
+means you must prove it at your property before you depend on it:</p>
+<ol type="1">
+<li><strong>Pilot first.</strong> Start with one or two departments, not
+the whole hotel.</li>
+<li><strong>Use MySQL on a proper server.</strong> Not SQLite, not a
+low-end shared plan.</li>
+<li><strong>Load-test before go-live.</strong> Load your real room
+count, users and a realistic volume of jobs into a test install, then
+have many people use it at once. Watch page times and the cron run.</li>
+<li><strong>Plan your own support.</strong> ExpTix is free software with
+no vendor support contract. Support comes from your own IT, an IT
+provider you choose, or the community.</li>
+</ol>
+<h2 id="what-to-switch-on-and-what-to-leave-off">What to switch on and
+what to leave off</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Area</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Departments</td>
+<td>All you need, renamed to match your org chart. Add departments (for
+example Spa, Recreation, Grounds) rather than overloading one.</td>
+</tr>
+<tr>
+<td>Locations</td>
+<td>Build the tree properly: buildings, floors, outlets, meeting rooms,
+back of house, mechanical rooms. Routing and reports depend on it.</td>
+</tr>
+<tr>
+<td>Housekeeping board</td>
+<td>On, with sections (<strong>Section</strong> on each room) and
+credits on every room type.</td>
+</tr>
+<tr>
+<td>Engineering</td>
+<td>Assets with criticality, PM, parts and stock, vendors, purchase
+requests with approval.</td>
+</tr>
+<tr>
+<td>Banquets</td>
+<td><strong>Events and BEOs</strong> on. Each BEO creates tasks for
+setup, kitchen, AV and housekeeping.</td>
+</tr>
+<tr>
+<td>Contractors</td>
+<td>Contractor role for outside trades. They see only their own
+jobs.</td>
+</tr>
+<tr>
+<td>Auditors</td>
+<td>Auditor role for owners’ reps, brand, insurers. Read-only.</td>
+</tr>
+<tr>
+<td>API and BI</td>
+<td>On, with a dedicated read-only user for the BI feed.</td>
+</tr>
+<tr>
+<td>Opera and Canary</td>
+<td><strong>Beta</strong>, not tested live. Use <strong>Mock</strong>
+mode until a controlled live test passes.</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>On, but designed (see below).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hosting">Hosting</h2>
+<ul>
+<li>MySQL 8 or MariaDB 10.6+ on a server sized and monitored by IT, with
+daily backups copied off the server and a tested restore.</li>
+<li>nginx or Apache with PHP-FPM, HTTPS only, cron every minute.</li>
+<li>If you sit behind a reverse proxy or load balancer, set
+<code>security.trusted_proxies</code> so lockouts and logs see real
+addresses.</li>
+<li>Forward the audit webhook to your SIEM or log platform.</li>
+<li>Force MFA for managers and above
+(<code>mfa_required_ranks_at_or_above</code> at <code>70</code>).</li>
+<li>Have a penetration test, or at least an authenticated vulnerability
+scan, before real guest data goes in.</li>
+</ul>
+<p>Keep a separate test install. Every upgrade, new checklist set or
+integration goes there first.</p>
+<h2 id="phased-rollout-by-department">Phased rollout by department</h2>
+<p>Do not go live everywhere on one day. A suggested order:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Departments</th>
+<th>Why this order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Engineering</td>
+<td>Clear work orders, measurable, few guest-facing risks. Builds asset
+and PM history early.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Housekeeping and front office together</td>
+<td>The board only works when both sides use it.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Guest QR portal, one tower or floor range first</td>
+<td>Proves the guest flow before every room has a code.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kitchen and F&amp;B: food safety, 86 list, allergy alerts</td>
+<td>Replaces paper temperature logs.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Banquets and events, Security, Laundry, IT</td>
+<td>Brings the rest onto one system.</td>
+</tr>
+</tbody>
+</table>
+<p>Give each phase 2 to 4 weeks. Do not start the next phase until the
+current one runs without paper. The <a
+href="playbook-rollout.html">rollout plan</a> covers training and
+go-live checks.</p>
+<h2 id="notification-rules-stop-alert-fatigue">Notification rules: stop
+alert fatigue</h2>
+<p>At this size, a careless rule sends hundreds of pushes a day and
+people stop looking. Design rules before go-live.</p>
+<ol type="1">
+<li><strong>Scope every rule to a department.</strong> Use <strong>Only
+for department</strong> on each one.</li>
+<li><strong>Use minimum priority.</strong> Managers do not need a push
+for every Normal job. Set <strong>Minimum priority</strong> to High or
+Urgent for manager alerts.</li>
+<li><strong>Send the right event to the right people.</strong>
+<strong>Ticket created</strong> goes to the department on shift.
+<strong>SLA at risk</strong> goes to supervisors. <strong>SLA
+breached</strong> goes to department supervisors and managers.</li>
+<li><strong>Pick the channel by urgency.</strong> In-app and push for
+staff. Teams or Slack for a department channel. SMS only for Critical
+and life safety.</li>
+<li><strong>Keep On shift honest.</strong> New jobs go to people on
+shift. Staff who leave it ticked get alerts at home and learn to mute
+them.</li>
+<li><strong>Review monthly.</strong> Ask each manager: which alerts do
+you ignore? Fix or remove that rule.</li>
+</ol>
+<h2 id="who-does-what">Who does what</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internal ExpTix administrator (see below)</td>
+<td>Administrator</td>
+</tr>
+<tr>
+<td>GM, hotel manager, director of operations</td>
+<td>General manager</td>
+</tr>
+<tr>
+<td>Directors and department heads</td>
+<td>Department manager</td>
+</tr>
+<tr>
+<td>Shift leads, inspectors, sous chefs, security leads</td>
+<td>Supervisor</td>
+</tr>
+<tr>
+<td>Front desk, PBX, guest services, night audit</td>
+<td>Front desk / guest services</td>
+</tr>
+<tr>
+<td>Frontline teams</td>
+<td>Staff</td>
+</tr>
+<tr>
+<td>Elevator, HVAC, fire systems, pest control and other trades</td>
+<td>Contractor</td>
+</tr>
+<tr>
+<td>Owners’ reps, asset managers, brand, insurers</td>
+<td>Auditor</td>
+</tr>
+<tr>
+<td>BI feed, AI assistant</td>
+<td>A dedicated user with the least role that does the job, plus a
+scoped token</td>
+</tr>
+</tbody>
+</table>
+<h3 id="staff-an-internal-administrator">Staff an internal
+administrator</h3>
+<p>Name one person as the ExpTix owner, with a backup. At this size it
+is part of a real job, not a favour. They:</p>
+<ul>
+<li>add and deactivate <strong>Users</strong> (untick
+<strong>Active</strong>, never delete),</li>
+<li>keep categories, keywords and SLAs tidy with the department
+heads,</li>
+<li>own <strong>Notification rules</strong>,
+<strong>Integrations</strong> and <strong>API and MCP</strong>
+tokens,</li>
+<li>run <strong>Verify integrity</strong> on the <strong>Audit
+log</strong> and check backups,</li>
+<li>test upgrades on the test install, then apply them,</li>
+<li>collect feedback and decide what changes, and when.</li>
+</ul>
+<h3 id="contractors-and-auditors">Contractors and auditors</h3>
+<p>Give each contracting company its own users with the Contractor role.
+Put insurance and workers’ compensation expiry dates on each vendor so
+ExpTix warns you before paperwork runs out. Auditors get the Auditor
+role: they see jobs, food safety logs, incidents, reports, the audit log
+and the security page, and cannot change anything.</p>
+<h3 id="api-and-bi">API and BI</h3>
+<p>Use the REST API (OpenAPI 3.1 at <code>/api/openapi.json</code>,
+readable docs at <code>/docs</code>) for your BI tool. Create a
+dedicated user with the Auditor role (it sees every department and
+cannot change anything), give its token only the <code>read</code>
+scope, and set an expiry. The API pages through tickets 500 at a time
+with <code>limit</code> and <code>offset</code>. The CSV export on
+<strong>Reports</strong> is fine for a quick look but is not a data
+feed.</p>
+<h2 id="a-day-in-the-life">A day in the life</h2>
+<ul>
+<li><strong>Overnight:</strong> PM jobs open on schedule. A freezer
+sensor posts an out-of-range reading and opens an Urgent job. Security
+logs a fire alarm in <strong>Incident reports</strong>.</li>
+<li><strong>07:00</strong> Department heads read the <strong>Shift
+logbook</strong> and the Home tiles for overdue and breached jobs.</li>
+<li><strong>08:00</strong> Housekeeping supervisors run
+<strong>Auto-assign</strong> by section.</li>
+<li><strong>10:00</strong> The banquet team checks today’s BEO tasks:
+who is ready, who is not.</li>
+<li><strong>Afternoon:</strong> contractors work their jobs and log time
+and parts. The chief engineer reviews costly machines.</li>
+<li><strong>Evening:</strong> the GM reviews guest complaints and
+service recovery from the day.</li>
+</ul>
+<h2 id="reports-to-check-weekly">Reports to check weekly</h2>
+<ul>
+<li>Response and resolve times, and SLA misses, by department and
+priority.</li>
+<li>Guest ratings, complaints and service recovery value.</li>
+<li>Repeat-problem rooms and costly machines.</li>
+<li>PM on time, especially life safety.</li>
+<li>Inspection scores and food safety readings out of range.</li>
+<li>Your BI dashboards built from the API, if you have them.</li>
+</ul>
+<p>Take a four-week baseline per department before setting targets.</p>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Going live everywhere at once.</strong> One problem then
+hits every team at the same moment.</li>
+<li><strong>Skipping the load test.</strong> Find the limits in a test
+window, not on a sold-out Saturday.</li>
+<li><strong>Alert storms.</strong> See the notification rules
+above.</li>
+<li><strong>No owner.</strong> An ExpTix with nobody in charge drifts:
+stale categories, old users, rules nobody understands.</li>
+<li><strong>A thin location tree.</strong> “Somewhere in the east wing”
+cannot be routed or reported on.</li>
+<li><strong>Expecting the app in other languages.</strong> The screens
+are English only today. Translate printed guides for your teams
+now.</li>
+<li><strong>Waiting for single sign-on.</strong> It is on the roadmap
+(Entra ID, Google), not built. Plan on ExpTix passwords with MFA.</li>
+</ul>
+<h2 id="when-to-grow">When to grow</h2>
+<p>If you run more than one property, read the <a
+href="size-group-chain.html">group and chain playbook</a>. ExpTix is one
+property per install today.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

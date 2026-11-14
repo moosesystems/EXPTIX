@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CFO and finance · ExpTix guides</title><meta name="description" content="What it costs to run, where the value shows up, how to measure it">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-sheet group-leaders">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Supervisors, managers and executives</p>
+<div class="doc"><article>
+<div class="titleblock">
+<h1>CFO and finance</h1>
+<p class="sub">What it costs to run, where the value shows up, how to measure it</p>
+<div class="chips"><span class="chip k">One-page sheet</span><span class="chip">For: CFOs, controllers and finance directors</span></div></div>
+<div class="dl"><a href="pdf/sheet-cfo.pdf">⬇ PDF to print</a><a href="docx/sheet-cfo.docx">⬇ Word</a><a href="src/sheet-cfo.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="recommendation">Recommendation</h2>
+<p>Run a 90-day pilot, measure it with ExpTix’s own reports, and decide
+on the numbers you collect. Do not budget on promised savings: there are
+none in this sheet.</p>
+<h2 id="total-cost-of-ownership">Total cost of ownership</h2>
+<p>There is no licence fee and no per-user or per-room charge. You still
+pay for:</p>
+<ul>
+<li><strong>Hosting:</strong> any ordinary PHP host. A small property
+fits on low-cost shared hosting; a large one wants its own server with
+MySQL.</li>
+<li><strong>Setup time:</strong> someone enters departments, rooms,
+categories, SLAs, checklists, assets and users. The time grows with the
+size of the property: a small lodge is quick, a large hotel needs a
+planned project.</li>
+<li><strong>Training:</strong> short for frontline staff, longer for
+managers who set the rules.</li>
+<li><strong>Support:</strong> there is no vendor support contract.
+Budget for your own IT, an IT provider, or community help.</li>
+<li><strong>Security work before go-live:</strong> the deployment guide
+asks for a vulnerability scan or penetration test before real guest data
+goes in.</li>
+</ul>
+<h2 id="where-cost-and-value-show-up">Where cost and value show up</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>What</th>
+<th>Where in ExpTix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Labour and parts per job</td>
+<td>Each job’s <strong>Log time and parts</strong></td>
+</tr>
+<tr>
+<td>Labour and parts per machine</td>
+<td><strong>Reports</strong>, costly machines; each asset’s history</td>
+</tr>
+<tr>
+<td>Service recovery cost</td>
+<td><strong>Reports</strong>, guest section (total given back)</td>
+</tr>
+<tr>
+<td>Repeat-problem rooms</td>
+<td><strong>Reports</strong>, repeat-problem rooms</td>
+</tr>
+<tr>
+<td>PM compliance</td>
+<td><strong>Reports</strong>, PM generated, completed, on time</td>
+</tr>
+<tr>
+<td>Food safety catches</td>
+<td><strong>Reports</strong>, readings and out-of-range count</td>
+</tr>
+<tr>
+<td>Spending</td>
+<td><strong>Purchase requests</strong>: amount, approver, date,
+status</td>
+</tr>
+</tbody>
+</table>
+<p>Labour is recorded in minutes. Multiply by your own loaded hourly
+rate. ExpTix does not value food: count the out-of-range readings that
+were caught and price each with your own cost of a lost cooler.</p>
+<h2 id="measuring-roi-over-90-days">Measuring ROI over 90 days</h2>
+<ol type="1">
+<li>Before go-live, write down your baseline: complaint count, comp and
+refund spend, emergency repair spend, and any food loss.</li>
+<li>Pilot one or two departments for 90 days.</li>
+<li>Pull <strong>Reports</strong> at 30, 60 and 90 days and export the
+ticket list to CSV for your own spreadsheet or BI tool.</li>
+<li>Compare: response and resolve times, SLA misses, recovery cost,
+repeat rooms, PM on time, costly machines.</li>
+<li>Decide with your GM whether to extend to every department.</li>
+</ol>
+<h2 id="risk-and-controls">Risk and controls</h2>
+<ul>
+<li><strong>Audit log:</strong> every sign-in and change, hash-chained.
+<strong>Verify integrity</strong> proves nothing was altered. Kept 7
+years by default.</li>
+<li><strong>Roles:</strong> eight roles; staff see only their
+department. Read-only <strong>Auditor</strong> accounts for
+reviewers.</li>
+<li><strong>Approvals:</strong> purchase requests record who approved
+and when. ExpTix has no dollar limits, so write your approval policy
+down.</li>
+<li>Ticket list exports are logged.</li>
+</ul>
+<h2 id="the-licence-agpl-v3-in-plain-english">The licence (AGPL v3) in
+plain English</h2>
+<ul>
+<li>Free to use, change and share, including commercially.</li>
+<li>Using it unmodified, even for staff and guests: keep the copyright
+and licence notices. That is the obligation.</li>
+<li>If you change the code and let people use your changed version over
+a network, you must offer those users your changed source code under the
+same licence.</li>
+<li>No warranty.</li>
+</ul>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+<figure class="fig desk"><img src="../images/roles/gm-reports.jpg" alt="Reports: response, SLA misses, ratings, labour and parts" loading="lazy"><figcaption>Reports: response, SLA misses, ratings, labour and parts</figcaption></figure>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

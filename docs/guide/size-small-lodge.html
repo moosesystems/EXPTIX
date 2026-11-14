@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Small lodge or inn · ExpTix guides</title><meta name="description" content="3 to 20 rooms, a few people who do everything">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-playbook group-size">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › By property size</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Small lodge or inn</h1>
+<p class="sub">3 to 20 rooms, a few people who do everything</p>
+<div class="chips"><span class="chip k">Playbook</span><span class="chip">For: Owners and managers of lodges, inns, motels and small B&amp;Bs</span></div></div>
+<div class="dl"><a href="pdf/size-small-lodge.pdf">⬇ PDF to print</a><a href="docx/size-small-lodge.docx">⬇ Word</a><a href="src/size-small-lodge.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="who-this-is-for">Who this is for</h2>
+<p>You run 3 to 20 rooms with a small team. Picture a three-room fly-in
+lodge with two staff who cook, clean, fix the generator and greet the
+floatplane. Nobody has time for software. You want one list of what
+needs doing, a record of what was done, and maybe a QR card so guests
+can ask for towels without hunting you down.</p>
+<p>Use ExpTix lightly. Switch on what saves you a trip or a forgotten
+job, and leave the rest off. You can switch more on later without
+starting again.</p>
+<h2 id="what-to-switch-on-and-what-to-leave-off">What to switch on and
+what to leave off</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Area</th>
+<th>Recommendation</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Departments</td>
+<td>Keep 3 or 4: Front office, Housekeeping, Engineering (call it
+Maintenance if you like), Kitchen. Untick <strong>Active</strong> on the
+rest.</td>
+<td>Fewer departments means fewer places for a job to hide.</td>
+</tr>
+<tr>
+<td>Housekeeping board</td>
+<td>On.</td>
+<td>Even with three rooms, red, blue and green tells the other person
+what is ready.</td>
+</tr>
+<tr>
+<td>Food safety</td>
+<td>On if you serve food.</td>
+<td>Fridge and freezer readings in seconds, and a clean log for the
+health inspector.</td>
+</tr>
+<tr>
+<td>Preventive maintenance</td>
+<td>On, with a short list: generator service, water treatment, smoke
+alarm test, chimney or stove check.</td>
+<td>Remote sites cannot wait for a repair person. PM jobs remind you
+before things fail.</td>
+</tr>
+<tr>
+<td>Guest QR portal</td>
+<td>Optional.</td>
+<td>Worth it if guests are spread across cabins. Skip it if guests eat
+with you and just ask.</td>
+</tr>
+<tr>
+<td>PMS link (Opera)</td>
+<td>Off.</td>
+<td>You run fine without one. Set <strong>Occ</strong> or
+<strong>Vac</strong> and <strong>Due in</strong> or <strong>Due
+out</strong> by hand on <strong>Rooms</strong>.</td>
+</tr>
+<tr>
+<td>Canary, email to ticket, sensors</td>
+<td>Off at first.</td>
+<td>Each one is something else to look after.</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>In-app and web push only.</td>
+<td>No SMS or email setup needed.</td>
+</tr>
+<tr>
+<td>Events and BEOs, Key control, purchase requests</td>
+<td>Off or ignored.</td>
+<td>Turn them on if you host groups or hand out master keys.</td>
+</tr>
+</tbody>
+</table>
+<p>Without a PMS, the board is only as accurate as your taps. Make “tap
+the room when a guest arrives or leaves” part of the routine.</p>
+<h2 id="hosting-keep-it-simple">Hosting: keep it simple</h2>
+<p>Use SQLite on ordinary shared web hosting that offers PHP 8.1 and
+cron. SQLite needs no database setup and is fine for a small property
+with a few dozen staff. The deployment guide walks through shared
+hosting in about an hour.</p>
+<p>You need three things whatever you pick: HTTPS, the cron job running
+every minute, and <code>demo_mode</code> set to <code>false</code>.
+Without cron, SLA timers and reminders stall overnight.</p>
+<h3 id="limited-internet">Limited internet</h3>
+<p>ExpTix needs a connection to the server to save work. If the link
+drops, staff see that they are offline. Write the job down and log it
+when the link is back.</p>
+<p>On a satellite or slow link, keep it light:</p>
+<ol type="1">
+<li>Use phones on the lodge Wi-Fi, installed from the browser with
+<strong>Add to Home Screen</strong>.</li>
+<li>Take photos only when they help. Every photo is an upload over your
+link.</li>
+<li>Skip integrations you do not need. Each one adds traffic.</li>
+</ol>
+<h3 id="a-small-computer-at-the-lodge-instead">A small computer at the
+lodge instead</h3>
+<p>You can run ExpTix on a small computer at the lodge so staff on the
+local Wi-Fi keep working when the outside link is down. Only do this if
+someone can maintain it. The trade-offs:</p>
+<ul>
+<li><strong>For it:</strong> staff can log and finish jobs on the local
+network during an outage.</li>
+<li><strong>Against it:</strong> you own the power, updates, backups and
+HTTPS certificate. Push alerts still need the internet, because they
+travel through the phone makers’ push services. Guests outside your
+Wi-Fi cannot reach the QR page. A failed disk with no off-site backup
+loses the record.</li>
+</ul>
+<p>For most small lodges, ordinary hosting with a written fallback is
+the safer choice.</p>
+<h2 id="setup-in-order">Setup in order</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Step</th>
+<th>What</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Hosting, install, <code>create-admin</code>, HTTPS, cron (see the
+deployment guide)</td>
+<td>About 1 hour</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sign in, change the temporary password, turn on MFA in <strong>My
+account</strong></td>
+<td>5 minutes</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Departments: switch off the ones you do not need, rename the
+rest</td>
+<td>10 minutes</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Users</strong>: one account per person. Never share a
+sign-in</td>
+<td>10 minutes</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Room types and <strong>Rooms</strong></td>
+<td>15 minutes</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SLA policies: keep the defaults, loosen the ones you cannot
+meet</td>
+<td>10 minutes</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Request categories: keep a short list of quick picks</td>
+<td>20 minutes</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Checklist templates: one room check, one opening or closing
+check</td>
+<td>20 minutes</td>
+</tr>
+<tr>
+<td>9</td>
+<td>PM schedules for the 4 or 5 things that would hurt most if they
+failed</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Food safety points, if you serve food</td>
+<td>15 minutes</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Each person: <strong>Add to Home Screen</strong>, <strong>Enable
+push alerts</strong>, <strong>Send a test</strong></td>
+<td>10 minutes each</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Optional: <strong>Room QR codes</strong>, print and place</td>
+<td>20 minutes</td>
+</tr>
+</tbody>
+</table>
+<p>Plan on one afternoon, plus the hosting hour.</p>
+<h3 id="slas-for-a-small-team">SLAs for a small team</h3>
+<p>The demo timers assume a staffed hotel (a guest amenity in 20
+minutes, a Critical response in 5). Two people cannot always meet those.
+Set timers you can keep, and keep Critical tight for safety. A breached
+timer should mean something went wrong, not that someone was out on the
+dock.</p>
+<h2 id="who-does-what">Who does what</h2>
+<p>At a lodge, one person wears several hats. Give each person the
+lowest role that covers what they do.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role in ExpTix</th>
+<th>Departments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Owner or manager</td>
+<td>General manager (also the administrator)</td>
+<td>All</td>
+</tr>
+<tr>
+<td>Second staff member</td>
+<td>Supervisor</td>
+<td>Housekeeping, also works in Kitchen and Maintenance</td>
+</tr>
+<tr>
+<td>Seasonal help</td>
+<td>Staff</td>
+<td>Their main area, plus <strong>Also works in</strong> for the
+rest</td>
+</tr>
+<tr>
+<td>Visiting trades (generator, water, propane)</td>
+<td>Contractor</td>
+<td>Maintenance only</td>
+</tr>
+</tbody>
+</table>
+<p>The GM role covers <strong>Users</strong>,
+<strong>Integrations</strong> and <strong>API and MCP</strong>, so a
+separate administrator account is optional. If you keep one, use it only
+for setup.</p>
+<p>Only Front desk and higher roles can change <strong>Occ</strong>,
+<strong>Vac</strong>, <strong>Due in</strong> and <strong>Due
+out</strong>, and only Supervisor and higher can mark a room
+<strong>Inspected</strong>. Whoever checks guests in needs at least the
+Front desk role.</p>
+<p>Assign every user to every department they help with, using
+<strong>Also works in</strong>. Otherwise they will not see jobs for
+that team.</p>
+<h2 id="a-day-in-the-life">A day in the life</h2>
+<ol type="1">
+<li><strong>Morning:</strong> both staff tick <strong>On shift</strong>.
+The manager reads the <strong>Shift logbook</strong> and taps
+<strong>Mark read</strong>.</li>
+<li><strong>Kitchen opening:</strong> temperatures go in with
+<strong>Save reading</strong>. A bad reading opens an urgent job by
+itself.</li>
+<li><strong>Guests leave:</strong> the room is marked <strong>Due
+out</strong>, then <strong>Start cleaning</strong> and
+<strong>Clean</strong>. The manager checks it and taps
+<strong>Inspected</strong>.</li>
+<li><strong>Something breaks:</strong> whoever sees it taps <strong>+
+New</strong>, types “shower drain slow in cabin 2”, adds a photo. It
+goes to Maintenance.</li>
+<li><strong>The generator PM comes up:</strong> it appears in <strong>My
+work</strong> with a checklist. Tick, <strong>Log time and
+parts</strong>, <strong>Resolve</strong>.</li>
+<li><strong>Evening:</strong> one line in the <strong>Shift
+logbook</strong> for tomorrow. Both untick <strong>On
+shift</strong>.</li>
+</ol>
+<h2 id="reports-to-check-weekly">Reports to check weekly</h2>
+<p>Open <strong>Reports</strong>, pick 7 days. Ten minutes is
+enough.</p>
+<ul>
+<li><strong>Open and overdue jobs:</strong> anything older than a week
+needs a decision.</li>
+<li><strong>Repeat-problem rooms:</strong> the same cabin keeps coming
+up? Fix the cause.</li>
+<li><strong>PM on time:</strong> missed PM at a remote site costs more
+than anywhere else.</li>
+<li><strong>Parts used:</strong> reorder before the next supply
+run.</li>
+<li><strong>Guest ratings,</strong> if you use QR codes.</li>
+</ul>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Switching everything on.</strong> More screens means more to
+ignore. Start small.</li>
+<li><strong>No cron.</strong> Timers and PM jobs stop. Check it in week
+one.</li>
+<li><strong>Shared sign-ins.</strong> ExpTix writes a name on every
+action. Shared accounts make the record useless.</li>
+<li><strong>Forgetting room status.</strong> Without a PMS, nobody else
+updates Occ, Vac, Due in and Due out.</li>
+<li><strong>No backup.</strong> Run <code>cli.php backup</code> daily
+and copy it off the server. Keep <code>app.key</code> safe too.</li>
+<li><strong>Expecting support from a vendor.</strong> ExpTix is free
+software with no support contract. Know who your IT person is before you
+need them.</li>
+</ul>
+<h2 id="when-to-grow">When to grow</h2>
+<p>Move to the <a href="size-mid-hotel.html">mid-size hotel playbook</a>
+when:</p>
+<ul>
+<li>you have more than about 20 rooms or a few dozen staff,</li>
+<li>you hire department heads who need their own SLAs and
+checklists,</li>
+<li>several people update ExpTix at the same moment all day.</li>
+</ul>
+<p>At that point, move to MySQL. There is no built-in converter yet:
+export each table to CSV and import it into a freshly migrated MySQL
+database, or start fresh at a quiet time.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

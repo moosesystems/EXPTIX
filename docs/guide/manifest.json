@@ -1,0 +1,206 @@
+[
+ {
+  "file": "faq-executives",
+  "kind": "faq",
+  "group": "faq",
+  "lang": "en"
+ },
+ {
+  "file": "faq-it",
+  "kind": "faq",
+  "group": "faq",
+  "lang": "en"
+ },
+ {
+  "file": "faq-managers",
+  "kind": "faq",
+  "group": "faq",
+  "lang": "en"
+ },
+ {
+  "file": "faq-staff",
+  "kind": "faq",
+  "group": "faq",
+  "lang": "en"
+ },
+ {
+  "file": "glossary",
+  "kind": "glossary",
+  "group": "reference",
+  "lang": "en"
+ },
+ {
+  "file": "guide-index",
+  "kind": "guide",
+  "group": "reference",
+  "lang": "en"
+ },
+ {
+  "file": "playbook-rollout",
+  "kind": "playbook",
+  "group": "size",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-cfo",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-contractor",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-cook-steward",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-department-manager",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-first-day-everyone.es",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "es"
+ },
+ {
+  "file": "sheet-first-day-everyone.fr",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "fr"
+ },
+ {
+  "file": "sheet-first-day-everyone",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-first-day-everyone.tl",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "tl"
+ },
+ {
+  "file": "sheet-front-desk-agent",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-general-manager",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-guest-card",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-houseperson-laundry",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-it-admin",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-maintenance-tech",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-owner-auditor",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-room-attendant.es",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "es"
+ },
+ {
+  "file": "sheet-room-attendant.fr",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "fr"
+ },
+ {
+  "file": "sheet-room-attendant",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-room-attendant.tl",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "tl"
+ },
+ {
+  "file": "sheet-security-officer",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-server-fb",
+  "kind": "sheet",
+  "group": "frontline",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-supervisor",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "sheet-vp-operations",
+  "kind": "sheet",
+  "group": "leaders",
+  "lang": "en"
+ },
+ {
+  "file": "size-group-chain",
+  "kind": "playbook",
+  "group": "size",
+  "lang": "en"
+ },
+ {
+  "file": "size-large-hotel",
+  "kind": "playbook",
+  "group": "size",
+  "lang": "en"
+ },
+ {
+  "file": "size-mid-hotel",
+  "kind": "playbook",
+  "group": "size",
+  "lang": "en"
+ },
+ {
+  "file": "size-small-lodge",
+  "kind": "playbook",
+  "group": "size",
+  "lang": "en"
+ }
+]

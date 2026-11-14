@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mid-size hotel · ExpTix guides</title><meta name="description" content="50 to 250 rooms, department heads, the housekeeping board at the centre">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-playbook group-size">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › By property size</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>Mid-size hotel</h1>
+<p class="sub">50 to 250 rooms, department heads, the housekeeping board at the centre</p>
+<div class="chips"><span class="chip k">Playbook</span><span class="chip">For: General managers, department managers and IT for full-service and select-service hotels</span></div></div>
+<div class="dl"><a href="pdf/size-mid-hotel.pdf">⬇ PDF to print</a><a href="docx/size-mid-hotel.docx">⬇ Word</a><a href="src/size-mid-hotel.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="who-this-is-for">Who this is for</h2>
+<p>You run 50 to 250 rooms. Think of a 120-room downtown hotel with a
+front office, housekeeping, engineering, a restaurant and a few meeting
+rooms. Each department has a manager, shifts have supervisors, and work
+moves between teams all day.</p>
+<p>This is the size ExpTix was built and tested for. The demo hotel has
+182 rooms.</p>
+<h2 id="what-to-switch-on-and-what-to-leave-off">What to switch on and
+what to leave off</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Area</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Departments</td>
+<td>Keep the ones you have. Rename to match your org chart, untick
+<strong>Active</strong> on the rest.</td>
+</tr>
+<tr>
+<td>Housekeeping board</td>
+<td>On. This is the centre of the day for front office and
+housekeeping.</td>
+</tr>
+<tr>
+<td>Auto-assign and credits</td>
+<td>On. Set credits per room type so suites count for more.</td>
+</tr>
+<tr>
+<td>Inspections</td>
+<td>On, with a room inspection checklist. Every failed line becomes a
+job.</td>
+</tr>
+<tr>
+<td>Engineering</td>
+<td>Assets for anything that costs money to fix, PM schedules, parts and
+stock.</td>
+</tr>
+<tr>
+<td>Food safety</td>
+<td>On if you run a kitchen. Add every fridge, freezer and hot-holding
+point.</td>
+</tr>
+<tr>
+<td>Guest QR portal</td>
+<td>On. One code in every room plus the lobby, pool and gym.</td>
+</tr>
+<tr>
+<td>Events and BEOs</td>
+<td>On if you sell meetings or banquets.</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Incident reports, <strong>Key control</strong> and <strong>Lost and
+found</strong>.</td>
+</tr>
+<tr>
+<td>PMS</td>
+<td>Optional. Run it manually, or try the beta Opera Cloud link (see
+below).</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>In-app and push for everyone. Email or Teams for managers.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pms-manual-or-the-beta-opera-link">PMS: manual or the beta Opera
+link</h3>
+<p>ExpTix runs fine without a PMS. The front desk sets
+<strong>Occ</strong> or <strong>Vac</strong> and <strong>Due in</strong>
+or <strong>Due out</strong> on <strong>Rooms</strong>, and the board is
+as accurate as those taps. Minibar charges then stay in ExpTix.</p>
+<p>The Oracle Opera Cloud (OHIP) and Canary links are
+<strong>beta</strong>. They follow the vendors’ documented patterns but
+have not been tested against live systems. If you want them:</p>
+<ol type="1">
+<li>Run the integration in <strong>Mock</strong> mode first and train on
+it.</li>
+<li>Switch to <strong>Live</strong> in a test window with your Opera
+administrator watching.</li>
+<li>Compare room status in both systems for a week before you trust
+it.</li>
+</ol>
+<h2 id="hosting">Hosting</h2>
+<p>Use MySQL 8 or MariaDB 10.6+ on your own Linux server or a hosting
+plan with PHP 8.1, MySQL and cron. Either takes about an hour following
+the deployment guide. MySQL handles many people saving at once and has
+standard backup tools.</p>
+<p>Before real guest data goes in, work through the security checklist
+in the deployment guide. Force MFA for managers and above with
+<code>mfa_required_ranks_at_or_above</code> set to <code>70</code>.</p>
+<h2 id="setup-in-order">Setup in order</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Week</th>
+<th>What</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Install, HTTPS, cron, backups, first administrator with MFA</td>
+<td>Half a day for IT</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Departments with a manager and email for each</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Locations, room types with credits, <strong>Rooms</strong></td>
+<td>2 to 4 hours</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SLA policies: start from the defaults, adjust with each manager</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Request categories and auto-route keywords, per department</td>
+<td>1 to 2 hours per department</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Checklist templates: room inspection, opening and closing checks,
+fire rounds</td>
+<td>2 to 3 hours</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Assets, PM schedules, parts, vendors with insurance expiry
+dates</td>
+<td>1 to 2 days for engineering</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Food safety points and outlets, 86 list, allergy alerts</td>
+<td>2 hours</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Notification rules</strong></td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Users</strong>, with role and department</td>
+<td>1 to 2 hours</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Room QR codes</strong>: print and place</td>
+<td>Half a day</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Pilot and go live (see the <a href="playbook-rollout.html">rollout
+plan</a>)</td>
+<td>2 to 4 weeks</td>
+</tr>
+</tbody>
+</table>
+<p>Assets and PM take longest. Start with life safety and high-cost
+equipment and add the rest over time.</p>
+<h2 id="who-does-what">Who does what</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Person</th>
+<th>Role</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General manager</td>
+<td>General manager</td>
+<td>Sees everything, owns <strong>Reports</strong> and
+<strong>Announcements</strong>.</td>
+</tr>
+<tr>
+<td>Hotel IT or your IT provider</td>
+<td>Administrator</td>
+<td>Install, <strong>Users</strong>, <strong>Integrations</strong>,
+backups, <strong>Audit log</strong>.</td>
+</tr>
+<tr>
+<td>Executive housekeeper, chief engineer, F&amp;B manager, chef, front
+office manager</td>
+<td>Department manager</td>
+<td>Own their categories, checklists, assets, PM and purchase
+approvals.</td>
+</tr>
+<tr>
+<td>Shift leads, inspectors</td>
+<td>Supervisor</td>
+<td><strong>Auto-assign</strong>, <strong>Inspections</strong>,
+<strong>Inspected</strong>, watch the clock.</td>
+</tr>
+<tr>
+<td>Front desk, PBX, night audit</td>
+<td>Front desk / guest services</td>
+<td>Sees all departments to answer “where is my request?” Can rush rooms
+and set out of order.</td>
+</tr>
+<tr>
+<td>Attendants, techs, cooks, servers, officers</td>
+<td>Staff</td>
+<td><strong>My work</strong> and <strong>My rooms</strong>.</td>
+</tr>
+<tr>
+<td>Outside trades</td>
+<td>Contractor</td>
+<td>Only their own jobs.</td>
+</tr>
+<tr>
+<td>Owner’s rep, brand or insurance reviewer</td>
+<td>Auditor</td>
+<td>Read-only.</td>
+</tr>
+</tbody>
+</table>
+<p>In this version, SLA policies and <strong>Notification rules</strong>
+need the GM or an administrator to save changes. Department managers
+decide what they want and the GM enters or approves it. That doubles as
+a simple change control.</p>
+<h2 id="the-housekeeping-board-at-the-centre">The housekeeping board at
+the centre</h2>
+<p>Most of the day runs through <strong>Rooms</strong>.</p>
+<ol type="1">
+<li><strong>Morning:</strong> the supervisor taps
+<strong>Auto-assign</strong>. Rooms go to attendants on shift, floors
+kept together, workloads shown as bars.</li>
+<li><strong>Front desk</strong> filters to <strong>Due in</strong> and
+taps <strong>Rush</strong> on early arrivals. Housekeeping sees it with
+no phone call.</li>
+<li><strong>Attendants</strong> tap <strong>Start cleaning</strong> and
+<strong>Clean</strong> on their phones. Gold-bordered rooms first.</li>
+<li><strong>Supervisors</strong> run the room inspection and tap
+<strong>Inspected</strong>. Failed lines become jobs for the right
+team.</li>
+<li><strong>Engineering</strong> sees the 🔧 on rooms with open repairs.
+Out-of-order rooms return to service when the job is resolved.</li>
+</ol>
+<h2 id="a-day-in-the-life">A day in the life</h2>
+<ul>
+<li><strong>06:45</strong> Night audit adds an <strong>Action
+required</strong> note to the <strong>Shift logbook</strong>.</li>
+<li><strong>07:00</strong> Day shift ticks <strong>On shift</strong> and
+reads the logbook. The kitchen logs opening temperatures.</li>
+<li><strong>08:30</strong> A guest scans the room QR code for extra
+towels. The job lands on housekeeping’s phones with a 20-minute timer.
+The guest watches it move to <strong>Completed</strong>.</li>
+<li><strong>10:00</strong> The chief engineer clears overnight jobs and
+today’s PM from <strong>My work</strong>.</li>
+<li><strong>13:00</strong> The GM checks the Home tiles. One department
+shows overdue jobs. The GM calls its manager.</li>
+<li><strong>15:00</strong> Check-in. Front desk works from green rooms
+only.</li>
+<li><strong>18:00</strong> A banquet BEO created last week has given
+setup, kitchen and AV their tasks. Each team ticks its own.</li>
+<li><strong>22:00</strong> Evening shift logs a noise complaint with
+service recovery: what was given back and what it cost.</li>
+</ul>
+<h2 id="reports-to-check-weekly">Reports to check weekly</h2>
+<p>Open <strong>Reports</strong> with 7 days for the weekly meeting and
+30 days for the monthly one. Print with 🖨.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Report</th>
+<th>Who</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Response and resolve times by department</td>
+<td>GM, managers</td>
+<td>Who is keeping up?</td>
+</tr>
+<tr>
+<td>SLA misses by priority</td>
+<td>Managers</td>
+<td>Are the timers realistic, or are we short-staffed?</td>
+</tr>
+<tr>
+<td>Guest ratings and complaints</td>
+<td>GM, front office manager</td>
+<td>Are guests happier this month than last?</td>
+</tr>
+<tr>
+<td>Service recovery value</td>
+<td>GM, controller</td>
+<td>What are we giving back, and why?</td>
+</tr>
+<tr>
+<td>Repeat-problem rooms</td>
+<td>Chief engineer</td>
+<td>Which rooms need a real fix?</td>
+</tr>
+<tr>
+<td>Costly machines</td>
+<td>Chief engineer, GM</td>
+<td>Where do labour and parts go? Repair or replace?</td>
+</tr>
+<tr>
+<td>PM on time</td>
+<td>Chief engineer</td>
+<td>Are we keeping up with planned work?</td>
+</tr>
+<tr>
+<td>Inspections and scores</td>
+<td>Executive housekeeper</td>
+<td>Who needs coaching, who deserves thanks?</td>
+</tr>
+</tbody>
+</table>
+<p>Do not set savings targets from day one. Take four weeks of numbers
+as your baseline, then measure change against it.</p>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Too many categories.</strong> Twenty quick picks per
+department slows people down. Start with ten.</li>
+<li><strong>Alerts to everyone.</strong> One rule that pushes every new
+job to every manager trains people to ignore the bell. Use department
+and minimum priority on each rule.</li>
+<li><strong>On shift left ticked.</strong> People get alerts on their
+day off. Make unticking part of going home.</li>
+<li><strong>No credits on room types.</strong>
+<strong>Auto-assign</strong> cannot balance workloads without them.</li>
+<li><strong>Trusting the beta Opera link on day one.</strong> Run it in
+<strong>Mock</strong> mode, then compare live data for a week.</li>
+<li><strong>Paper running alongside forever.</strong> Set a date when
+the clipboard stops (see the <a href="playbook-rollout.html">rollout
+plan</a>).</li>
+</ul>
+<h2 id="when-to-grow">When to grow</h2>
+<p>Move to the <a href="size-large-hotel.html">large hotel and resort
+playbook</a> when you pass about 250 rooms, add a second building or
+several outlets, or need contractors, auditors and a BI feed as everyday
+parts of the system. If you are opening a second property, read the <a
+href="size-group-chain.html">group and chain playbook</a>. Each property
+needs its own install today.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>

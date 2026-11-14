@@ -127,6 +127,11 @@ nav.top .links a.gh{color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .role em{color:var(--teal)}}
 :root[data-theme="dark"] .role em{color:var(--teal)}
 .roles-note{text-align:center;color:var(--muted);margin:22px 0 0;font-size:.95rem}
+.gb{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.gbc{display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:16px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:transform .2s,border-color .2s}
+.gbc:hover{transform:translateY(-3px);border-color:var(--accent)}
+.gbc .e{font-size:1.7rem}.gbc b{font-size:1.1rem}.gbc span:last-child{color:var(--muted);font-size:.93rem}
+.rd-sheet{display:inline-block;margin-top:14px;font-weight:800;color:var(--primary)}
 dialog.rd{width:min(1180px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:0;border-radius:20px;background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:auto}
 dialog.rd::backdrop{background:rgba(6,14,17,.72);backdrop-filter:blur(4px)}
 .rd-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--card);border-bottom:1px solid var(--line)}
@@ -217,7 +222,8 @@ footer .by img{height:20px;width:auto}
         <a href="#features">Features</a>
         <a href="#tour">Tour</a>
         <a href="#start">Get started</a>
-        <a href="DEPLOYMENT.html">Docs</a>
+        <a href="guide/index.html">Guides</a>
+        <a href="DEPLOYMENT.html">Deploy</a>
         <a class="gh" href="https://github.com/moosesystems/EXPTIX">★ GitHub</a>
       </div>
     </div>
@@ -363,6 +369,23 @@ footer .by img{height:20px;width:auto}
   </div>
 </section>
 
+<section class="guides-band" id="guides">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">How to use it</div>
+      <h2>A guide for every person in the building.</h2>
+      <p>Deployment is one tree in the forest. These are for the people who run the hotel: printable one-page sheets, playbooks by property size, and straight answers.</p>
+    </div>
+    <div class="gb">
+      <a class="gbc reveal" href="guide/index.html#frontline"><span class="e">🧹</span><b>Frontline one-pagers</b><span>Room attendants, techs, cooks, servers, front desk, security, contractors. Big steps, few words. Also in French, Spanish and Tagalog.</span></a>
+      <a class="gbc reveal" href="guide/index.html#leaders"><span class="e">📊</span><b>Leaders</b><span>Supervisor, department manager, GM, CFO, VP of operations, owners and auditors, IT.</span></a>
+      <a class="gbc reveal" href="guide/index.html#size"><span class="e">🏨</span><b>By property size</b><span>A three-room lodge, a mid-size hotel, a 1,000-room resort, a group with 3,000 rooms. Plus a 90-day rollout.</span></a>
+      <a class="gbc reveal" href="guide/index.html#faq"><span class="e">❓</span><b>FAQs</b><span>For staff, managers, executives and IT. Honest about what it does not do yet.</span></a>
+    </div>
+    <p class="roles-note"><a class="btn primary" href="guide/index.html">Open the guide library →</a></p>
+  </div>
+</section>
+
 <section style="background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap split rev">
     <div class="term reveal">
@@ -450,7 +473,7 @@ php -S localhost:8080 -t public public/index.php</pre>
       <section><h4>What</h4><p id="rdWhat"></p></section>
       <section><h4>Why it matters</h4><p id="rdWhy"></p></section>
       <section><h4>How</h4><ol id="rdHow"></ol></section>
-      <section class="wide"><div><h4>Gets told about</h4><ul id="rdNotify"></ul></div><div><h4>Good to know</h4><p id="rdExtra"></p></div></div>
+      <section class="wide"><div><h4>Gets told about</h4><ul id="rdNotify"></ul></div><div><h4>Good to know</h4><p id="rdExtra"></p><a class="rd-sheet" id="rdSheet" href="guide/index.html">Print the one-page guide for this role →</a></div></div>
     </div>
   </div>
 </dialog>
@@ -458,7 +481,7 @@ php -S localhost:8080 -t public public/index.php</pre>
 <footer>
   <div class="wrap">
     <span class="by"><img src="images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
-    <span><a href="https://github.com/moosesystems/EXPTIX">Source</a> · <a href="DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX/blob/main/SECURITY.md">Security</a></span>
+    <span><a href="https://github.com/moosesystems/EXPTIX">Source</a> · <a href="guide/index.html">How-to guides</a> · <a href="DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX/blob/main/SECURITY.md">Security</a></span>
     <span style="flex-basis:100%;font-size:.8rem;opacity:.75">Screens show the built-in demo hotel; all names are fictional. Oracle, Opera, Canary, Microsoft Teams, Slack, Twilio and other names are trademarks of their owners; ExpTix is not affiliated with them.</span>
   </div>
 </footer>
@@ -496,7 +519,7 @@ php -S localhost:8080 -t public public/index.php</pre>
   const show = idx => {
     cur = (idx + ROLES.length) % ROLES.length; const r = ROLES[cur];
     $('rdE').textContent = r.e; $('rdTitle').textContent = r.t; $('rdWho').textContent = r.who;
-    $('rdWhat').textContent = r.what; $('rdWhy').textContent = r.why; $('rdExtra').textContent = r.extra;
+    $('rdWhat').textContent = r.what; $('rdSheet').href = 'guide/' + ({gm:'sheet-general-manager',fd:'sheet-front-desk-agent',hk:'sheet-room-attendant',eng:'sheet-maintenance-tech',kit:'sheet-cook-steward',sec:'sheet-security-officer',con:'sheet-contractor',aud:'sheet-owner-auditor'}[r.id] || 'index') + '.html'; $('rdWhy').textContent = r.why; $('rdExtra').textContent = r.extra;
     $('rdHow').replaceChildren(...r.how.map(x => el('li', x))); $('rdNotify').replaceChildren(...r.notify.map(x => el('li', x)));
     $('rdThumbs').replaceChildren(...r.img.map((im, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', im.c);
       const t = document.createElement('img'); t.src = 'images/roles/' + im.f + '.jpg'; t.alt = ''; t.loading = 'lazy'; b.append(t); b.onclick = () => pick(r, i); return b; }));

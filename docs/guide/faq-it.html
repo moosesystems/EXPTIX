@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IT questions · ExpTix guides</title><meta name="description" content="Short answers for the people who run it">
+<link rel="icon" href="../images/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="guide.css"></head>
+<body class="kind-faq group-faq">
+<header class="top"><div class="in"><a class="brand" href="../index.html"><img src="../images/logo.svg" alt="">ExpTix</a>
+<a href="index.html">Guides</a><a href="faq-staff.html">FAQ</a><a href="../DEPLOYMENT.html">Deploy</a><a href="https://github.com/moosesystems/EXPTIX">GitHub</a></div></header>
+
+<main class="wrap">
+<p class="crumbs"><a href="index.html">Guides</a> › Questions and answers</p>
+<div class="doc nofig"><article>
+<div class="titleblock">
+<h1>IT questions</h1>
+<p class="sub">Short answers for the people who run it</p>
+<div class="chips"><span class="chip k">FAQ</span><span class="chip">For: Hotel IT and IT providers</span></div></div>
+<div class="dl"><a href="pdf/faq-it.pdf">⬇ PDF to print</a><a href="docx/faq-it.docx">⬇ Word</a><a href="src/faq-it.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
+<div class="body"><h2 id="where-can-we-host-it">Where can we host it?</h2>
+<p>Any ordinary PHP 8.1+ host: your own Linux server (nginx or Apache
+with PHP-FPM) or shared hosting with PHP, MySQL and cron. HTTPS is
+required. Requirements and example configs are in the deployment
+guide.</p>
+<h2 id="sqlite-or-mysql">SQLite or MySQL?</h2>
+<p>SQLite for a trial or a small property with a few dozen staff. MySQL
+8 or MariaDB 10.6+ for production. There is no built-in converter yet:
+moving from SQLite to MySQL means exporting tables to CSV and importing
+them.</p>
+<h2 id="how-do-backups-work">How do backups work?</h2>
+<p>Run <code>php app/bin/cli.php backup</code> daily from cron and copy
+<code>app/data/backups/</code> off the server. Back up
+<code>app/data/app.key</code>, <code>app/data/uploads/</code> and
+<code>app/config/local.php</code> separately: they are not in the
+database dump. After a restore, run <code>verify-audit</code>.</p>
+<h2 id="how-do-we-update">How do we update?</h2>
+<p>Read <code>CHANGELOG.md</code>, back up, pull the new code, run
+<code>php app/bin/cli.php migrate</code>, reload PHP. Migrate never
+drops or renames anything, so it is safe to repeat.</p>
+<h2 id="does-it-need-cron">Does it need cron?</h2>
+<p>Yes, every minute. Cron runs SLA warnings and escalations, sends
+notifications, opens PM jobs and syncs integrations. Without it, timers
+stall overnight.</p>
+<h2 id="does-it-support-single-sign-on">Does it support single
+sign-on?</h2>
+<p>Not yet. Entra ID and Google are on the roadmap. Accounts live in
+ExpTix, with optional or forced TOTP two-step sign-in.</p>
+<h2 id="how-do-we-set-up-email">How do we set up email?</h2>
+<p>ExpTix sends through PHP <code>mail()</code>, so the server needs a
+working <code>sendmail</code>. For an SMTP relay or Microsoft 365, use
+<code>msmtp</code>. Set SPF and DKIM for the sending domain, and make
+sure <code>demo_mode</code> is off.</p>
+<h2 id="how-do-we-set-up-sms">How do we set up SMS?</h2>
+<p>Add Twilio credentials under <strong>Integrations</strong>, Twilio
+SMS. Users add a mobile number and tick SMS alerts.</p>
+<h2 id="how-do-push-notifications-work">How do push notifications
+work?</h2>
+<p>Web push works with no setup: ExpTix makes its own VAPID keys. Users
+turn it on in <strong>My account</strong>. On iPhone, iOS 16.4+ and
+adding ExpTix to the Home Screen are required. Pushes carry no payload,
+so no guest data passes through the push service.</p>
+<h2 id="teams-and-slack">Teams and Slack?</h2>
+<p>Create an incoming webhook in Teams or Slack, then use its URL as the
+target of a notification rule.</p>
+<h2 id="how-do-api-tokens-and-mcp-work">How do API tokens and MCP
+work?</h2>
+<p>Create a token in <strong>API and MCP</strong>, or with
+<code>cli.php token</code>. Scopes are read, write, mcp and admin; the
+token acts with its user’s role, so give assistants a dedicated user
+with the least role needed. The REST API is described at
+<code>/docs</code> and <code>/api/openapi.json</code>; the MCP server is
+at <code>/mcp</code>.</p>
+<h2 id="where-are-the-logs">Where are the logs?</h2>
+<p>PHP errors, cron and scheduler logs are in
+<code>app/data/logs/</code>. An error page shows a reference you can
+look up there. User actions are in the <strong>Audit log</strong>, and
+an audit webhook can forward them to your SIEM.</p>
+<h2 id="are-the-integrations-production-ready">Are the integrations
+production ready?</h2>
+<p>Opera Cloud and Canary are beta: built to the vendors’ documented
+patterns and not yet tested against live systems. Every integration,
+including email to ticket, sensors, SMS and webhooks, has a mock mode.
+Start in mock mode and test each link in your own environment before
+staff rely on it.</p>
+<h2 id="is-there-a-docker-image">Is there a Docker image?</h2>
+<p>Not yet. It is on the roadmap.</p>
+<h2 id="how-do-we-harden-it">How do we harden it?</h2>
+<p>Work through the security checklist in the deployment guide:
+<code>demo_mode</code> off, HTTPS only, only <code>public/</code> web
+reachable, strict file permissions, MFA for managers and up, webhook
+secrets set, tested backups and a vulnerability scan before real guest
+data.</p>
+</div>
+<p class="printfoot">ExpTix · free and open-source hotel operations · moosesystems.github.io/EXPTIX · brought to you by the Nunavut Nerds at tudliktech.ca</p>
+</article>
+</div></main>
+<footer class="foot"><div class="in"><span class="by"><img src="../images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
+<span><a href="index.html">All guides</a> · <a href="../DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX">Source</a></span></div></footer>
+</body></html>
