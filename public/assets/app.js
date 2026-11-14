@@ -151,7 +151,7 @@
 
   function renderShell() {
     const u = S.user;
-    ROOT.innerHTML = `${S.app.demo ? '<div class="demo-banner">Proof of concept · demo data only · fictional guests and staff</div>' : ''}
+    ROOT.innerHTML = `${S.app.demo ? '<div class="demo-banner">Demo mode · fictional hotel, guests and staff</div>' : ''}
     <div class="shell">
       <aside class="side" id="side">
         <div class="brand"><div class="logo">X</div><div><b>${esc(S.app.name)}</b><small>${esc(S.app.property)}</small></div></div>
