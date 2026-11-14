@@ -1,0 +1,18 @@
+Options -Indexes
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# If ExpTix runs in a sub-folder, set RewriteBase to it, e.g. RewriteBase /exptix/
+RewriteBase /
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+RewriteRule ^ index.php [QSA,L]
+</IfModule>
+<FilesMatch "\.(js|css|svg|png|webmanifest)$">
+Header set Cache-Control "public, max-age=300"
+</FilesMatch>
+<Files "sw.js">
+Header set Cache-Control "no-cache"
+Header set Service-Worker-Allowed "/"
+</Files>

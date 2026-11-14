@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F1E24">
+<meta name="robots" content="noindex, nofollow">
+<title>ExpTix How-To Guide</title>
+<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+<style>
+:root{
+  --c-deep:#0F1E24;--c-primary:#1D5C63;--c-accent2:#4E9AA0;--c-mist:#BFD9DB;--c-accent:#F0A23B;
+  --bg:#F3F7F7;--surface:#FFFFFF;--surface2:#EEF2F6;--text:#1B2230;--muted:#5B6878;--line:#DCE3EB;
+  --what:#2F6DB5;--what-bg:#E8F0FA;--how:#A8770A;--how-bg:#FFF6DC;--why:#1E8E5A;--why-bg:#E3F5EC;--tip:#6B4FA0;--tip-bg:#F0EBFA;--bad:#C0392B;--bad-bg:#FBE9E7;
+  --font:system-ui,system-ui,-apple-system,'Segoe UI',sans-serif;--display:system-ui,system-ui,system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08111F;--surface:#0F1C31;--surface2:#16253D;--text:#E6ECF3;--muted:#9AABC0;--line:#22324D;
+  --what:#8DB6E8;--what-bg:#132A47;--how:#F0CB64;--how-bg:#33290D;--why:#6CD3A0;--why-bg:#0F3122;--tip:#C5B3F0;--tip-bg:#261D3D;--bad:#F08A7E;--bad-bg:#3A1714;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08111F;--surface:#0F1C31;--surface2:#16253D;--text:#E6ECF3;--muted:#9AABC0;--line:#22324D;
+  --what:#8DB6E8;--what-bg:#132A47;--how:#F0CB64;--how-bg:#33290D;--why:#6CD3A0;--why-bg:#0F3122;--tip:#C5B3F0;--tip-bg:#261D3D;--bad:#F08A7E;--bad-bg:#3A1714;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--what)}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;margin:0 0 .4em}
+h2{font-size:1.9rem;margin-top:0}
+h3{font-size:1.3rem}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.hero{background:linear-gradient(160deg,var(--c-deep),var(--c-primary));color:#fff;padding:40px 0 56px}
+.hero .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.hero .logo{width:46px;height:46px;border-radius:12px;background:var(--c-accent);color:var(--c-deep);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.4rem}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero p{font-size:1.2rem;color:var(--c-mist);max-width:640px;margin:0}
+.hero .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none;border:2px solid transparent}
+.btn.gold{background:var(--c-accent);color:var(--c-deep)}
+.btn.ghost{border-color:rgba(255,255,255,.4);color:#fff}
+nav.chips{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.chips a{flex:none;padding:7px 13px;border-radius:999px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--text);font-weight:600;font-size:.9rem;white-space:nowrap}
+nav.chips a:hover{border-color:var(--c-accent2)}
+section{padding:44px 0 8px}
+.lead{font-size:1.15rem;color:var(--muted);margin:0 0 20px;max-width:760px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 1px 2px rgba(7,21,43,.05),0 6px 18px rgba(7,21,43,.05)}
+.big{font-size:2.6rem;line-height:1;margin-bottom:8px}
+.rule{display:flex;gap:14px;align-items:flex-start}
+.rule .n{flex:none;width:44px;height:44px;border-radius:50%;background:var(--c-accent);color:var(--c-deep);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.3rem}
+.rule b{font-size:1.1rem}
+.who{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+.who .e{font-size:2.2rem}
+.who small{display:block;color:var(--muted)}
+.callouts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:14px 0}
+.co{border-radius:14px;padding:14px 16px;border-left:6px solid}
+.co h4{font-size:1rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.co p{margin:0}
+.co ol,.co ul{margin:0;padding-left:1.2em}
+.co li{margin:3px 0}
+.what{background:var(--what-bg);border-color:var(--what)}.what h4{color:var(--what)}
+.how{background:var(--how-bg);border-color:var(--how)}.how h4{color:var(--how)}
+.why{background:var(--why-bg);border-color:var(--why)}.why h4{color:var(--why)}
+.tip{background:var(--tip-bg);border-color:var(--tip)}.tip h4{color:var(--tip)}
+.oops{background:var(--bad-bg);border-color:var(--bad)}.oops h4{color:var(--bad)}
+.role{margin-top:26px}
+.role>.top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.role>.top .e{font-size:2.6rem}
+.role>.top small{color:var(--muted);display:block}
+.task{border-top:1px dashed var(--line);padding-top:14px;margin-top:14px}
+.task h3{display:flex;gap:8px;align-items:center}
+.key{display:inline-block;padding:2px 9px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);font-weight:700;font-size:.92em;white-space:nowrap}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:700;font-size:.85rem;border:1px solid transparent}
+.swatch{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.swatch .c{flex:none;width:56px;height:56px;border-radius:12px;color:#fff;font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:1.05rem}
+.swatch b{display:block}
+.swatch small{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.tw{overflow-x:auto}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding-left:44px;margin:12px 0;min-height:32px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:32px;height:32px;border-radius:50%;background:var(--c-primary);color:#fff;display:grid;place-items:center;font-weight:800;font-family:var(--display)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}
+.flow .arrow{color:var(--muted);font-weight:800}
+.timer{height:22px;border-radius:999px;background:linear-gradient(90deg,#1E8E5A 0 80%,#D88B10 80% 100%);position:relative;margin:30px 0 30px}
+.timer span{position:absolute;top:-24px;font-size:.8rem;font-weight:700;transform:translateX(-50%);white-space:nowrap}
+.timer i{position:absolute;right:-60px;top:0;height:22px;width:60px;border-radius:0 999px 999px 0;background:#C0392B}
+.timer em{position:absolute;top:28px;font-size:.8rem;font-style:normal;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.access td:not(:first-child),.access th:not(:first-child){text-align:center}
+.yes{color:var(--why);font-weight:800}.no{color:var(--muted)}
+footer{padding:40px 0 60px;color:var(--muted);text-align:center;font-size:.9rem}
+.ba{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.ba ul{margin:8px 0 0;padding-left:20px}.ba li{margin:6px 0}
+.ba .before{border-top:5px solid #C0392B}.ba .after{border-top:5px solid #1E8E5A}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin-top:6px}
+.flow div{flex:1 1 130px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;font-size:.95rem}
+.flow div b{display:block;font-size:1.6rem;margin-bottom:4px}
+.flow i{align-self:center;font-style:normal;color:var(--muted);font-weight:800}
+@media (max-width:640px){.flow i{display:none}}
+.toggle{position:fixed;right:14px;bottom:14px;z-index:6;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:1.2rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+@media (max-width:640px){body{font-size:16px}h2{font-size:1.55rem}.card{padding:16px}.timer{margin-right:60px}}
+@media print{nav.chips,.toggle,.hero .btns{display:none}header.hero{background:#0F1E24;-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid-page}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><div class="logo">X</div><div><b style="font-family:var(--display);font-size:1.2rem">ExpTix</b><div style="color:var(--c-mist);font-size:.9rem">Staff how-to guide</div></div></div>
+    <h1>ExpTix, the easy way 👋</h1>
+    <p>If something needs doing, tell ExpTix. It gets the job to the right person, reminds them, and keeps a record. That is the whole idea.</p>
+    <div class="btns"><a class="btn gold" href="./">🚀 Open ExpTix</a><a class="btn ghost" href="#about">❓ What is this?</a><a class="btn ghost" href="#roles">👤 Find my job</a><a class="btn ghost" href="#types">🎨 What the colours mean</a></div>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Sections"><div class="wrap">
+  <a href="#about">❓ What is ExpTix</a><a href="#rules">⭐ 3 rules</a><a href="#start">🔑 Getting started</a><a href="#everyone">🙋 Everyone</a><a href="#roles">👤 Find my job</a>
+  <a href="#attendant">🛏️ Room attendant</a><a href="#engineer">🛠️ Engineering</a><a href="#kitchen">🍳 Kitchen</a><a href="#fb">🍽️ F&amp;B</a><a href="#banquets">🎉 Banquets</a>
+  <a href="#security">🛡️ Security</a><a href="#laundry">🧺 Laundry</a><a href="#frontdesk">🛎️ Front desk</a><a href="#supervisor">📋 Supervisor</a><a href="#manager">🏢 Manager</a>
+  <a href="#gm">🌟 GM</a><a href="#admin">⚙️ Admin</a><a href="#contractor">🧰 Contractor</a><a href="#auditor">🔍 Auditor</a><a href="#guest">🧳 Guests</a>
+  <a href="#types">🎨 Types and colours</a><a href="#sla">⏱️ Timers</a><a href="#who">🔐 Who sees what</a><a href="#oops">🆘 Uh oh</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <h2>❓ What is ExpTix, and why does it exist?</h2>
+  <p class="lead">ExpTix is the hotel's shared job list. Anyone can tell it "this needs doing". It sends the job to the right team, starts a timer, reminds people, and remembers everything that happened.</p>
+
+  <div class="callouts">
+    <div class="co what"><h4>📘 What it is</h4><p>One website, on any phone, tablet or computer, where every department logs and tracks its work: repairs, guest requests, complaints, room cleaning, food safety checks, events, incidents and shift notes. Think of it as the hotel's to-do list, fix-it list and logbook, all in one place that everyone can see.</p></div>
+    <div class="co why"><h4>💚 Why it exists</h4><p>A hotel runs on hundreds of small jobs a day, passed between people and shifts. Without one shared place, jobs live in radio calls, phone messages, sticky notes and people's heads. Some get forgotten, the guest waits, and nobody can tell what happened. ExpTix makes sure every job has an owner, a deadline and a record.</p></div>
+    <div class="co how"><h4>👉 How it works</h4><p>Someone reports a job. ExpTix reads it, picks the team and the timer, and alerts the people on shift. They tap <b>Start</b> and <b>Done</b>. If time runs out, a supervisor hears about it. Afterwards, managers see the numbers.</p></div>
+  </div>
+
+  <h3>Before and after</h3>
+  <div class="ba">
+    <div class="card before"><b>😟 Without a shared system</b><ul>
+      <li>A guest asks the front desk for towels. The message goes by radio, and maybe arrives.</li>
+      <li>Night shift sees a leak. Day shift never hears about it.</li>
+      <li>The same toilet breaks five times and nobody notices the pattern.</li>
+      <li>Fridge temperatures are written on paper that is hard to find during an inspection.</li>
+      <li>The GM asks "how fast do we fix things?" and nobody knows.</li>
+    </ul></div>
+    <div class="card after"><b>😊 With ExpTix</b><ul>
+      <li>The towel request goes straight to housekeeping's phones, with a timer. If the guest asked by QR code, they can watch it on their own phone.</li>
+      <li>The leak is a ticket with photos. Day shift sees it on their screen and in the logbook.</li>
+      <li>ExpTix flags the room as a repeat problem so engineering fixes the cause.</li>
+      <li>Temperatures are logged in seconds. A bad reading opens an urgent job by itself.</li>
+      <li>Reports show response times, guest ratings and problem rooms for any week or month.</li>
+    </ul></div>
+  </div>
+
+  <h3 style="margin-top:22px">The journey of one job</h3>
+  <div class="flow" role="list">
+    <div role="listitem"><b>📣</b>Someone reports it: staff, a guest QR code, the phone, Opera, Canary or a sensor</div><i>→</i>
+    <div role="listitem"><b>🧭</b>ExpTix sends it to the right team and starts the timer</div><i>→</i>
+    <div role="listitem"><b>🔔</b>The people on shift get an alert</div><i>→</i>
+    <div role="listitem"><b>🛠️</b>Someone taps Start, does it, taps Done</div><i>→</i>
+    <div role="listitem"><b>📊</b>The record stays for reports, audits and the next shift</div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card"><h3>✅ What ExpTix is</h3><ul>
+      <li>The work system for <b>every</b> department: front office, housekeeping, engineering, kitchen, F&amp;B, banquets, security, laundry and IT.</li>
+      <li>A way for guests to ask for things by scanning a QR code, with no app or sign-in.</li>
+      <li>A memory: who did what, when, and how long it took.</li>
+    </ul></div>
+    <div class="card"><h3>🚫 What ExpTix is not</h3><ul>
+      <li><b>Not Opera.</b> Reservations, check-in, folios and billing stay in Opera Cloud. ExpTix listens to Opera and only shares room status and minibar charges back.</li>
+      <li><b>Not Canary.</b> Guest messaging stays in Canary. Guest requests from Canary become ExpTix jobs.</li>
+      <li><b>Not an emergency system.</b> In a real emergency, call 911 and use the radio first.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section id="rules">
+  <h2>⭐ The 3 golden rules</h2>
+  <p class="lead">Remember these and you already know most of ExpTix.</p>
+  <div class="grid g3">
+    <div class="card rule"><div class="n">1</div><div><b>If you see it, log it.</b><br>Broken, dirty, missing, or a guest asked? Tap <span class="key">+ New</span>. Do not just tell someone in the hallway.</div></div>
+    <div class="card rule"><div class="n">2</div><div><b>Tap the button when you start and when you finish.</b><br><span class="key">▶ Start</span> then <span class="key">✔ Done</span>. That is how everyone knows where things are.</div></div>
+    <div class="card rule"><div class="n">3</div><div><b>Write one line about what you did.</b><br>"Replaced the bulb." "Guest happy." Short is perfect. The next person will thank you.</div></div>
+  </div>
+  <div class="callouts">
+    <div class="co what"><h4>📘 What</h4><p>ExpTix is the hotel's shared to-do list and fix-it list. Every job, request, problem and shift note lives in one place that every department can see.</p></div>
+    <div class="co how"><h4>👉 How</h4><p>Log it, start it, finish it, write one line. Four taps on a phone. ExpTix sends the job to the right team and starts the clock.</p></div>
+    <div class="co why"><h4>💚 Why bother?</h4><p>Nothing gets forgotten between shifts, guests get faster help, and nobody has to chase anybody. If it is in ExpTix, it is not in your head.</p></div>
+  </div>
+</section>
+
+<!-- ================= START ================= -->
+<section id="start">
+  <h2>🔑 Getting started</h2>
+  <div class="callouts" style="margin-bottom:14px">
+    <div class="co what"><h4>📘 What</h4><p>ExpTix is a website that acts like an app. Nothing to buy or download. It works on hotel computers, tablets and your own phone.</p></div>
+    <div class="co how"><h4>👉 How</h4><p>Sign in once, put it on your phone's home screen, and turn on push alerts. Ten minutes, start to finish.</p></div>
+    <div class="co why"><h4>💚 Why</h4><p>The phone in your pocket becomes your radio, notepad and job list. You can report a problem the moment you see it.</p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Sign in</h3>
+      <ol class="steps">
+        <li>Open the ExpTix address your administrator gave you on any phone, tablet or computer.</li>
+        <li>Type your <b>username</b> and <b>password</b>. Your manager gives you these.</li>
+        <li>First time? ExpTix asks you to pick a <b>new password</b>. Use 12 or more characters. A short sentence works great: <i>"Blue canoe on the lake"</i>.</li>
+        <li>If you turned on two-step sign-in, type the 6-digit code from your authenticator app.</li>
+      </ol>
+      <div class="co oops"><h4>🙅 Never</h4><p>Never share your password or sign in as someone else. ExpTix writes your name on everything you do.</p></div>
+    </div>
+    <div class="card">
+      <h3>Put it on your phone like an app 📱</h3>
+      <ol class="steps">
+        <li><b>iPhone:</b> open it in Safari, tap the Share button, then <b>Add to Home Screen</b>.</li>
+        <li><b>Android:</b> open it in Chrome, tap the ⋮ menu, then <b>Install app</b> or <b>Add to Home screen</b>.</li>
+        <li>Open ExpTix from the new icon. Go to <b>My account</b> and tap <span class="key">Enable push alerts</span>.</li>
+        <li>Tap <span class="key">Send a test</span>. Your phone should buzz. 🎉</li>
+      </ol>
+      <div class="co why"><h4>💚 Why</h4><p>With push alerts, new jobs find you. You do not have to keep checking.</p></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Your screen, piece by piece</h3>
+    <div class="grid g3">
+      <div><div class="big">🏠</div><b>Home</b><br>Today at a glance: open jobs, rooms, events and notes.</div>
+      <div><div class="big">✅</div><b>My work</b><br>Only your jobs. Start here every shift.</div>
+      <div><div class="big">➕</div><b>New</b><br>The big gold button. Report anything.</div>
+      <div><div class="big">🛏️</div><b>Rooms</b><br>The housekeeping board. Every room, every colour.</div>
+      <div><div class="big">🎫</div><b>Tickets</b><br>Every job in the hotel that you are allowed to see.</div>
+      <div><div class="big">🔔</div><b>The bell</b><br>A red number means something new for you. Tap it.</div>
+      <div><div class="big">🔎</div><b>Search</b><br>Type a room number, a guest name or a ticket number.</div>
+      <div><div class="big">☰</div><b>Menu</b><br>On a phone, tap ☰ at the top left for everything else.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVERYONE ================= -->
+<section id="everyone">
+  <h2>🙋 Things everyone does</h2>
+  <p class="lead">Whatever your job, these four skills cover most of your day.</p>
+
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>➕ Report something (make a request)</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A <b>request</b> (we also call it a <b>ticket</b>) is a little card that says "this needs doing". It has a number like <b>EXP-000123</b>.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Tap the gold <span class="key">+ New</span>.</li><li>Tap a <b>Quick pick</b> button, or just type what is wrong.</li><li>Add the <b>room number</b> if there is one.</li><li>Snap a <b>photo</b> if it helps.</li><li>Tap <span class="key">Create request</span>.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>You do not need to know who fixes it. Leave <b>Department</b> blank and ExpTix reads your words and sends it to the right team. "Toilet running in 512" goes to Engineering all by itself.</p></div>
+      </div>
+      <div class="co tip"><h4>💡 Tip</h4><p>Is the room unusable until it is fixed? Tick <b>Take the room out of order</b>. The front desk will not sell it, and it comes back automatically when the job is resolved.</p></div>
+    </div>
+
+    <div class="task"><h3>▶️ Work a job</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Every job moves along a simple path: <b>New</b>, then <b>Acknowledged</b>, then <b>In progress</b>, then <b>Resolved</b>.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Open the job (tap it).</li><li>Not yours yet? Tap <span class="key">🙋 Take it</span>.</li><li>Tap <span class="key">▶ Start</span> when you begin.</li><li>Tick any <b>checklist</b> steps.</li><li>Tap <span class="key">✔ Resolve</span> and write what you did.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>The buttons stop the timers, tell the person who asked, and (for guests) tell the guest. One tap saves three phone calls.</p></div>
+      </div>
+      <div class="flow"><span class="pill" style="background:#E3EDF8;color:#1F4E86">New</span><span class="arrow">→</span><span class="pill" style="background:#E7E2F5;color:#4D3A85">Acknowledged</span><span class="arrow">→</span><span class="pill" style="background:#FCF1D3;color:#8A5A00">In progress</span><span class="arrow">→</span><span class="pill" style="background:#DDF3E8;color:#17663F">Resolved</span><span class="arrow">→</span><span class="pill" style="background:#E6E9EE;color:#3B4452">Closed</span></div>
+      <div class="co tip"><h4>💡 Stuck?</h4><p>Waiting for a part or the guest is in the room? Tap <span class="key">⏸ On hold</span> and say why. Need another team too? Tap <span class="key">➕ Follow-up for another team</span>. It makes a linked job for them.</p></div>
+    </div>
+
+    <div class="task"><h3>💬 Write an update</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>The <b>Activity</b> box at the bottom of every job. It is the job's diary.</p></div>
+        <div class="co how"><h4>👉 How</h4><p>Type your note, keep <span class="key">Internal note</span> selected, tap <span class="key">Post</span>. To talk to the guest, pick <span class="key">Message guest</span> first (only shows when the guest asked through the QR code or Canary).</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>The next shift reads it and knows exactly where things stand. Internal notes are never shown to guests.</p></div>
+      </div>
+    </div>
+
+    <div class="task"><h3>📓 Read and write the shift logbook</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>The <b>Shift logbook</b> is the notebook that gets passed between shifts. "Room 610 asked for a quiet room tomorrow." "Ice machine on 4 is making noise."</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Menu, then <b>Shift logbook</b>.</li><li>Type your note, pick how <b>important</b> it is, tap <span class="key">Add to log</span>.</li><li>Starting a shift? Read the notes and tap <span class="key">Mark read</span>.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Managers can see who read what. "Nobody told me" goes away.</p></div>
+      </div>
+    </div>
+
+    <div class="task"><h3>🟢 Go on shift and off shift</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A switch on <b>My work</b> that says "I am here and can take jobs".</p></div>
+        <div class="co how"><h4>👉 How</h4><p>Tick <b>On shift</b> when you start. Untick it when you go home.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>ExpTix only hands new jobs to people who are on shift. Off shift means your phone stays quiet. 😴</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROLE PICKER ================= -->
+<section id="roles">
+  <h2>👤 Find my job</h2>
+  <p class="lead">Tap your job to jump to the part of this guide that is just for you.</p>
+  <div class="grid g3">
+    <a class="card who" href="#attendant"><span class="e">🛏️</span><span><b>Room attendant</b><small>Housekeeping, housepersons</small></span></a>
+    <a class="card who" href="#engineer"><span class="e">🛠️</span><span><b>Engineering</b><small>Maintenance techs</small></span></a>
+    <a class="card who" href="#kitchen"><span class="e">🍳</span><span><b>Kitchen</b><small>Cooks, chefs, stewards</small></span></a>
+    <a class="card who" href="#fb"><span class="e">🍽️</span><span><b>Food and beverage</b><small>Servers, lounge, in-room dining</small></span></a>
+    <a class="card who" href="#banquets"><span class="e">🎉</span><span><b>Banquets and events</b><small>Event staff and coordinators</small></span></a>
+    <a class="card who" href="#security"><span class="e">🛡️</span><span><b>Security</b><small>Guards and leads</small></span></a>
+    <a class="card who" href="#laundry"><span class="e">🧺</span><span><b>Laundry</b><small>Laundry attendants</small></span></a>
+    <a class="card who" href="#frontdesk"><span class="e">🛎️</span><span><b>Front desk</b><small>Guest services, night audit</small></span></a>
+    <a class="card who" href="#supervisor"><span class="e">📋</span><span><b>Supervisor</b><small>Shift leads, inspectors</small></span></a>
+    <a class="card who" href="#manager"><span class="e">🏢</span><span><b>Department manager</b><small>Heads of department</small></span></a>
+    <a class="card who" href="#gm"><span class="e">🌟</span><span><b>General manager</b><small>The whole hotel</small></span></a>
+    <a class="card who" href="#admin"><span class="e">⚙️</span><span><b>Administrator</b><small>Users, links to other systems</small></span></a>
+    <a class="card who" href="#contractor"><span class="e">🧰</span><span><b>Contractor</b><small>Outside trades and vendors</small></span></a>
+    <a class="card who" href="#auditor"><span class="e">🔍</span><span><b>Auditor</b><small>Look but do not touch</small></span></a>
+    <a class="card who" href="#guest"><span class="e">🧳</span><span><b>Guests</b><small>What the guest sees</small></span></a>
+  </div>
+</section>
+
+<!-- ================= ATTENDANT ================= -->
+<section id="attendant" class="role">
+  <div class="top"><span class="e">🛏️</span><div><h2>Room attendant</h2><small>Housekeeping staff and housepersons</small></div></div>
+  <div class="card">
+    <h3>🌅 Start of shift</h3>
+    <ol class="steps"><li>Open ExpTix and tick <b>On shift</b> on <b>My work</b>.</li><li>Tap <span class="key">🛏️ My rooms</span>. You see only the rooms your supervisor gave you.</li><li>Do <b>gold-bordered</b> rooms first. Those are guests arriving today. ⚡ means <b>Rush</b>: do it now.</li></ol>
+
+    <div class="task"><h3>🧹 Clean a room</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Each room is a coloured square. The colour says how clean it is. Red is dirty, orange is being cleaned, blue is clean, green is inspected.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Tap the room square.</li><li>Tap <span class="key">▶ Start cleaning</span>. It turns orange.</li><li>Clean the room. 🧽</li><li>Tap <span class="key">✔ Clean</span>. It turns blue.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>The front desk is watching. When your room turns blue, your supervisor inspects it, and then the guest can check in. Your taps get guests into rooms faster.</p></div>
+      </div>
+    </div>
+
+    <div class="task"><h3>🚫 Guest says "do not disturb" or "no service today"</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p><b>DND</b> means do not knock. <b>Declined service</b> means the guest said no cleaning today (they may get an F&amp;B credit for it 🌿).</p></div>
+        <div class="co how"><h4>👉 How</h4><p>Tap the room, tick <b>DND</b> or <b>Declined service</b>. Untick when it changes.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Your supervisor will not mark you late for a room you were not allowed into.</p></div>
+      </div>
+    </div>
+
+    <div class="task"><h3>🔧 Something is broken in the room</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A dripping tap, a dead lamp, a stain on the carpet. Anything Engineering or another team should fix.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Tap the room square.</li><li>Tap <span class="key">🔧 Report a problem</span>. The room number is already filled in.</li><li>Type what is wrong, add a photo, tap <span class="key">Create request</span>.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>It goes straight to the right person. The 🔧 icon shows on the room until it is fixed so nobody forgets.</p></div>
+      </div>
+    </div>
+
+    <div class="task"><h3>🧳 Found something a guest left</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p>Menu, <b>Lost and found</b>, <span class="key">+ New</span>. Say what it is, where you found it and the room. Hand it to your supervisor.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>When the guest calls, the front desk finds it in seconds.</p></div>
+      </div>
+    </div>
+    <div class="co tip"><h4>💡 Little icons on a room</h4><p>⭐ VIP guest · 🚫 do not disturb · 🧹 guest asked for service · ⚡ rush · 🌿 declined service · 🔧 open repair</p></div>
+  </div>
+</section>
+
+<!-- ================= ENGINEER ================= -->
+<section id="engineer" class="role">
+  <div class="top"><span class="e">🛠️</span><div><h2>Engineering</h2><small>Maintenance techs and engineers</small></div></div>
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>🎫 Work orders</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A <b>work order</b> is a "please fix this" job. It may say a room, a place (like the Boiler room) or a machine (an <b>asset</b>, like "Dryer 1").</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Open <b>My work</b>. Red stripes are most urgent.</li><li><span class="key">▶ Start</span>, fix it, then log your <b>minutes</b> and any <b>parts</b> under <b>Log time and parts</b>.</li><li><span class="key">✔ Resolve</span> and write what you did.</li><li>Was the room out of order? Leave <b>Return room to service</b> ticked.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Parts come off the stock count by themselves. Time and parts add up on the machine's history, so the chief can see which machine to replace.</p></div>
+      </div>
+      <div class="co tip"><h4>💡 Look before you fix</h4><p>The right side of a job shows <b>Room history</b> and <b>Asset history</b>. 🔁 means this keeps happening. Maybe the real problem is somewhere else.</p></div>
+    </div>
+    <div class="task"><h3>📆 Preventive maintenance (PM)</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Jobs that come back on a schedule: clean the dryer vents every month, test the fire pump every week. ExpTix makes these jobs by itself.</p></div>
+        <div class="co how"><h4>👉 How</h4><p>They appear in your list like any job, with a checklist. Do each step, tick it, resolve.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Fixing before it breaks is cheaper and guests never notice. Inspectors also want proof PM was done; this is the proof.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>📦 Parts and purchase requests</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p><b>Parts and stock</b> shows what is on the shelf. Need to buy something? <b>Purchase requests</b>, <span class="key">+ New</span>. Your manager approves it. Tap <span class="key">📥 Received</span> when it arrives.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>No more "I thought someone ordered it".</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KITCHEN ================= -->
+<section id="kitchen" class="role">
+  <div class="top"><span class="e">🍳</span><div><h2>Kitchen</h2><small>Chefs, cooks and stewards</small></div></div>
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>🌡️ Temperature checks (food safety)</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Every fridge, freezer and hot-holding unit has a tile on the <b>Food safety</b> page. Orange border means a check is due. Red means the last reading was unsafe.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Menu, <b>Food safety</b>.</li><li>Tap the unit.</li><li>Type the temperature, tap <span class="key">Save reading</span>.</li><li>If it is out of range, write what you did (moved the food, called Engineering).</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>An unsafe reading opens an <b>urgent</b> job for the kitchen and Engineering by itself. And the health inspector gets a clean, signed log instead of a wet clipboard. Some units have sensors 📡 that log by themselves.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🚫 The 86 list</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>"86" means we ran out. The <b>86 list</b> shows what is unavailable and what to offer instead.</p></div>
+        <div class="co how"><h4>👉 How</h4><p>Menu, <b>86 list</b>, <span class="key">+ New</span>: the item, the outlet, a substitute. Turn it off when it is back.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Servers see it on Home, and guests see "not available today" on their QR page. No more disappointed orders.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🥜 Allergy alerts</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p>Menu, <b>Allergy alerts</b>. Check before the event or the room service order. Add new ones with <span class="key">+ New</span>.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Allergies are the one thing we can never get wrong. Everyone sees the same list.</p></div>
+      </div>
+    </div>
+    <div class="co tip"><h4>💡 Broken equipment?</h4><p><span class="key">+ New</span>, quick pick <b>Kitchen equipment</b>. It goes straight to Engineering as a high priority.</p></div>
+  </div>
+</section>
+
+<!-- ================= F&B ================= -->
+<section id="fb" class="role">
+  <div class="top"><span class="e">🍽️</span><div><h2>Food and beverage</h2><small>Servers, lounge, in-room dining</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>Your jobs are guest requests for your outlet, in-room dining trays to pick up, and anything broken in your area.</p></div>
+      <div class="co how"><h4>👉 How</h4><ol><li>Check <b>Home</b> for the 86 list and events today.</li><li>Check <b>Allergy alerts</b> and <b>Guest preferences</b> for VIPs.</li><li>A guest complains at the table? <span class="key">+ New</span>, type <b>Guest complaint</b>, write what happened and what you did.</li></ol></div>
+      <div class="co why"><h4>💚 Why</h4><p>The manager can follow up, and if the guest comes back unhappy, the next person already knows the story.</p></div>
+    </div>
+    <div class="co tip"><h4>💡 Tray left in the hallway?</h4><p>Anyone can log it. Quick pick <b>Tray pickup</b> or just type "tray outside 412".</p></div>
+  </div>
+</section>
+
+<!-- ================= BANQUETS ================= -->
+<section id="banquets" class="role">
+  <div class="top"><span class="e">🎉</span><div><h2>Banquets and events</h2><small>Event coordinators and banquet staff</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>An <b>event</b> (or <b>BEO</b>, banquet event order) is the plan for a meeting, wedding or conference: the room, the time, the head count, the menu and the setup.</p></div>
+      <div class="co how"><h4>👉 How</h4><ol><li>Menu, <b>Events and BEOs</b>, <span class="key">+ New</span>.</li><li>Fill in the room, times, guests, setup, menu, AV and any allergies.</li><li>Save. ExpTix makes a task for each team that needs to help (setup, kitchen, AV, housekeeping).</li></ol></div>
+      <div class="co why"><h4>💚 Why</h4><p>One form tells every department what to do and by when. Each team ticks off its own task, so you can see who is ready.</p></div>
+    </div>
+    <div class="co tip"><h4>💡 See what is coming</h4><p>Menu, <b>Calendar</b> shows the next month of events, maintenance and scheduled work together.</p></div>
+  </div>
+</section>
+
+<!-- ================= SECURITY ================= -->
+<section id="security" class="role">
+  <div class="top"><span class="e">🛡️</span><div><h2>Security</h2><small>Officers and leads</small></div></div>
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>📝 Incident reports</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A record of anything that went wrong: a fall, a fight, a theft, damage, a fire alarm, a medical call.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li>Make sure everyone is safe first. 🚑</li><li>Menu, <b>Incident reports</b>, <span class="key">+ New</span>.</li><li>Write what happened, when, where, who was there and what you did. Attach photos.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Insurance, the police and the workers' compensation board may ask for it. A clear report written right away protects the guest, the staff and the hotel. Serious ones alert the managers right away.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🔑 Key control</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p>Menu, <b>Key control</b>. Log every master key or radio that goes out: who, when, and when it came back.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>A missing master key is a big deal. This shows who had it last.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAUNDRY ================= -->
+<section id="laundry" class="role">
+  <div class="top"><span class="e">🧺</span><div><h2>Laundry</h2><small>Laundry attendants</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>Your jobs: linen requests from floors, machine problems, and the dryer vent cleaning that comes up on a schedule.</p></div>
+      <div class="co how"><h4>👉 How</h4><p>Work them from <b>My work</b> like any job. A machine acting up? <span class="key">+ New</span>, pick the machine under <b>Asset</b>, describe it.</p></div>
+      <div class="co why"><h4>💚 Why</h4><p>Dryer lint is a fire risk. The scheduled cleaning jobs and their ticked checklists show it was done.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FRONT DESK ================= -->
+<section id="frontdesk" class="role">
+  <div class="top"><span class="e">🛎️</span><div><h2>Front desk</h2><small>Guest services, PBX, night audit</small></div></div>
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>☎️ A guest calls or walks up with a request</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>You are the hotel's ears. You can see every department's jobs so you can answer "where is my towel?"</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li><span class="key">+ New</span>. Tap a quick pick (<b>Extra towels or linen</b>, <b>Room too cold</b>, <b>Noise complaint</b>).</li><li>Type the room. Add the guest's name.</li><li>Set <b>Source</b> to <b>Phone call</b> or <b>Front desk</b>. Tick <b>VIP</b> if they are.</li><li><span class="key">Create request</span>. Tell the guest the number.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>The guest request clock starts right away. If it is late, managers get told. When it is done, you can call the guest back with confidence.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🛏️ Rooms for check-in</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><ol><li>Open <b>Rooms</b>. Filter <b>Any reservation</b> to <b>Due in</b>.</li><li>Green rooms are ready. Need one fast? Tap it, tick <b>Rush</b>.</li><li>A room cannot be sold? Tap it, type a reason, <span class="key">Set OOO</span> (out of order).</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Housekeeping sees your rush right away, without a phone call. Out-of-order rooms go back to Opera so nobody sells them by mistake.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>😠 A complaint</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p>Log it as a <b>Guest complaint</b>. In the job, fill in <b>Resolution and service recovery</b>: what you did (free breakfast, room move) and what it cost.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Managers see every complaint and every dollar given back, and can spot patterns. A guest who rates us 1 or 2 stars alerts the front office for a callback.</p></div>
+      </div>
+    </div>
+    <div class="co tip"><h4>💡 Also yours</h4><p>🍫 <b>Minibar</b>: tap an occupied room, <span class="key">🍫 Minibar</span>, post the charge (it goes to the Opera folio). ⭐ <b>Guest preferences</b>: feather-free pillows, high floor, allergies. Add them and every team sees them on that guest's jobs.</p></div>
+  </div>
+</section>
+
+<!-- ================= SUPERVISOR ================= -->
+<section id="supervisor" class="role">
+  <div class="top"><span class="e">📋</span><div><h2>Supervisor</h2><small>Shift leads, housekeeping and engineering supervisors</small></div></div>
+  <div class="card">
+    <p>You can do everything your team does, plus these.</p>
+    <div class="task"><h3>👥 Hand out the work</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Every room has <b>credits</b> (how much work it is). A suite is more than a standard room. Each attendant can do about 14 to 16 credits a shift.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li><b>Rooms</b>, tap <span class="key">⚖ Auto-assign</span>. ExpTix shares the rooms fairly between attendants on shift, keeping floors together.</li><li>Want to change it? <span class="key">☑ Select rooms</span>, tap some rooms, pick a name, <span class="key">Assign</span>.</li><li>For other jobs, use the <b>assign</b> drop-down on the job.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Fair, fast and visible. The bars on the right show who is full and who can take more.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>✅ Inspect</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A <b>checklist</b> you walk through: a room inspection, an opening check, a fire safety walk.</p></div>
+        <div class="co how"><h4>👉 How</h4><ol><li><b>Inspections</b> (or tap a room, <span class="key">📋 Inspect</span>).</li><li>Pick the checklist. For each line tap <span class="key">✓</span>, <span class="key">✕</span> or <span class="key">N/A</span>.</li><li>A ✕ asks "what is wrong?". Type a few words.</li><li><span class="key">Submit</span>. You get a score.</li><li>For a passed room, tap the room and press <span class="key">★ Inspected</span>. It turns green.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>Every ✕ becomes a job for the right team automatically. Scores over time show who needs coaching and who deserves a thank-you. 🏆</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>📊 Watch the clock</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p><b>Home</b> shows <b>Overdue</b>, <b>SLA breached</b> and <b>Unassigned</b> counts. Tap a number to see those jobs. Check <b>Reports</b> at the end of the week.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>You catch a late job before the guest calls about it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MANAGER ================= -->
+<section id="manager" class="role">
+  <div class="top"><span class="e">🏢</span><div><h2>Department manager</h2><small>Executive housekeeper, chief engineer, F&amp;B manager, chef, front office manager</small></div></div>
+  <div class="card">
+    <p>You can do everything a supervisor does, plus set up how your department works.</p>
+    <div class="callouts">
+      <div class="co what"><h4>📘 What you control</h4><ul><li><b>Request categories</b>: the quick-pick buttons and the words that route jobs to you.</li><li><b>SLA policies</b>: how fast each kind of job must be answered and finished.</li><li><b>Checklist templates</b>: your inspections and procedures.</li><li><b>Preventive maintenance</b>, <b>Assets</b>, <b>Vendors</b> and <b>Notification rules</b>.</li><li><b>Purchase requests</b>: approve or reject.</li></ul></div>
+      <div class="co how"><h4>👉 How</h4><p>Open the item from the menu, tap a row to change it, or <span class="key">+ New</span>. A checklist template is one step per line. Start a line with <b>##</b> to make a heading.</p></div>
+      <div class="co why"><h4>💚 Why</h4><p>You set the rules once. ExpTix follows them every time, on every shift, at 3 a.m. too.</p></div>
+    </div>
+    <div class="co tip"><h4>💡 Vendor paperwork</h4><p>Put insurance and WCB expiry dates on each vendor. ExpTix warns you before they run out.</p></div>
+  </div>
+</section>
+
+<!-- ================= GM ================= -->
+<section id="gm" class="role">
+  <div class="top"><span class="e">🌟</span><div><h2>General manager</h2><small>The whole property</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>You see every department, every room, every report. You also manage <b>Users</b>, <b>Integrations</b>, and <b>API and MCP</b>.</p></div>
+      <div class="co how"><h4>👉 How</h4><ol><li><b>Home</b> each morning: the department tiles show who is behind.</li><li><b>Reports</b>: pick 7, 30 or 90 days. See response times, guest ratings, repeat-problem rooms, costly machines, and PM done on time. <span class="key">🖨 Print</span> for meetings.</li><li><b>Announcements</b>: post to every staff member's Home screen.</li></ol></div>
+      <div class="co why"><h4>💚 Why</h4><p>Real numbers instead of guesses. "Room 317 has had 6 plumbing calls this month" tells you where to spend money.</p></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>🧭 Try it: a 10-minute GM tour</h3>
+    <p>New to ExpTix? Sign in as the GM and walk through the hotel's day in this order.</p>
+    <ol class="steps">
+      <li><b>Dashboard</b>: <i>What</i> is open, overdue and coming up today. <i>Why</i>: one look tells you which team needs help.</li>
+      <li><b>Tickets</b>, then tap any job: <i>What</i> the full story looks like, from the first report to the fix, with photos, parts and time. <i>Why</i>: nothing is lost in a hallway conversation.</li>
+      <li><b>Housekeeping board</b>: <i>What</i> every room's colour means right now. <i>How</i>: tap a room to see its jobs and guest notes. <i>Why</i>: front desk and housekeeping work from the same picture.</li>
+      <li><b>Food safety</b>: <i>What</i> cooler and freezer readings. <i>Why</i>: a reading out of range opens an urgent job on its own, so a warm walk-in is caught before food is lost.</li>
+      <li><b>Shift logbook</b>: <i>What</i> each team handed over last night. <i>Why</i>: the morning shift starts informed.</li>
+      <li><b>Reports</b>: <i>How</i>: pick 30 days. <i>What</i>: response times, guest ratings and problem rooms. <i>Why</i>: decide where to spend money and time.</li>
+      <li><b>Room QR codes</b>: <i>How</i>: open one and scan it with your phone to see what a guest sees. Send a request, then watch it arrive in <b>Tickets</b>. <i>Why</i>: guests ask without phoning the desk, and see when it is done.</li>
+      <li><b>Integrations</b>: <i>What</i> connects to Opera Cloud and Canary. <i>Why</i>: check-ins, check-outs and guest messages turn into jobs on their own.</li>
+    </ol>
+    <div class="co tip"><h4>💡 Demo data</h4><p>The demo hotel is full of made-up guests, staff and jobs. Click anything. You cannot break the real hotel.</p></div>
+  </div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section id="admin" class="role">
+  <div class="top"><span class="e">⚙️</span><div><h2>Administrator</h2><small>System owner (hotel IT or your IT provider)</small></div></div>
+  <div class="card">
+    <div class="task" style="border:0;margin:0;padding:0"><h3>👤 Add a person</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><ol><li>Menu, <b>Users</b>, <span class="key">+ New</span>.</li><li>Name, username, <b>role</b>, <b>department</b> (and extra departments if they float).</li><li>Create. Copy the <b>temporary password</b> and give it to them in person. It is shown only once.</li></ol></div>
+        <div class="co why"><h4>💚 Why</h4><p>The role decides what they can see and do (see <a href="#who">Who sees what</a>). They must pick their own password on first sign-in.</p></div>
+      </div>
+      <div class="co tip"><h4>💡 Someone leaves or forgets</h4><p>Open the user: <span class="key">🔑 Reset password</span>, <span class="key">🔓 Unlock</span> (after 5 wrong tries), <span class="key">↺ Reset MFA</span> (lost phone). To remove access, untick <b>Active</b>. Do not delete people, so their history stays.</p></div>
+    </div>
+    <div class="task"><h3>🔗 Integrations (Opera, Canary and friends)</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>Links to other systems. <b>Opera Cloud</b> sends room and guest status in and gets housekeeping status and minibar charges back. <b>Canary</b> turns guest text messages into jobs. Also: email, SMS, Teams, sensors.</p></div>
+        <div class="co how"><h4>👉 How</h4><p><b>Integrations</b>, fill in the details from the vendor, switch <b>Mock</b> to <b>Live</b>, Save. <b>Mock</b> pretends to be the other system so you can demo safely.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Nobody types the same thing twice. Passwords for these links are locked away (encrypted) and never shown again.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🤖 API and MCP (computers and AI assistants)</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>A <b>token</b> is a key that lets another program, or an AI assistant like Claude, use ExpTix. It acts as the person you choose, with that person's access.</p></div>
+        <div class="co how"><h4>👉 How</h4><p><b>API and MCP</b>, name the token, pick who it acts as, tick scopes (<b>read</b>, <b>write</b>, <b>mcp</b>, <b>admin</b>), set an expiry, <span class="key">Create token</span>. Copy it now; it is shown once. Full details are in the <a href="docs">API documentation</a>.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>An AI assistant can give the morning briefing, file guest requests from messages, or answer "what is broken on floor 6?". Everything it does is logged under its token.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🔐 Audit log and security</h3>
+      <div class="callouts">
+        <div class="co what"><h4>📘 What</h4><p>The <b>Audit log</b> records every sign-in and every change. Each line is chained to the one before, like a wax seal, so changes cannot be hidden. <b>Security and compliance</b> shows how ExpTix lines up with NIST security controls.</p></div>
+        <div class="co how"><h4>👉 How</h4><p><b>Audit log</b>, <span class="key">Verify integrity</span>. A ✓ means nothing was tampered with. Filter by person or action.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Auditors, insurers and owners can trust the record.</p></div>
+      </div>
+    </div>
+    <div class="task"><h3>🔳 Print QR codes for guests</h3>
+      <div class="callouts">
+        <div class="co how"><h4>👉 How</h4><p><b>Room QR codes</b>, pick a floor, <span class="key">🖨 Print</span>. Put one on each desk card or mirror, plus the lobby, pool and gym.</p></div>
+        <div class="co why"><h4>💚 Why</h4><p>Each code knows its room. Guests scan, tap, done. No app, no sign-in, no phone tag.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTRACTOR ================= -->
+<section id="contractor" class="role">
+  <div class="top"><span class="e">🧰</span><div><h2>Contractor</h2><small>Outside trades and service companies</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>You only see the jobs given to you or your department. Nothing about guests or other teams.</p></div>
+      <div class="co how"><h4>👉 How</h4><ol><li>Open <b>My work</b>.</li><li><span class="key">▶ Start</span> when you arrive, add photos of before and after.</li><li>Log your time and parts.</li><li><span class="key">✔ Resolve</span> with a note on what you did.</li></ol></div>
+      <div class="co why"><h4>💚 Why</h4><p>The hotel signs off faster and pays faster when the record is clear.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AUDITOR ================= -->
+<section id="auditor" class="role">
+  <div class="top"><span class="e">🔍</span><div><h2>Auditor</h2><small>Owners' reps, brand, insurance, compliance reviewers</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>You can look at everything: jobs, rooms, food safety logs, incidents, reports, the audit log and the security page. You cannot change anything. The buttons are greyed out.</p></div>
+      <div class="co how"><h4>👉 How</h4><p>Start with <b>Reports</b>, <b>Food safety</b>, <b>Completed checklists</b> and <b>Security and compliance</b>. Tap <span class="key">Verify integrity</span> on the audit log.</p></div>
+      <div class="co why"><h4>💚 Why</h4><p>Proof without risk. You see the real records and cannot break them by accident.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GUEST ================= -->
+<section id="guest" class="role">
+  <div class="top"><span class="e">🧳</span><div><h2>Guests</h2><small>What a guest sees when they scan the QR code</small></div></div>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>A simple page: "How can we help?" with big buttons like <b>Towels, pillows or blankets</b>, <b>Clean my room</b>, <b>Wake-up call</b>, <b>Late check-out</b>. It also shows restaurant hours.</p></div>
+      <div class="co how"><h4>👉 How (for the guest)</h4><ol><li>Scan the code with the phone camera.</li><li>Tap what they need. Add a note if they like.</li><li>Tap <span class="key">Send request</span>.</li><li>A tracking page shows <b>Received</b>, <b>On its way</b>, <b>In progress</b>, <b>Completed</b>.</li><li>They can send a message and give a star rating at the end. ⭐⭐⭐⭐⭐</li></ol></div>
+      <div class="co why"><h4>💚 Why</h4><p>Guests do not wait on hold, and they can see their request is moving. Staff messages marked <b>Message guest</b> show up on that page. Guests who text through <b>Canary</b> get the same service by text.</p></div>
+    </div>
+    <div class="co tip"><h4>💡 For staff</h4><p>Guest jobs show a <b>Guest QR portal</b> or <b>Canary</b> tag. Be friendly in guest messages: they read every word. 🙂</p></div>
+  </div>
+</section>
+
+<!-- ================= TYPES ================= -->
+<section id="types">
+  <h2>🎨 Types and colours</h2>
+  <p class="lead">Every coloured tag in ExpTix means something. Here is the picture dictionary.</p>
+
+  <div class="callouts" style="margin-bottom:14px">
+    <div class="co what"><h4>📘 What</h4><p>Each job has a <b>type</b> (what kind of job), a <b>status</b> (where it is), a <b>priority</b> (how urgent) and a <b>source</b> (where it came from). Each one has its own colour.</p></div>
+    <div class="co how"><h4>👉 How</h4><p>When you tap <span class="key">+ New</span>, pick the type that matches best. Not sure? Pick <b>Work order</b> for anything broken and <b>Guest request</b> for anything a guest asked for. A supervisor can change it later.</p></div>
+    <div class="co why"><h4>💚 Why</h4><p>The type sets the timer and the team. The right type gets the right people moving at the right speed.</p></div>
+  </div>
+  <h3>Kinds of job (ticket type)</h3>
+  <div class="card tw"><table>
+    <thead><tr><th>Type</th><th>📘 What it is</th><th>👉 When to use it</th><th>💚 Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><b>🔧 Work order</b></td><td>Something to fix or maintain.</td><td>Leaks, lights, heat, doors, TVs, anything broken.</td><td>Builds the repair history for rooms and machines.</td></tr>
+      <tr><td><b>🛎️ Guest request</b></td><td>A guest asked for something.</td><td>Towels, pillows, a crib, a wake-up call, a late check-out.</td><td>Has a fast timer. Guests notice speed.</td></tr>
+      <tr><td><b>😠 Guest complaint</b></td><td>A guest is unhappy.</td><td>Noise, a bad meal, a dirty room, rude service.</td><td>Managers track recovery and patterns.</td></tr>
+      <tr><td><b>🛡️ Incident follow-up</b></td><td>Work that comes from an incident report.</td><td>Fix the step someone tripped on, replace the broken window.</td><td>Links the fix to the incident for insurance.</td></tr>
+      <tr><td><b>✅ Task</b></td><td>A to-do that is not a repair or guest request.</td><td>"Restock the business centre." "Move tables to Ballroom B."</td><td>Small jobs stop falling through the cracks.</td></tr>
+      <tr><td><b>📆 Preventive maintenance</b></td><td>Scheduled care, made by ExpTix.</td><td>You do not make these. They appear on schedule.</td><td>Prevents breakdowns and proves compliance.</td></tr>
+      <tr><td><b>📋 Inspection finding</b></td><td>A ✕ from an inspection.</td><td>Made automatically when a checklist line fails.</td><td>Every problem found gets fixed, not just noted.</td></tr>
+      <tr><td><b>🎉 Event task</b></td><td>A department's part of an event.</td><td>Made from an event (BEO), or added by hand.</td><td>Every team knows its part and its deadline.</td></tr>
+      <tr><td><b>🏗️ Project</b></td><td>Bigger work that takes days or weeks.</td><td>Renovating a floor, replacing a boiler.</td><td>Holds follow-up tasks together in one place.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:26px">Job status</h3>
+  <div class="grid g3">
+    <div class="swatch"><span class="pill" style="background:#E3EDF8;color:#1F4E86">New</span><div><b>Nobody has looked yet.</b><small>Waiting for someone to take it.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#E7E2F5;color:#4D3A85">Acknowledged</span><div><b>"Got it!"</b><small>Someone saw it and will do it. The response clock stops.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#FCF1D3;color:#8A5A00">In progress</span><div><b>Being worked on now.</b><small>Someone is on it.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#ECEFF3;color:#4F5B6A">On hold</span><div><b>Waiting on something.</b><small>A part, a vendor, the guest. Always says why.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#DDF3E8;color:#17663F">Resolved</span><div><b>Done!</b> 🎉<small>The fix clock stops. The guest is told.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#E6E9EE;color:#3B4452">Closed</span><div><b>Done and checked.</b><small>Filed away. Can still be reopened.</small></div></div>
+    <div class="swatch"><span class="pill" style="background:#F1F1F1;color:#888;text-decoration:line-through">Cancelled</span><div><b>Not needed.</b><small>Duplicate or the guest changed their mind. Says why.</small></div></div>
+  </div>
+
+  <h3 style="margin-top:26px">Priority: how fast?</h3>
+  <div class="grid g3">
+    <div class="swatch"><span class="pill" style="color:#5B6878;border-color:#CBD3DD">Low</span><div><b>When you can.</b><small>"Touch up paint in the stairwell."</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#2F6DB5;border-color:#BFD9DB">Normal</span><div><b>Today.</b><small>Most jobs. "Lamp out in 512."</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#B25A00;border-color:#F0C68A;background:#FFF5E6">High</span><div><b>Soon, a guest is waiting.</b><small>"No hot water in 706."</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#fff;background:#C0392B">Urgent</span><div><b>Drop what you are doing.</b><small>"Water coming through the ceiling."</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#fff;background:#6E0E0E">Critical</span><div><b>Safety or the whole hotel.</b><small>"Elevator stuck with people." "Fire panel trouble." Managers are alerted right away.</small></div></div>
+  </div>
+  <div class="co tip" style="margin-top:12px"><h4>💡 You usually do not pick</h4><p>Leave priority blank and ExpTix uses the right one for that kind of job. Change it only when you know better.</p></div>
+
+  <h3 style="margin-top:26px">Room colours (housekeeping board)</h3>
+  <div class="grid g3">
+    <div class="swatch"><span class="c" style="background:#C0392B">212</span><div><b>Red: Dirty</b><small>Needs cleaning.</small></div></div>
+    <div class="swatch"><span class="c" style="background:#D88B10">204</span><div><b>Orange: Cleaning</b><small>An attendant is inside now.</small></div></div>
+    <div class="swatch"><span class="c" style="background:#2F6DB5">203</span><div><b>Blue: Clean</b><small>Cleaned, waiting for a supervisor to check.</small></div></div>
+    <div class="swatch"><span class="c" style="background:#1E8E5A">205</span><div><b>Green: Inspected</b><small>Checked and ready to sell. 🎉</small></div></div>
+    <div class="swatch"><span class="c" style="background:#B75A1E">210</span><div><b>Brown: Pickup</b><small>Quick tidy only (stayover touch-up).</small></div></div>
+    <div class="swatch"><span class="c" style="background:repeating-linear-gradient(45deg,#2A2F36 0 6px,#3a414b 6px 12px)">317</span><div><b>Striped: Out of order</b><small>Cannot be sold. Says why and until when.</small></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><b>Words under the number</b><ul style="margin:.4em 0 0;padding-left:1.2em"><li><b>Occ</b>: a guest is staying in it. <b>Vac</b>: empty.</li><li><b>Due in</b>: a guest arrives today (gold border). Clean these first.</li><li><b>Due out</b>: the guest leaves today.</li><li><b>Stay</b>: the guest is staying another night.</li></ul></div>
+    <div class="card"><b>Little icons</b><ul style="margin:.4em 0 0;padding-left:1.2em"><li>⭐ VIP · 🚫 Do not disturb · 🧹 Guest asked for service</li><li>⚡ Rush · 🌿 Declined service · 🔧 Open repair</li></ul></div>
+  </div>
+
+  <h3 style="margin-top:26px">Where a job came from (source)</h3>
+  <div class="card tw"><table><tbody>
+    <tr><td>👷 <b>Staff</b>, ☎️ <b>Phone</b>, 🛎️ <b>Front desk</b></td><td>A person typed it in.</td></tr>
+    <tr><td>🔳 <b>Guest QR portal</b></td><td>A guest scanned the code in their room.</td></tr>
+    <tr><td>💬 <b>Canary</b></td><td>A guest sent a text message through Canary.</td></tr>
+    <tr><td>🏨 <b>Opera PMS</b></td><td>The hotel's reservation system sent it (for example, a room move).</td></tr>
+    <tr><td>✉️ <b>Email</b></td><td>Someone emailed the ExpTix mailbox.</td></tr>
+    <tr><td>📡 <b>Sensor</b></td><td>A fridge, leak or building sensor noticed a problem by itself.</td></tr>
+    <tr><td>📆 <b>PM schedule</b>, 📋 <b>Inspection</b></td><td>ExpTix made it from a schedule or a failed checklist line.</td></tr>
+    <tr><td>🤖 <b>AI assistant (MCP)</b>, 🔌 <b>API</b></td><td>Another program or an AI assistant made it using a token.</td></tr>
+  </tbody></table></div>
+
+  <h3 style="margin-top:26px">Logbook importance</h3>
+  <div class="grid g3">
+    <div class="swatch"><span class="pill" style="background:var(--surface2)">Info</span><div><b>Good to know.</b><small>"Quiet night."</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#B25A00;border-color:#F0C68A;background:#FFF5E6">Important</span><div><b>Read this.</b><small>Shows on Home for everyone.</small></div></div>
+    <div class="swatch"><span class="pill" style="color:#fff;background:#C0392B">Action required</span><div><b>Someone must do something.</b><small>"Call 610 at 9 a.m. about the refund."</small></div></div>
+  </div>
+</section>
+
+<!-- ================= SLA ================= -->
+<section id="sla">
+  <h2>⏱️ The timers (SLA)</h2>
+  <div class="card">
+    <div class="callouts">
+      <div class="co what"><h4>📘 What</h4><p>Every job gets two invisible kitchen timers. <b>Respond by</b>: someone must say "got it". <b>Resolve by</b>: it must be done. Guest requests have short timers. Painting has long ones.</p></div>
+      <div class="co how"><h4>👉 How</h4><p>Watch the little label on each job: <b style="color:#1E8E5A">Due in 2 h</b>, <b style="color:#C77A0A">Due in 20 min</b>, <b style="color:#C0392B">Overdue 1 h</b>. Tap <span class="key">👍 Acknowledge</span> or <span class="key">▶ Start</span> to stop the first timer.</p></div>
+      <div class="co why"><h4>💚 Why</h4><p>No job sits forgotten. If time runs out, ExpTix tells a supervisor, then a manager. That is a safety net, not a punishment.</p></div>
+    </div>
+    <div class="timer" aria-hidden="true"><span style="left:0;transform:none">Job created</span><span style="left:80%">80%: warning 🔔</span><span style="left:100%">Due ⏰</span><em style="left:40%">plenty of time</em><em style="left:90%">hurry</em><i></i></div>
+    <p class="small" style="color:var(--muted);font-size:.9rem">Past the due time the job is <b style="color:#C0392B">breached</b> and escalates to the next level.</p>
+  </div>
+</section>
+
+<!-- ================= WHO SEES WHAT ================= -->
+<section id="who">
+  <h2>🔐 Who sees what</h2>
+  <p class="lead">Each person has one <b>role</b>. Higher roles can do everything below them. Most people only see their own department's jobs; front desk, the GM, admins and auditors see all of them.</p>
+  <div class="card tw"><table class="access">
+    <thead><tr><th>Can I…</th><th>🔍 Auditor</th><th>🧰 Contractor</th><th>👷 Staff</th><th>🛎️ Front desk</th><th>📋 Supervisor</th><th>🏢 Manager</th><th>🌟 GM</th><th>⚙️ Admin</th></tr></thead>
+    <tbody>
+      <tr><td>Look at jobs</td><td class="yes">All</td><td>Mine</td><td>My dept</td><td class="yes">All</td><td>My dept</td><td>My dept</td><td class="yes">All</td><td class="yes">All</td></tr>
+      <tr><td>Make and work jobs</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Write the logbook</td><td class="no">✕</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Rush rooms, out of order, minibar</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Assign work, mark inspected, reports</td><td class="no">View</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Set up categories, SLAs, rules, approve purchases</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Users, integrations, API tokens</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Audit log and security page</td><td class="yes">View</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td><td class="no">Security</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callouts">
+    <div class="co what"><h4>📘 What</h4><p>Your role decides which menus you see and which buttons work. Your department decides which jobs you see.</p></div>
+    <div class="co how"><h4>👉 How</h4><p>Find your role across the top, then read down. Need more access? Ask your manager. A GM or admin changes it in <b>Users</b>.</p></div>
+    <div class="co why"><h4>💚 Why</h4><p>People see what they need to do their job, and nothing more. That keeps guest information private and the screen simple.</p></div>
+    <div class="co tip"><h4>💡 Safety on</h4><p>Sign-ins lock for 15 minutes after 5 wrong passwords. You are signed out after 30 minutes of no use. Turn on <b>two-step sign-in</b> in <b>My account</b>: it takes one minute.</p></div>
+  </div>
+</section>
+
+<!-- ================= OOPS ================= -->
+<section id="oops">
+  <h2>🆘 Uh oh! Quick fixes</h2>
+  <div class="callouts" style="margin-bottom:14px">
+    <div class="co what"><h4>📘 What</h4><p>The six snags people hit most, and the fix for each.</p></div>
+    <div class="co how"><h4>👉 How</h4><p>Find the sentence that sounds like you and follow it. Still stuck? Ask your supervisor, then an admin.</p></div>
+    <div class="co why"><h4>💚 Why</h4><p>Most fixes take one minute. You do not need to wait for IT.</p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>😕 "I cannot sign in."</h3><p>Check caps lock. After 5 wrong tries, wait 15 minutes or ask a manager to <b>Unlock</b> you. Lost your phone with the code app? Ask an admin to <b>Reset MFA</b>.</p></div>
+    <div class="card"><h3>🙈 "I cannot see a job."</h3><p>You may only see your own department. Ask your supervisor, or ask the person to assign it to you. Also check the <b>Open / All / Done</b> switch on Tickets.</p></div>
+    <div class="card"><h3>🔕 "My phone does not buzz."</h3><p>Tick <b>On shift</b>. On iPhone, ExpTix must be opened from the Home Screen icon. Then <b>My account</b>, <span class="key">Enable push alerts</span>, <span class="key">Send a test</span>.</p></div>
+    <div class="card"><h3>✋ "The Resolve button warns me."</h3><p>Some checklist steps are not ticked. Tick them, or resolve anyway and say why in the note.</p></div>
+    <div class="card"><h3>🔁 "I made a mistake."</h3><p>Change the field and save, or tap <span class="key">✕ Cancel</span> with a reason. A closed job can be reopened with <span class="key">▶ Resume / reopen</span>. Everything is kept in the history, so nothing is lost.</p></div>
+    <div class="card"><h3>📵 "It says I am offline."</h3><p>Check Wi-Fi. ExpTix needs a connection to save your work. Write it down and log it as soon as you are back.</p></div>
+  </div>
+  <div class="co oops" style="margin-top:14px"><h4>🚨 Real emergency?</h4><p>Fire, medical, or someone in danger: <b>call 911 and follow the hotel emergency plan first</b>. Log it in ExpTix afterwards.</p></div>
+</section>
+
+</main>
+
+<footer>
+  <p>ExpTix · free software under the GNU Affero General Public License v3</p>
+  <p>Proof of concept. Demo data only: guests and staff are fictional.</p>
+  <p><a href="./">Open ExpTix</a> · <a href="docs">API documentation</a></p>
+</footer>
+
+<button class="toggle" id="theme" aria-label="Switch light or dark">🌓</button>
+<script>
+(function(){
+  var b=document.getElementById('theme'),r=document.documentElement;
+  try{var t=localStorage.getItem('exptix-theme');if(t)r.dataset.theme=t;}catch(e){}
+  b.addEventListener('click',function(){
+    var dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme=dark?'light':'dark';
+    try{localStorage.setItem('exptix-theme',r.dataset.theme);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

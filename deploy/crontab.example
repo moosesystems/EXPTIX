@@ -1,0 +1,8 @@
+# ExpTix scheduled jobs. Install with: crontab -e (as the same user the web server runs PHP as)
+# Adjust the path to your checkout.
+# Every minute: SLA timers, escalations, notifications, preventive maintenance, Opera sync, email intake
+* * * * * php /opt/exptix/app/bin/cli.php cron >/dev/null 2>&1
+# Daily 03:15: database backup to app/data/backups (keeps 14 days). Copy these off the server.
+15 3 * * * php /opt/exptix/app/bin/cli.php backup >/dev/null 2>&1
+# Weekly: verify the hash-chained audit log
+30 4 * * 1 php /opt/exptix/app/bin/cli.php verify-audit >> /opt/exptix/app/data/logs/audit-verify.log 2>&1

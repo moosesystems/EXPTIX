@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ExpTix deployment guide</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root{--deep:#0F1E24;--primary:#1D5C63;--accent:#F0A23B;--ink:#1F2A30;--muted:#5B6770;--line:#D9E3E4;--surface:#F3F7F7;--code:#EEF3F3;--bg:#FFFFFF}
+@media (prefers-color-scheme:dark){:root{--deep:#E6F0F1;--primary:#6FC3C9;--ink:#E3EAEC;--muted:#9FB0B5;--line:#2C3B40;--surface:#16252A;--code:#1B2C31;--bg:#0E191D}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+main,header#title-block-header,body>*:not(script){max-width:900px;margin-left:auto;margin-right:auto;padding-left:16px;padding-right:16px}
+h1,h2,h3{color:var(--deep);line-height:1.25}
+h1{font-size:2.1rem;margin:2rem auto .5rem;border-bottom:4px solid var(--accent);padding-bottom:.4rem}
+h2{font-size:1.45rem;margin-top:2.6rem;padding-top:.6rem;border-top:1px solid var(--line)}
+h3{font-size:1.1rem;margin-top:1.8rem}
+a{color:var(--primary)}
+code{font:0.88em/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);padding:.1em .35em;border-radius:4px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}
+pre code{background:none;padding:0;font-size:.85rem}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.93rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface);color:var(--deep)}
+ul.task-list{list-style:none;padding-left:.4rem}
+blockquote{border-left:4px solid var(--accent);margin:1rem 0;padding:.2rem 1rem;background:var(--surface)}
+header#title-block-header{display:none}
+@media print{body{font-size:11pt}h2{break-before:auto}pre,table{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ExpTix deployment guide</h1>
+</header>
+<h1 id="exptix-deployment-guide">ExpTix deployment guide</h1>
+<p>ExpTix is a self-hosted operations and ticketing system for hotels.
+It is one PHP application with a browser front end, no build step and no
+framework. This guide covers every supported way to install it, from a
+five-minute local trial to a hardened production server.</p>
+<p>ExpTix is free software under the GNU Affero General Public License
+v3. If you run a modified copy for other people over a network, you must
+offer them its source code. See <a href="#licence-obligations">Licence
+obligations</a>.</p>
+<h2 id="contents">Contents</h2>
+<ol type="1">
+<li><a href="#choose-a-deployment">Choose a deployment</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#how-the-files-are-laid-out">How the files are laid
+out</a></li>
+<li><a href="#quick-start-local-trial">Quick start: local trial</a></li>
+<li><a href="#production-on-a-linux-server">Production on a Linux server
+(nginx or Apache)</a></li>
+<li><a href="#shared-hosting">Shared hosting (cPanel, Plesk and
+similar)</a></li>
+<li><a href="#running-in-a-sub-folder">Running in a sub-folder</a></li>
+<li><a href="#configuration-reference">Configuration reference</a></li>
+<li><a href="#database-sqlite-or-mysql">Database: SQLite or
+MySQL</a></li>
+<li><a href="#first-sign-in-and-setting-up-the-property">First sign-in
+and setting up the property</a></li>
+<li><a href="#scheduled-jobs-cron">Scheduled jobs (cron)</a></li>
+<li><a href="#notifications">Email, push, SMS and chat
+notifications</a></li>
+<li><a href="#integrations-and-webhooks">Integrations and
+webhooks</a></li>
+<li><a href="#api-tokens-and-the-mcp-server">API tokens and the MCP
+server</a></li>
+<li><a href="#security-hardening-checklist">Security hardening
+checklist</a></li>
+<li><a href="#backups-and-restore">Backups and restore</a></li>
+<li><a href="#upgrading">Upgrading</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#command-line-reference">Command line reference</a></li>
+<li><a href="#licence-obligations">Licence obligations</a></li>
+</ol>
+<h2 id="choose-a-deployment">Choose a deployment</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>You want to</th>
+<th>Use</th>
+<th>Database</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Try it on your own computer</td>
+<td><a href="#quick-start-local-trial">Quick start</a></td>
+<td>SQLite</td>
+<td>5 minutes</td>
+</tr>
+<tr>
+<td>Run it for one property on your own server</td>
+<td><a href="#production-on-a-linux-server">Linux server</a></td>
+<td>MySQL 8 or MariaDB 10.6+ (SQLite works for small sites)</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>Run it on web hosting you already pay for</td>
+<td><a href="#shared-hosting">Shared hosting</a></td>
+<td>MySQL from the hosting panel</td>
+<td>1 hour</td>
+</tr>
+</tbody>
+</table>
+<p>Whichever you pick, a production install needs HTTPS, the cron job,
+and <code>demo_mode</code> set to <code>false</code>.</p>
+<h2 id="requirements">Requirements</h2>
+<p><strong>PHP 8.1 or later</strong> (tested on 8.2) with these
+extensions:</p>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Why</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pdo_sqlite</code> or <code>pdo_mysql</code></td>
+<td>Database</td>
+<td>One of them</td>
+</tr>
+<tr>
+<td><code>sodium</code></td>
+<td>Encrypts integration secrets at rest</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>openssl</code></td>
+<td>Web push (VAPID) signing</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>mbstring</code></td>
+<td>Text handling</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>curl</code></td>
+<td>Opera, Canary, Twilio, Teams, Slack and webhook calls</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>json</code>, <code>fileinfo</code></td>
+<td>API and uploads</td>
+<td>Yes (usually built in)</td>
+</tr>
+<tr>
+<td><code>imap</code></td>
+<td>Email to ticket</td>
+<td>Only if you use email intake</td>
+</tr>
+</tbody>
+</table>
+<p>PHP must be built with Argon2 support
+(<code>PASSWORD_ARGON2ID</code>). Most distributions are. If it is not,
+ExpTix falls back to bcrypt.</p>
+<p><strong>Web server:</strong> nginx with PHP-FPM, or Apache 2.4 with
+<code>mod_rewrite</code> and <code>AllowOverride All</code>. LiteSpeed
+works with the included <code>.htaccess</code>.</p>
+<p><strong>Database:</strong> SQLite 3.35+ (bundled with PHP) or MySQL 8
+/ MariaDB 10.6+, <code>utf8mb4</code>.</p>
+<p><strong>Other:</strong> a TLS certificate (Let’s Encrypt is fine), a
+cron scheduler, and a mail transfer agent if you want email
+(<code>sendmail</code> or <code>msmtp</code>).</p>
+<p><strong>Browsers:</strong> current Chrome, Edge, Safari and Firefox
+on desktop, Android and iOS. Web push on iPhone needs iOS 16.4+ and the
+app added to the Home Screen.</p>
+<p>ExpTix loads one third-party script, the QR code library from
+<code>cdnjs.cloudflare.com</code>, and only on the Room QR codes page.
+Nothing else leaves the server unless you switch on an integration.</p>
+<h2 id="how-the-files-are-laid-out">How the files are laid out</h2>
+<pre><code>exptix/
+├── app/                  Application code. Never serve this folder.
+│   ├── bin/cli.php       Command line: migrate, create-admin, seed, cron, backup, token
+│   ├── config/
+│   │   ├── config.php    Defaults (committed)
+│   │   └── local.php     Your settings and secrets (you create it, never committed)
+│   ├── data/             Created at runtime: database, keys, sessions, uploads, logs, backups
+│   └── src/              PHP classes
+├── public/               The only folder the web server serves
+│   ├── index.php         Front controller
+│   ├── .htaccess         Apache and LiteSpeed rewrite rules
+│   ├── HowTo.html        Staff how-to guide
+│   └── assets/           JavaScript, CSS, icons, service worker, manifest
+├── deploy/               Example nginx, Apache and cron files
+├── scripts/              Helper scripts
+└── docs/                 This guide (Markdown, HTML and Word)</code></pre>
+<p><code>public/index.php</code> finds the app folder at
+<code>../app</code> by default. If you split them (common on shared
+hosting), set the environment variable <code>EXPTIX_APP_ROOT</code> to
+the full path of <code>app/</code>, or edit the one
+<code>define(&#39;APP_ROOT&#39;, ...)</code> line in
+<code>public/index.php</code>.</p>
+<p><code>app/data/</code> holds everything that changes. The web server
+user must be able to write to it, and nobody else should be able to read
+it. It contains:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Path</th>
+<th>What it is</th>
+<th>Lose it and</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data/exptix.sqlite</code></td>
+<td>Database (SQLite only)</td>
+<td>You lose all data</td>
+</tr>
+<tr>
+<td><code>data/app.key</code></td>
+<td>Key that encrypts integration secrets</td>
+<td>Stored integration secrets cannot be decrypted; re-enter them</td>
+</tr>
+<tr>
+<td><code>data/sessions/</code></td>
+<td>Sign-in sessions</td>
+<td>Everyone signs in again</td>
+</tr>
+<tr>
+<td><code>data/uploads/</code></td>
+<td>Ticket photos and files</td>
+<td>Attachments are gone</td>
+</tr>
+<tr>
+<td><code>data/logs/</code></td>
+<td>Error, cron and scheduler logs</td>
+<td>Nothing important</td>
+</tr>
+<tr>
+<td><code>data/backups/</code></td>
+<td>Output of <code>cli.php backup</code></td>
+<td>Your local backups</td>
+</tr>
+<tr>
+<td><code>data/demo-credentials.txt</code></td>
+<td>Demo passwords written by <code>seed</code></td>
+<td>Run <code>seed --reset</code> again (demo only)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-start-local-trial">Quick start: local trial</h2>
+<p>This runs the full app with demo data on your own computer using
+PHP’s built-in web server. Do not use the built-in server in
+production.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/moosesystems/EXPTIX.git exptix</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> exptix</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php migrate</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php seed</span></code></pre></div>
+<p><code>seed</code> prints the demo passwords and saves them in
+<code>app/data/demo-credentials.txt</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;admin_password&quot;</span><span class="fu">:</span> <span class="st">&quot;…&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;demo_password&quot;</span><span class="fu">:</span> <span class="st">&quot;Demo-…&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;sensor_token&quot;</span><span class="fu">:</span> <span class="st">&quot;…&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;rooms&quot;</span><span class="fu">:</span> <span class="dv">182</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;tickets&quot;</span><span class="fu">:</span> <span class="dv">175</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;users&quot;</span><span class="fu">:</span> <span class="dv">40</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Start the server and open <a href="http://localhost:8080" class="uri">http://localhost:8080</a>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-S</span> localhost:8080 <span class="at">-t</span> public public/index.php</span></code></pre></div>
+<p>Sign in as <code>admin</code> with <code>admin_password</code>, or as
+any demo user (<code>gm</code>, <code>fo.manager</code>,
+<code>hk.manager</code>, <code>chief.eng</code>, <code>chef</code>,
+<code>hk1</code> to <code>hk8</code>, <code>eng1</code> to
+<code>eng3</code>, <code>fd1</code> to <code>fd4</code>,
+<code>auditor</code>, <code>contractor</code> and others) with
+<code>demo_password</code>. The GM account sees every department and is
+the best place to start.</p>
+<p>To start the demo over:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php seed <span class="at">--reset</span></span></code></pre></div>
+<p><code>seed --reset</code> drops every table and deletes all data.
+Never run it on a live system.</p>
+<p>To see SLA timers and escalations move, run the scheduler in a second
+terminal:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="fu">true</span><span class="kw">;</span> <span class="cf">do</span> <span class="ex">php</span> app/bin/cli.php cron<span class="kw">;</span> <span class="fu">sleep</span> 60<span class="kw">;</span> <span class="cf">done</span></span></code></pre></div>
+<h2 id="production-on-a-linux-server">Production on a Linux server</h2>
+<p>These steps use Ubuntu 24.04 LTS or Debian 12 with nginx, PHP-FPM 8.2
+and MySQL 8. Adjust package names and the PHP version for your
+distribution.</p>
+<h3 id="1-install-packages">1. Install packages</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install nginx mysql-server php8.2-fpm php8.2-cli php8.2-mysql php8.2-sqlite3 <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  php8.2-mbstring php8.2-curl php8.2-xml php8.2-imap php8.2-intl git certbot python3-certbot-nginx</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-m</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">&#39;sodium|openssl|pdo_mysql|mbstring|curl&#39;</span></span></code></pre></div>
+<h3 id="2-get-the-code">2. Get the code</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /opt/exptix</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="st">&quot;</span><span class="va">$USER</span><span class="st">&quot;</span>: /opt/exptix</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/moosesystems/EXPTIX.git /opt/exptix</span></code></pre></div>
+<h3 id="3-create-the-database">3. Create the database</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mysql <span class="op">&lt;&lt;&#39;SQL&#39;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE DATABASE exptix CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE USER &#39;exptix&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;use-a-long-random-password&#39;;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">GRANT ALL PRIVILEGES ON exptix.* TO &#39;exptix&#39;@&#39;localhost&#39;;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">FLUSH PRIVILEGES;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">SQL</span></span></code></pre></div>
+<p>Generate a password with <code>openssl rand -base64 24</code>.</p>
+<h3 id="4-configure">4. Configure</h3>
+<p>Either run the helper, which asks for the database details and writes
+<code>app/config/local.php</code> with mode 600:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/exptix</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/configure-mysql.sh</span></span></code></pre></div>
+<p>or copy the example and edit it:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> app/config/local.example.php app/config/local.php</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 app/config/local.php</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> app/config/local.php</span></code></pre></div>
+<p>At minimum set <code>property_name</code>,
+<code>property_code</code>, <code>base_url</code>,
+<code>timezone</code>, <code>locale</code>, <code>currency</code>, the
+<code>db</code> block and <code>demo_mode =&gt; false</code>. Every
+setting is described in the <a href="#configuration-reference">configuration reference</a>.</p>
+<h3 id="5-set-ownership">5. Set ownership</h3>
+<p>The web server and the cron job must run as the same user, so files
+they create stay readable by both.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /opt/exptix/app/data</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> www-data:www-data /opt/exptix/app/data /opt/exptix/app/config/local.php</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 750 /opt/exptix/app/data</span></code></pre></div>
+<h3 id="6-create-the-tables-and-the-first-administrator">6. Create the
+tables and the first administrator</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/exptix</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php migrate</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php create-admin admin <span class="st">&quot;Your Name&quot;</span> you@example.com</span></code></pre></div>
+<p><code>create-admin</code> prints a temporary password. You must
+change it at first sign-in.</p>
+<p>For an evaluation server you can run <code>seed</code> instead to
+load the demo hotel. Do not load demo data into a system you will use
+for real guests.</p>
+<h3 id="7-configure-the-web-server">7. Configure the web server</h3>
+<p><strong>nginx:</strong> copy <code>deploy/nginx.conf</code> to
+<code>/etc/nginx/sites-available/exptix</code>, change
+<code>server_name</code>, the certificate paths and the PHP-FPM socket,
+then:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /etc/nginx/sites-available/exptix /etc/nginx/sites-enabled/</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> certbot certonly <span class="at">--nginx</span> <span class="at">-d</span> exptix.example.com</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nginx <span class="at">-t</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl reload nginx</span></code></pre></div>
+<p><strong>Apache:</strong> enable the modules, copy
+<code>deploy/apache-vhost.conf</code>, and edit it the same way:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> a2enmod rewrite headers ssl proxy_fcgi setenvif</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp deploy/apache-vhost.conf /etc/apache2/sites-available/exptix.conf</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> a2ensite exptix</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> certbot certonly <span class="at">--apache</span> <span class="at">-d</span> exptix.example.com</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apachectl configtest <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl reload apache2</span></code></pre></div>
+<p>Whichever server you use, only <code>public/</code> is the document
+root. The nginx file passes the <code>Authorization</code> header to
+PHP, which API tokens and MCP need. The <code>.htaccess</code> does the
+same on Apache.</p>
+<h3 id="8-install-the-cron-job">8. Install the cron job</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> crontab <span class="at">-u</span> www-data <span class="at">-e</span></span></code></pre></div>
+<p>Paste the lines from <code>deploy/crontab.example</code>, with your
+path. See <a href="#scheduled-jobs-cron">Scheduled jobs</a>.</p>
+<h3 id="9-check-it">9. Check it</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://exptix.example.com/api/health</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># {&quot;ok&quot;:true,&quot;app&quot;:&quot;ExpTix&quot;,&quot;version&quot;:&quot;…&quot;,&quot;db&quot;:&quot;mysql&quot;,&quot;time&quot;:&quot;…&quot;}</span></span></code></pre></div>
+<p>Open the site, sign in as your administrator, set a new password,
+turn on MFA under <strong>My profile</strong>, then follow <a href="#first-sign-in-and-setting-up-the-property">First sign-in</a>.</p>
+<h2 id="shared-hosting">Shared hosting</h2>
+<p>Most hosting plans with PHP 8.1+, MySQL, SSH or a file manager, and
+cron will run ExpTix. The approach is to put <code>app/</code> outside
+the public web folder and the contents of <code>public/</code> inside
+it.</p>
+<ol type="1">
+<li><p><strong>Create a MySQL database and user</strong> in the hosting
+panel. Note the host name, which is often not
+<code>localhost</code>.</p></li>
+<li><p><strong>Upload the code.</strong> With SSH,
+<code>git clone</code> into your home folder, for example
+<code>~/exptix</code>. Without SSH, upload the repository as a zip and
+extract it there.</p></li>
+<li><p><strong>Put the app outside the web root.</strong> If your site’s
+web folder is <code>~/public_html</code>, the simplest layout is:</p>
+<pre><code>~/exptix/app/            application (not web reachable)
+~/public_html/           contents of exptix/public/ copied here</code></pre>
+<p>Copy <code>public/</code> across, including the hidden
+<code>.htaccess</code>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-a</span> ~/exptix/public/. ~/public_html/</span></code></pre></div></li>
+<li><p><strong>Tell <code>index.php</code> where the app is.</strong>
+Add this line to the top of <code>~/public_html/.htaccess</code>, with
+your real path:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode apache"><code class="sourceCode apache"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>SetEnv<span class="st"> EXPTIX_APP_ROOT /home/youruser/exptix/app</span></span></code></pre></div>
+<p>Some hosts do not pass <code>SetEnv</code> through to PHP. If the
+site shows an error about <code>config.php</code>, edit
+<code>~/public_html/index.php</code> instead and change the
+<code>define(&#39;APP_ROOT&#39;, ...)</code> line to
+<code>define(&#39;APP_ROOT&#39;, &#39;/home/youruser/exptix/app&#39;);</code>.</p></li>
+<li><p><strong>Configure.</strong> Run
+<code>./scripts/configure-mysql.sh</code> from <code>~/exptix</code>
+over SSH, or create <code>app/config/local.php</code> from
+<code>local.example.php</code> in the file manager. Set its permissions
+to 600.</p></li>
+<li><p><strong>Create the tables and administrator</strong> over
+SSH:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/exptix</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php migrate</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php create-admin admin <span class="st">&quot;Your Name&quot;</span> you@example.com</span></code></pre></div>
+<p>If the host has no SSH, temporarily create a PHP file that runs
+these, open it once in the browser, then delete it immediately. SSH is
+strongly preferred.</p></li>
+<li><p><strong>Add the cron job</strong> in the hosting panel:
+<code>php /home/youruser/exptix/app/bin/cli.php cron</code> every
+minute. If the panel only allows every 5 minutes, SLA timers will still
+work, just less precisely. Use the full path to PHP 8 if the panel’s
+default <code>php</code> is older (for example
+<code>/usr/local/php82/bin/php</code>).</p></li>
+<li><p><strong>Turn on HTTPS</strong> in the panel (most offer free
+Let’s Encrypt certificates).</p></li>
+</ol>
+<p>On shared hosting, <code>cli.php backup</code> needs
+<code>mysqldump</code> on the path. If it is not there, use the panel’s
+own database backups.</p>
+<h2 id="running-in-a-sub-folder">Running in a sub-folder</h2>
+<p>ExpTix can live at <code>https://example.com/exptix/</code> instead
+of a domain root. Change three things:</p>
+<ol type="1">
+<li>In <code>local.php</code>: <code>&#39;base_path&#39; =&gt; &#39;/exptix&#39;</code>
+and <code>&#39;base_url&#39; =&gt; &#39;https://example.com/exptix&#39;</code>.</li>
+<li>In <code>public/.htaccess</code> (Apache):
+<code>RewriteBase /exptix/</code> and
+<code>Header set Service-Worker-Allowed &quot;/exptix/&quot;</code>.</li>
+<li>On nginx, wrap the locations in
+<code>location /exptix/ { ... }</code> with <code>alias</code>, or serve
+the sub-folder from its own <code>server</code> block, and set the
+<code>Service-Worker-Allowed</code> header to
+<code>/exptix/</code>.</li>
+</ol>
+<p>The web app manifest uses relative paths and needs no change.</p>
+<h2 id="configuration-reference">Configuration reference</h2>
+<p><code>app/config/config.php</code> holds the defaults. Put your
+changes in <code>app/config/local.php</code>, which returns an array
+merged over the defaults. Never edit <code>config.php</code> for site
+settings, so upgrades do not overwrite them.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app_name</code></td>
+<td><code>ExpTix</code></td>
+<td>Product name in the title bar and emails</td>
+</tr>
+<tr>
+<td><code>property_name</code></td>
+<td><code>Demo Hotel</code></td>
+<td>Your property’s name, shown to staff and guests</td>
+</tr>
+<tr>
+<td><code>property_code</code></td>
+<td><code>DEMO</code></td>
+<td>Prefix for ticket numbers (<code>DEMO-000123</code>)</td>
+</tr>
+<tr>
+<td><code>operator</code></td>
+<td>empty</td>
+<td>Optional “Operated by …” text on the sign-in page</td>
+</tr>
+<tr>
+<td><code>base_path</code></td>
+<td>empty</td>
+<td>URL path ExpTix lives under; empty at a domain root</td>
+</tr>
+<tr>
+<td><code>base_url</code></td>
+<td><code>https://exptix.example.com</code></td>
+<td>Full public URL; used in emails, QR codes and the API docs</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td><code>UTC</code></td>
+<td>Property time zone (any PHP / IANA zone name). All data is stored in
+UTC</td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td><code>en-US</code></td>
+<td>Date and number formatting in the browser</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td><code>USD</code></td>
+<td>ISO 4217 code for charges, recovery values and purchase
+requests</td>
+</tr>
+<tr>
+<td><code>source_url</code></td>
+<td>this repository</td>
+<td>Link to the source code shown on the sign-in page (AGPL section
+13)</td>
+</tr>
+<tr>
+<td><code>demo_mode</code></td>
+<td><code>true</code></td>
+<td>Demo banner, email off, unsigned webhooks accepted, daily fake
+arrivals. <strong>Set <code>false</code> in production</strong></td>
+</tr>
+<tr>
+<td><code>db.*</code></td>
+<td>SQLite in <code>app/data</code></td>
+<td>See <a href="#database-sqlite-or-mysql">Database</a></td>
+</tr>
+<tr>
+<td><code>security.session_idle_minutes</code></td>
+<td><code>30</code></td>
+<td>Sign out after this much inactivity</td>
+</tr>
+<tr>
+<td><code>security.session_max_hours</code></td>
+<td><code>12</code></td>
+<td>Sign out after this long regardless</td>
+</tr>
+<tr>
+<td><code>security.password_min_length</code></td>
+<td><code>12</code></td>
+<td>Minimum password length (common passwords are also blocked)</td>
+</tr>
+<tr>
+<td><code>security.lockout_threshold</code></td>
+<td><code>5</code></td>
+<td>Failed sign-ins before a lockout</td>
+</tr>
+<tr>
+<td><code>security.lockout_minutes</code></td>
+<td><code>15</code></td>
+<td>Lockout length</td>
+</tr>
+<tr>
+<td><code>security.mfa_required_ranks_at_or_above</code></td>
+<td><code>999</code> (off)</td>
+<td>Force TOTP MFA from this role rank up. <code>70</code> covers
+managers and above</td>
+</tr>
+<tr>
+<td><code>security.audit_retention_days</code></td>
+<td><code>2555</code></td>
+<td>How long audit log entries are kept (7 years)</td>
+</tr>
+<tr>
+<td><code>security.trusted_proxies</code></td>
+<td>empty</td>
+<td>IP addresses of reverse proxies whose <code>X-Forwarded-For</code>
+is trusted</td>
+</tr>
+<tr>
+<td><code>uploads.path</code></td>
+<td><code>app/data/uploads</code></td>
+<td>Where attachments are stored</td>
+</tr>
+<tr>
+<td><code>uploads.max_mb</code></td>
+<td><code>12</code></td>
+<td>Largest upload; keep the web server’s body limit above this</td>
+</tr>
+<tr>
+<td><code>uploads.types</code></td>
+<td>images, PDF, text, CSV</td>
+<td>Allowed MIME types</td>
+</tr>
+<tr>
+<td><code>mail.from</code>, <code>mail.from_name</code></td>
+<td><code>exptix@example.com</code>, <code>ExpTix</code></td>
+<td>Sender for notification email</td>
+</tr>
+<tr>
+<td><code>push.subject</code></td>
+<td><code>mailto:admin@example.com</code></td>
+<td>Contact address sent to browser push services (VAPID)</td>
+</tr>
+</tbody>
+</table>
+<p>Role ranks, for <code>mfa_required_ranks_at_or_above</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Administrator</td>
+<td>100</td>
+</tr>
+<tr>
+<td>General Manager</td>
+<td>90</td>
+</tr>
+<tr>
+<td>Department Manager</td>
+<td>70</td>
+</tr>
+<tr>
+<td>Supervisor</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Front Desk / Guest Services</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Contractor</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Auditor (read-only)</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<h2 id="database-sqlite-or-mysql">Database: SQLite or MySQL</h2>
+<p><strong>SQLite</strong> needs no setup and is the default. The
+database is <code>app/data/exptix.sqlite</code>, in WAL mode. It is fine
+for a trial and for a small property with a few dozen staff. Back it up
+with <code>cli.php backup</code>, which takes a consistent copy while
+the app runs.</p>
+<p><strong>MySQL 8 or MariaDB 10.6+</strong> is recommended for
+production: better concurrency, and standard tooling for backups and
+replication.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;db&#39;</span> =&gt; [</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;driver&#39;</span> =&gt; <span class="st">&#39;mysql&#39;</span><span class="ot">,</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;host&#39;</span>   =&gt; <span class="st">&#39;localhost&#39;</span><span class="ot">,</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;port&#39;</span>   =&gt; <span class="dv">3306</span><span class="ot">,</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;name&#39;</span>   =&gt; <span class="st">&#39;exptix&#39;</span><span class="ot">,</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user&#39;</span>   =&gt; <span class="st">&#39;exptix&#39;</span><span class="ot">,</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pass&#39;</span>   =&gt; <span class="st">&#39;…&#39;</span><span class="ot">,</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>]<span class="ot">,</span></span></code></pre></div>
+<p><code>cli.php migrate</code> creates every table and adds any columns
+a new version needs. It never drops or renames anything, so it is safe
+to run on every upgrade.</p>
+<p>To move from SQLite to MySQL, export each table to CSV from SQLite
+and import it into a freshly migrated MySQL database. There is no
+built-in converter yet.</p>
+<h2 id="first-sign-in-and-setting-up-the-property">First sign-in and
+setting up the property</h2>
+<p>Sign in as the administrator, change the temporary password, then
+turn on MFA under <strong>My profile</strong> (any TOTP authenticator
+app works). Then work through <strong>Admin</strong> in this order:</p>
+<ol type="1">
+<li><strong>Departments:</strong> the teams that receive work (front
+office, housekeeping, engineering and so on), with a manager and an
+email address for each.</li>
+<li><strong>Users:</strong> everyone who signs in, with role and
+department. Staff can belong to more than one department.</li>
+<li><strong>Locations:</strong> buildings, floors, outlets, meeting
+rooms, back-of-house areas. Every location and room gets a guest QR
+code; print the ones for public areas where guests can make
+requests.</li>
+<li><strong>Room types</strong> (with housekeeping credits and cleaning
+minutes) and <strong>Rooms</strong>.</li>
+<li><strong>SLA policies:</strong> response and resolve targets and who
+to escalate to.</li>
+<li><strong>Request categories:</strong> what people ask for, which
+department gets it, its default priority and SLA, and the keywords that
+auto-route free text. Mark the ones guests may choose on the QR
+portal.</li>
+<li><strong>Checklist templates:</strong> room inspections, opening and
+closing checks, fire and life safety rounds.</li>
+<li><strong>Assets, PM schedules, parts and vendors</strong> for
+engineering.</li>
+<li><strong>Outlets and temperature points</strong> for food safety
+logging.</li>
+<li><strong>Notification rules:</strong> who hears about what, and
+how.</li>
+<li><strong>Room QR codes:</strong> print one card per room and public
+area.</li>
+<li><strong>Integrations:</strong> Opera Cloud, Canary, email, SMS and
+so on.</li>
+</ol>
+<p>The how-to guide at <code>/HowTo.html</code> explains each screen for
+staff, by role. Link it from your intranet or staff onboarding.</p>
+<p>If you loaded the demo data to explore, start the real system on a
+fresh database rather than deleting demo records by hand.</p>
+<h2 id="scheduled-jobs-cron">Scheduled jobs (cron)</h2>
+<p>One command does all scheduled work. Run it every minute as the web
+server user:</p>
+<pre class="cron"><code>* * * * * php /opt/exptix/app/bin/cli.php cron &gt;/dev/null 2&gt;&amp;1</code></pre>
+<p>Each run does only what is due. A lock file stops two runs
+overlapping.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Job</th>
+<th>How often</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLA sweep</td>
+<td>1 min</td>
+<td>Warnings, breaches and escalations</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>1 min</td>
+<td>Sends queued email, push, SMS, Teams, Slack and webhook
+messages</td>
+</tr>
+<tr>
+<td>Preventive maintenance</td>
+<td>30 min</td>
+<td>Opens PM tickets as they come due</td>
+</tr>
+<tr>
+<td>Opera sync</td>
+<td><code>sync_minutes</code> (default 10)</td>
+<td>Pulls room and reservation status</td>
+</tr>
+<tr>
+<td>Email intake</td>
+<td>2 min</td>
+<td>Turns new mailbox messages into tickets</td>
+</tr>
+<tr>
+<td>Hygiene</td>
+<td>60 min</td>
+<td>Auto-closes resolved tickets after 72 hours, returns out-of-order
+rooms whose end date has passed, flags overdue keys and temperature
+checks, expires 86-list items, and once a day checks low stock and
+vendor insurance and workers’ compensation expiry</td>
+</tr>
+</tbody>
+</table>
+<p>Also schedule the daily backup and a weekly audit check. Both are in
+<code>deploy/crontab.example</code>.</p>
+<p>If cron has not run for two minutes, ExpTix runs the scheduler during
+the next web request as a fallback. Do not rely on that: quiet overnight
+periods have no web requests, so escalations would stall.</p>
+<h2 id="notifications">Notifications</h2>
+<p>Each user picks their channels under <strong>My profile</strong>.
+<strong>Admin, Notification rules</strong> sends events to people,
+roles, departments or addresses.</p>
+<p><strong>In-app:</strong> always on.</p>
+<p><strong>Web push:</strong> works with no setup. ExpTix creates its
+VAPID key pair on first use and stores it in the database. Users turn on
+push notifications in <strong>My profile</strong>. Set
+<code>push.subject</code> to a real contact address. On iPhone, users
+must first add ExpTix to the Home Screen.</p>
+<p><strong>Email:</strong> uses PHP <code>mail()</code>, so the server
+needs a working <code>sendmail</code>. To send through an SMTP relay or
+Microsoft 365, install <code>msmtp</code> and point PHP’s
+<code>sendmail_path</code> at it. In <code>demo_mode</code>, email is
+skipped unless the <strong>Email notifications</strong> integration is
+switched on. Set SPF and DKIM for your <code>mail.from</code> domain, or
+messages will land in junk.</p>
+<p><strong>SMS:</strong> add Twilio credentials under <strong>Admin,
+Integrations, Twilio SMS</strong>.</p>
+<p><strong>Microsoft Teams and Slack:</strong> create an incoming
+webhook (Teams Workflows or a Slack app) and use its URL as the target
+of a notification rule with the Teams or Slack channel.</p>
+<p><strong>Outbound webhooks:</strong> under <strong>Admin,
+Webhooks</strong>, send events to any HTTPS endpoint. Each POST carries
+<code>X-ExpTix-Event</code>, <code>X-ExpTix-Timestamp</code> and
+<code>X-ExpTix-Signature: sha256=HMAC(secret, timestamp + &quot;.&quot; + body)</code>.
+Verify the signature and reject old timestamps.</p>
+<h2 id="integrations-and-webhooks">Integrations and webhooks</h2>
+<p>Configure integrations under <strong>Admin, Integrations</strong>.
+Each one has a <strong>mock</strong> mode that behaves realistically
+without credentials, and a <strong>live</strong> mode. Secrets are
+encrypted with the key in <code>app/data/app.key</code>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Live mode needs</th>
+<th>Inbound URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oracle Opera Cloud (OHIP)</td>
+<td>OHIP gateway URL, application key, client ID and secret, enterprise
+ID, hotel ID; a business events subscription</td>
+<td><code>/hooks/opera</code></td>
+</tr>
+<tr>
+<td>Canary Technologies</td>
+<td>API base URL, API key, property ID, webhook signing secret</td>
+<td><code>/hooks/canary</code></td>
+</tr>
+<tr>
+<td>Email to ticket</td>
+<td>IMAP host, mailbox, password or app password</td>
+<td>(polled by cron)</td>
+</tr>
+<tr>
+<td>Twilio SMS</td>
+<td>Account SID, auth token, sending number</td>
+<td>none</td>
+</tr>
+<tr>
+<td>IoT sensors</td>
+<td>Shared token, sent as <code>X-Sensor-Token</code></td>
+<td><code>/hooks/sensor</code></td>
+</tr>
+<tr>
+<td>Zapier, Make, Power Automate</td>
+<td>An API token with <code>write</code> scope</td>
+<td><code>/hooks/inbound</code></td>
+</tr>
+<tr>
+<td>dormakaba, BMS</td>
+<td>Placeholders; need vendor API access</td>
+<td><code>/hooks/sensor</code> (BMS alarms)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Opera Cloud:</strong> register an application in the OHIP
+developer portal for the property, copy the values above into the
+integration, and subscribe business events (check-in, check-out, room
+move, room status) to <code>https://your-host/hooks/opera</code> with
+the events secret. The API paths ExpTix calls are configurable. Check
+them against your OHIP catalogue during onboarding.</p>
+<p><strong>Webhook signatures:</strong> inbound Opera and Canary events
+must carry an HMAC-SHA256 of the raw body in <code>X-Signature</code>,
+<code>X-Canary-Signature</code> or <code>X-ExpTix-Signature</code>, or
+the shared secret in <code>X-Webhook-Token</code>. With
+<code>demo_mode</code> on and no secret set, unsigned events are
+accepted. With <code>demo_mode</code> off, they are rejected.</p>
+<p>Full request and response formats are in the live API documentation
+at <code>/docs</code> and <code>/api/openapi.json</code>.</p>
+<h2 id="api-tokens-and-the-mcp-server">API tokens and the MCP
+server</h2>
+<p>ExpTix has a REST API (<code>/api/...</code>, OpenAPI 3.1 at
+<code>/api/openapi.json</code>, readable docs at <code>/docs</code>) and
+a Model Context Protocol server at <code>/mcp</code> for AI
+assistants.</p>
+<p>Create tokens under <strong>Admin, Integrations, API tokens</strong>,
+or from the command line:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php token gm <span class="st">&quot;Assistant&quot;</span> read,write,mcp</span></code></pre></div>
+<p>Tokens start with <code>xtx_</code>, are shown once, and are stored
+only as hashes. Scopes are <code>read</code>, <code>write</code>,
+<code>mcp</code> and <code>admin</code>. A token acts with the role of
+the user it belongs to, so give assistants a dedicated user with the
+least role that does the job.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-H</span> <span class="st">&quot;Authorization: Bearer xtx_…&quot;</span> https://exptix.example.com/api/tickets<span class="pp">?</span>status=open</span></code></pre></div>
+<p>To connect an MCP client, point it at
+<code>https://exptix.example.com/mcp</code> (Streamable HTTP, JSON
+responses) with the header <code>Authorization: Bearer xtx_…</code>.</p>
+<h2 id="security-hardening-checklist">Security hardening checklist</h2>
+<p>ExpTix ships with controls mapped to NIST SP 800-53 Rev. 5 and SP
+800-63B. The <strong>Security and compliance</strong> page under Admin
+shows their live status. Before you go live:</p>
+<ul class="task-list">
+<li><label><input type="checkbox"></input><code>demo_mode</code> is
+<code>false</code>.</label></li>
+<li><label><input type="checkbox"></input>The site is HTTPS only, with HTTP
+redirecting to HTTPS. ExpTix sends HSTS.</label></li>
+<li><label><input type="checkbox"></input>Only <code>public/</code> is web
+reachable. Check that
+<code>https://your-host/../app/config/config.php</code> and
+<code>https://your-host/app/data/</code> return 404 or 403.</label></li>
+<li><label><input type="checkbox"></input><code>app/config/local.php</code> is
+mode 600 and <code>app/data/</code> is mode 750, owned by the web server
+user.</label></li>
+<li><label><input type="checkbox"></input>The first administrator has changed
+the temporary password and turned on MFA.</label></li>
+<li><label><input type="checkbox"></input><code>security.mfa_required_ranks_at_or_above</code>
+is <code>70</code> or lower.</label></li>
+<li><label><input type="checkbox"></input>Every integration with an inbound
+URL has its webhook secret set.</label></li>
+<li><label><input type="checkbox"></input><code>security.trusted_proxies</code> lists your
+reverse proxy, if you have one, so lockouts and logs see real client
+addresses.</label></li>
+<li><label><input type="checkbox"></input>Backups run daily, are copied off
+the server, and you have tested a restore.</label></li>
+<li><label><input type="checkbox"></input><code>app/data/app.key</code> is
+backed up separately from the database.</label></li>
+<li><label><input type="checkbox"></input>The audit webhook forwards to your
+SIEM or log platform, or you review the audit log
+regularly.</label></li>
+<li><label><input type="checkbox"></input>The server’s PHP, web server and
+database get security updates.</label></li>
+<li><label><input type="checkbox"></input>Guest data retention and a privacy
+notice for the guest QR portal are agreed with the property, and hosting
+meets your privacy law’s data residency rules.</label></li>
+<li><label><input type="checkbox"></input>You have had a penetration test, or
+at least an authenticated vulnerability scan, before real guest data
+goes in.</label></li>
+</ul>
+<p>Report vulnerabilities as described in <code>SECURITY.md</code>.</p>
+<h2 id="backups-and-restore">Backups and restore</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php backup</span></code></pre></div>
+<p>writes <code>app/data/backups/exptix-YYYYMMDD-HHMMSS.sqlite</code>
+(SQLite) or <code>.sql.gz</code> (MySQL, through
+<code>mysqldump --single-transaction</code>) and deletes local backups
+older than 14 days. Schedule it daily and copy the folder off the
+server, for example with <code>restic</code>, <code>rclone</code> or
+<code>borg</code>.</p>
+<p>Back up these too. They are not in the database dump:</p>
+<ul>
+<li><code>app/data/app.key</code> (without it, stored integration
+secrets are unreadable)</li>
+<li><code>app/data/uploads/</code></li>
+<li><code>app/config/local.php</code></li>
+</ul>
+<p><strong>Restore, MySQL:</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-c</span> exptix-20260101-031500.sql.gz <span class="kw">|</span> <span class="ex">mysql</span> <span class="at">-u</span> exptix <span class="at">-p</span> exptix</span></code></pre></div>
+<p><strong>Restore, SQLite:</strong> stop PHP-FPM (or put the site in
+maintenance), copy the backup over <code>app/data/exptix.sqlite</code>,
+delete any <code>exptix.sqlite-wal</code> and
+<code>exptix.sqlite-shm</code> files, then start again.</p>
+<p>After any restore, put <code>app.key</code> and <code>uploads/</code>
+back, then run <code>php app/bin/cli.php verify-audit</code> to confirm
+the audit chain is intact.</p>
+<h2 id="upgrading">Upgrading</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/exptix</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php backup</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php migrate</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl reload php8.2-fpm</span></code></pre></div>
+<p>Read <code>CHANGELOG.md</code> before upgrading. Browsers pick up new
+JavaScript and CSS on the next page load. The service worker refreshes
+on its own.</p>
+<p>On shared hosting, also copy the new <code>public/</code> files into
+your web folder, keeping your edited <code>.htaccess</code> and
+<code>index.php</code>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blank page or “Something went wrong (reference …)”</td>
+<td>PHP error</td>
+<td>Look up the reference in <code>app/data/logs/</code></td>
+</tr>
+<tr>
+<td>Error mentioning <code>config.php</code></td>
+<td><code>index.php</code> cannot find the app folder</td>
+<td>Set <code>EXPTIX_APP_ROOT</code> or edit the <code>APP_ROOT</code>
+line</td>
+</tr>
+<tr>
+<td>Every page except the home page is 404</td>
+<td>Rewrites not working</td>
+<td>Apache: enable <code>mod_rewrite</code> and
+<code>AllowOverride All</code>. nginx: check <code>try_files</code></td>
+</tr>
+<tr>
+<td>API tokens and MCP return 401</td>
+<td><code>Authorization</code> header not reaching PHP</td>
+<td>Use the included <code>.htaccess</code> or nginx
+<code>fastcgi_param HTTP_AUTHORIZATION</code></td>
+</tr>
+<tr>
+<td>Styles or scripts missing in a sub-folder</td>
+<td><code>base_path</code> wrong</td>
+<td>See <a href="#running-in-a-sub-folder">Running in a
+sub-folder</a></td>
+</tr>
+<tr>
+<td>SLA timers stall overnight, notifications late</td>
+<td>Cron not running</td>
+<td>Run <code>php app/bin/cli.php cron</code> by hand, check for errors
+in <code>app/data/logs/</code>, and fix the crontab</td>
+</tr>
+<tr>
+<td>Push notifications never arrive</td>
+<td>Service worker scope, HTTPS or iOS</td>
+<td>HTTPS is required; check <code>Service-Worker-Allowed</code>; on
+iPhone add to Home Screen first</td>
+</tr>
+<tr>
+<td>No email</td>
+<td>No working <code>sendmail</code>, or <code>demo_mode</code> on</td>
+<td>Test with
+<code>php -r &quot;var_dump(mail(&#39;you@example.com&#39;,&#39;t&#39;,&#39;t&#39;));&quot;</code>; set
+<code>demo_mode</code> false</td>
+</tr>
+<tr>
+<td>“Database already has users” on seed</td>
+<td><code>seed</code> refuses to touch a used database</td>
+<td>That is deliberate. Use <code>create-admin</code> for
+production</td>
+</tr>
+<tr>
+<td>Account locked</td>
+<td>Too many failed sign-ins</td>
+<td>Wait <code>lockout_minutes</code> (15 by default) and try again</td>
+</tr>
+<tr>
+<td>Integration secrets show as errors after a move</td>
+<td><code>app.key</code> not copied</td>
+<td>Copy <code>app/data/app.key</code> from the old server, or re-enter
+the secrets</td>
+</tr>
+</tbody>
+</table>
+<h2 id="command-line-reference">Command line reference</h2>
+<p>Run from the repository root as the web server user.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>php app/bin/cli.php migrate</code></td>
+<td>Create tables and add new columns. Safe to repeat</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php create-admin [username] [&quot;Full name&quot;] [email]</code></td>
+<td>Create an administrator with a temporary password</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php seed</code></td>
+<td>Load the demo hotel into an empty database</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php seed --reset</code></td>
+<td><strong>Delete everything</strong> and reload the demo hotel</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php cron</code></td>
+<td>Run scheduled jobs that are due</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php backup</code></td>
+<td>Back up the database to <code>app/data/backups</code></td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php verify-audit</code></td>
+<td>Check the hash chain of the audit log</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php token &lt;username&gt; &lt;name&gt; &lt;scopes&gt;</code></td>
+<td>Create an API token, e.g. <code>read,write,mcp</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="licence-obligations">Licence obligations</h2>
+<p>ExpTix is licensed under the GNU Affero General Public License,
+version 3 or (at your option) any later version. In plain terms:</p>
+<ul>
+<li>You may use, study, change and share it, including
+commercially.</li>
+<li>If you change it and let people use your changed version over a
+network (staff, guests or anyone else), you must offer those users the
+complete source code of your version under the same licence. ExpTix
+shows a <strong>Source code</strong> link on the sign-in page built from
+<code>source_url</code>. Point it at your own repository if you run a
+modified copy.</li>
+<li>Keep the copyright and licence notices.</li>
+<li>There is no warranty.</li>
+</ul>
+<p>The full text is in <code>LICENSE</code>. Oracle, Opera, Canary,
+dormakaba, Twilio, Microsoft Teams, Slack and other product names are
+trademarks of their owners. ExpTix is not affiliated with or endorsed by
+any of them.</p>
+</body>
+</html>
