@@ -42,7 +42,7 @@ The Oracle Opera Cloud (OHIP) and Canary links are **beta**. They follow the ven
 
 ## Hosting
 
-Use MySQL 8 or MariaDB 10.6+ on your own Linux server or a hosting plan with PHP 8.1, MySQL and cron. Either takes about an hour following the deployment guide. MySQL handles many people saving at once and has standard backup tools.
+Use MySQL 8 or MariaDB 10.6+ on your own Linux server or a hosting plan with an up-to-date PHP 8.2+, MySQL and cron. Either takes about an hour following the deployment guide. MySQL handles many people saving at once and has standard backup tools.
 
 Before real guest data goes in, work through the security checklist in the deployment guide. Force MFA for managers and above with `mfa_required_ranks_at_or_above` set to `70`.
 

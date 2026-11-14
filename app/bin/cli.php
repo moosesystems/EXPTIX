@@ -1,5 +1,5 @@
 <?php
-// ExpTix command line: php bin/cli.php migrate | create-admin [username] ["Full name"] [email] | seed [--reset] | cron | verify-audit | backup | token <username> <name> <scopes>
+// ExpTix command line: php bin/cli.php migrate | create-admin [username] ["Full name"] [email] | seed [--reset] | cron | verify-audit | check-php | backup | token <username> <name> <scopes>
 declare(strict_types=1);
 define('APP_ROOT', dirname(__DIR__));
 $cmd = $argv[1] ?? 'help';
@@ -38,6 +38,7 @@ switch ($cmd) {
         if ($r) U::log('cron', json_encode($r));
         break;
     case 'verify-audit': print_r(Audit::verify()); break;
+    case 'check-php': $r = Api::phpRuntimeCheck(); echo ($r['patched'] ? 'OK  ' : 'FIX ') . $r['detail'] . "\n"; exit($r['patched'] ? 0 : 1);
     case 'backup':
         $dir = APP_ROOT . '/data/backups'; @mkdir($dir, 0700, true);
         $f = $dir . '/exptix-' . gmdate('Ymd-His');
@@ -54,5 +55,5 @@ switch ($cmd) {
         if (!$u) { echo "No such user\n"; exit(1); }
         Auth::$user = $u;
         print_r(Auth::createToken((int)$u['id'], $argv[3] ?? 'CLI token', explode(',', $argv[4] ?? 'read,write,mcp'), null)); break;
-    default: echo "migrate | create-admin [username] [\"Full name\"] [email] | seed [--reset] | cron | verify-audit | backup | token <username> <name> <scopes>\n";
+    default: echo "migrate | create-admin [username] [\"Full name\"] [email] | seed [--reset] | cron | verify-audit | check-php | backup | token <username> <name> <scopes>\n";
 }

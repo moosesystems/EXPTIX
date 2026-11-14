@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Security: new control SI-2 on the Security and compliance page and `cli.php check-php` warn when the server's PHP lacks the fixes for the PHP2Shell remote code execution flaws (CVE-2026-109618, CVE-2026-109619). Minimum documented PHP is now 8.2 on a patched release (8.2.35, 8.3.36, 8.4.27, 8.5.12 or newer). New "Keep PHP patched" section in the deployment guide.
 - Fix: the PHP built-in server now serves CSS, JavaScript and images, so the quick start works.
 - Demo mode banner reads "Demo mode · fictional hotel, guests and staff".
 - Project website (GitHub Pages) with screenshots, and a new README.

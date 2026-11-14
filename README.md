@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: AGPL v3" src="https://img.shields.io/badge/license-AGPL%20v3-F0A23B?style=flat-square"></a>
-  <img alt="PHP 8.1+" src="https://img.shields.io/badge/PHP-8.1%2B-4E9AA0?style=flat-square&logo=php&logoColor=white">
+  <img alt="PHP 8.2+" src="https://img.shields.io/badge/PHP-8.2%2B-4E9AA0?style=flat-square&logo=php&logoColor=white">
   <img alt="No build step" src="https://img.shields.io/badge/build%20step-none-1D5C63?style=flat-square">
   <img alt="SQLite or MySQL" src="https://img.shields.io/badge/db-SQLite%20%7C%20MySQL-1D5C63?style=flat-square">
   <img alt="MCP server" src="https://img.shields.io/badge/MCP-built%20in-0F1E24?style=flat-square">
@@ -81,7 +81,9 @@
 
 ## 🚀 Run it in 5 minutes
 
-Needs PHP 8.1+ with `pdo_sqlite`, `sodium`, `openssl`, `mbstring` and `curl`. No framework, no Composer, no build step.
+Needs PHP 8.2+ with `pdo_sqlite`, `sodium`, `openssl`, `mbstring` and `curl`. No framework, no Composer, no build step.
+
+> **Security:** run a PHP release with the October 2026 fixes for the PHP2Shell remote code execution flaws (CVE-2026-109618, CVE-2026-109619): 8.2.35, 8.3.36, 8.4.27 or 8.5.12, or newer. `php app/bin/cli.php check-php` and the **Security and compliance** page tell you if your server needs updating.
 
 ```bash
 git clone https://github.com/moosesystems/EXPTIX.git exptix
@@ -99,7 +101,7 @@ Open <http://localhost:8080> and sign in as **`gm`** with the `demo_password` th
 |---|---|---|
 | 💻 | **Local trial:** PHP's built-in server and SQLite | 5 minutes |
 | 🐧 | **Your own server:** nginx or Apache, PHP-FPM, MySQL, Let's Encrypt, cron ([example configs](deploy/)) | About an hour |
-| ☁️ | **Shared hosting:** any plan with PHP 8.1, MySQL and cron | About an hour |
+| ☁️ | **Shared hosting:** any plan with an up-to-date PHP 8.2+, MySQL and cron | About an hour |
 
 Start production installs with `php app/bin/cli.php create-admin` instead of the demo data. Everything is in the **deployment guide**: [Markdown](docs/DEPLOYMENT.md) · [HTML](https://moosesystems.github.io/EXPTIX/DEPLOYMENT.html) · [Word](docs/DEPLOYMENT.docx).
 

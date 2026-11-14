@@ -715,6 +715,28 @@ final class Api {
         return ['opera_events' => "$b/hooks/opera", 'canary' => "$b/hooks/canary", 'sensor' => "$b/hooks/sensor", 'generic' => "$b/hooks/inbound", 'mcp' => "$b/mcp", 'openapi' => "$b/api/openapi.json", 'api' => "$b/api"];
     }
 
+    /**
+     * Is the PHP runtime patched for PHP2Shell (CVE-2026-109618, CVE-2026-109619)?
+     * Fixed upstream in 8.2.35, 8.3.36, 8.4.27 and 8.5.12. PHP 8.1 and older get no upstream fix;
+     * some distributions backport it without changing the version number, so we warn rather than refuse to run.
+     */
+    public static function phpRuntimeCheck(): array {
+        $fixed = ['8.2' => '8.2.35', '8.3' => '8.3.36', '8.4' => '8.4.27', '8.5' => '8.5.12'];
+        $v = PHP_VERSION; $branch = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
+        if (isset($fixed[$branch])) $patched = version_compare($v, $fixed[$branch], '>=');
+        else $patched = version_compare($branch, '8.5', '>');
+        $progress = filter_var(ini_get('session.upload_progress.enabled'), FILTER_VALIDATE_BOOLEAN);
+        if ($patched) {
+            $detail = "PHP $v includes the October 2026 security fixes (CVE-2026-109618, CVE-2026-109619). Keep applying PHP security updates.";
+        } elseif (version_compare($branch, '8.2', '<')) {
+            $detail = "PHP $v is end of life and gets no fix from the PHP project for CVE-2026-109618 and CVE-2026-109619 (unauthenticated remote code execution). Move to PHP 8.2.35, 8.3.36, 8.4.27, 8.5.12 or newer, unless your distribution has confirmed a backported fix.";
+        } else {
+            $detail = "PHP $v is older than {$fixed[$branch]}, the release that fixes CVE-2026-109618 and CVE-2026-109619 (unauthenticated remote code execution). Update PHP now, unless your distribution has confirmed a backported fix.";
+        }
+        if (!$patched) $detail .= $progress ? ' Until then, set session.upload_progress.enabled=0 in php.ini or the PHP-FPM pool and restart PHP.' : ' session.upload_progress.enabled is off, which blocks one known attack path but is not a full fix.';
+        return ['version' => $v, 'sapi' => PHP_SAPI, 'patched' => $patched, 'upload_progress' => $progress, 'detail' => $detail];
+    }
+
     private static function securityPosture(): array {
         Auth::require(70);
         $users = Db::one("SELECT COUNT(*) AS total, SUM(mfa_enabled) AS mfa, SUM(CASE WHEN role IN ('admin','gm') THEN 1 ELSE 0 END) AS privileged, SUM(CASE WHEN role IN ('admin','gm') AND mfa_enabled = 1 THEN 1 ELSE 0 END) AS privileged_mfa,
@@ -735,6 +757,7 @@ final class Api {
             $c('SC-8', 'System protection', 'Transmission confidentiality', $https ? 'implemented' : 'attention', $https ? 'TLS on every request; HSTS header set.' : 'Request did not arrive over HTTPS.'),
             $c('SC-23', 'System protection', 'Session authenticity', 'implemented', 'Secure, HttpOnly, SameSite cookies; session id rotated at sign-in; CSRF token on every state change.'),
             $c('SC-28', 'System protection', 'Protection at rest', 'partial', 'Integration secrets encrypted with libsodium (XSalsa20-Poly1305), key outside web root. Database encryption at rest depends on the hosting platform: use encrypted storage for production.'),
+            $c('SI-2', 'System integrity', 'Flaw remediation', ($php = self::phpRuntimeCheck())['patched'] ? 'implemented' : 'attention', $php['detail']),
             $c('SI-10', 'System integrity', 'Input validation', 'implemented', 'Typed field coercion, allow-listed enums, prepared statements throughout, upload MIME sniffing and allow-list, CSP header.'),
             $c('SI-4', 'System integrity', 'Monitoring', 'partial', 'Failed sign-in and token misuse logged; forward the audit webhook to your SIEM or SOC for alerting in production.'),
             $c('CP-9', 'Contingency', 'Backup', 'partial', 'Nightly database dump script provided (bin/backup.php). Production needs off-site, tested restores.'),

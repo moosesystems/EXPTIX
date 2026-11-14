@@ -147,7 +147,8 @@ webhooks</a></li>
 <li><a href="#api-tokens-and-the-mcp-server">API tokens and the MCP
 server</a></li>
 <li><a href="#security-hardening-checklist">Security hardening
-checklist</a></li>
+checklist</a> and <a href="#keep-php-patched">keeping PHP
+patched</a></li>
 <li><a href="#backups-and-restore">Backups and restore</a></li>
 <li><a href="#upgrading">Upgrading</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
@@ -194,8 +195,12 @@ checklist</a></li>
 <p>Whichever you pick, a production install needs HTTPS, the cron job,
 and <code>demo_mode</code> set to <code>false</code>.</p>
 <h2 id="requirements">Requirements</h2>
-<p><strong>PHP 8.1 or later</strong> (tested on 8.2) with these
-extensions:</p>
+<p><strong>PHP 8.2 or later, on a release with current security
+fixes</strong> (tested on 8.2 and 8.5). For the October 2026 PHP2Shell
+flaws that means 8.2.35, 8.3.36, 8.4.27 or 8.5.12 or newer; see <a href="#keep-php-patched">Keep PHP patched</a>. PHP 8.1 still runs ExpTix
+but gets no security fixes from the PHP project, so only use it where
+your distribution backports them.</p>
+<p>Extensions:</p>
 <table>
 <thead>
 <tr>
@@ -447,14 +452,16 @@ same on Apache.</p>
 path. See <a href="#scheduled-jobs-cron">Scheduled jobs</a>.</p>
 <h3 id="9-check-it">9. Check it</h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://exptix.example.com/api/health</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># {&quot;ok&quot;:true,&quot;app&quot;:&quot;ExpTix&quot;,&quot;version&quot;:&quot;…&quot;,&quot;db&quot;:&quot;mysql&quot;,&quot;time&quot;:&quot;…&quot;}</span></span></code></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># {&quot;ok&quot;:true,&quot;app&quot;:&quot;ExpTix&quot;,&quot;version&quot;:&quot;…&quot;,&quot;db&quot;:&quot;mysql&quot;,&quot;time&quot;:&quot;…&quot;}</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php check-php</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># OK  PHP 8.x.y includes the October 2026 security fixes …</span></span></code></pre></div>
 <p>Open the site, sign in as your administrator, set a new password,
 turn on MFA under <strong>My profile</strong>, then follow <a href="#first-sign-in-and-setting-up-the-property">First sign-in</a>.</p>
 <h2 id="shared-hosting">Shared hosting</h2>
-<p>Most hosting plans with PHP 8.1+, MySQL, SSH or a file manager, and
-cron will run ExpTix. The approach is to put <code>app/</code> outside
-the public web folder and the contents of <code>public/</code> inside
-it.</p>
+<p>Most hosting plans with an up-to-date PHP 8.2+, MySQL, SSH or a file
+manager, and cron will run ExpTix. The approach is to put
+<code>app/</code> outside the public web folder and the contents of
+<code>public/</code> inside it.</p>
 <ol type="1">
 <li><p><strong>Create a MySQL database and user</strong> in the hosting
 panel. Note the host name, which is often not
@@ -497,7 +504,9 @@ strongly preferred.</p></li>
 minute. If the panel only allows every 5 minutes, SLA timers will still
 work, just less precisely. Use the full path to PHP 8 if the panel’s
 default <code>php</code> is older (for example
-<code>/usr/local/php82/bin/php</code>).</p></li>
+<code>/usr/local/php85/bin/php</code>). Pick the newest PHP the panel
+offers for the site, and run <code>php app/bin/cli.php check-php</code>
+once to confirm it has the latest security fixes.</p></li>
 <li><p><strong>Turn on HTTPS</strong> in the panel (most offer free
 Let’s Encrypt certificates).</p></li>
 </ol>
@@ -987,8 +996,18 @@ backed up separately from the database.</label></li>
 <li><label><input type="checkbox"></input>The audit webhook forwards to your
 SIEM or log platform, or you review the audit log
 regularly.</label></li>
+<li><label><input type="checkbox"></input>The server’s PHP is at least 8.2.35,
+8.3.36, 8.4.27 or 8.5.12 (<code>php app/bin/cli.php check-php</code>
+says OK, and control SI-2 on the Security and compliance page shows
+Implemented). PHP served to the web can differ from the command-line
+<code>php</code>: the security page checks the one that serves
+ExpTix.</label></li>
+<li><label><input type="checkbox"></input><code>session.upload_progress.enabled = 0</code> in
+php.ini or the PHP-FPM pool. ExpTix does not use upload
+progress.</label></li>
 <li><label><input type="checkbox"></input>The server’s PHP, web server and
-database get security updates.</label></li>
+database get security updates automatically, or someone owns applying
+them.</label></li>
 <li><label><input type="checkbox"></input>Guest data retention and a privacy
 notice for the guest QR portal are agreed with the property, and hosting
 meets your privacy law’s data residency rules.</label></li>
@@ -997,6 +1016,45 @@ at least an authenticated vulnerability scan, before real guest data
 goes in.</label></li>
 </ul>
 <p>Report vulnerabilities as described in <code>SECURITY.md</code>.</p>
+<h3 id="keep-php-patched">Keep PHP patched</h3>
+<p>ExpTix runs inside PHP, so a flaw in PHP is a flaw in your ExpTix
+server, whatever ExpTix’s own code does. In October 2026 the PHP project
+fixed two critical remote code execution flaws known as
+<strong>PHP2Shell</strong> (CVE-2026-109618 and CVE-2026-109619). They
+need no login and are attacked on the internet. They affect every way of
+serving PHP (PHP-FPM, mod_php, CGI, LiteSpeed), so every ExpTix install
+is exposed until PHP is updated.</p>
+<ol type="1">
+<li><strong>Update PHP</strong> to 8.2.35, 8.3.36, 8.4.27 or 8.5.12, or
+newer. On Ubuntu and Debian,
+<code>sudo apt update &amp;&amp; sudo apt upgrade</code> then
+<code>sudo systemctl restart php8.x-fpm</code>. Distribution packages
+may keep an older version number with the fix backported: check your
+distribution’s security notice for CVE-2026-109618. On shared hosting,
+choose the newest PHP in the panel.</li>
+<li><strong>Check it</strong> with
+<code>php app/bin/cli.php check-php</code> and on <strong>Admin →
+Security and compliance</strong> (control SI-2). The page checks the PHP
+that actually serves ExpTix.</li>
+<li><strong>If you cannot update today</strong>, reduce the risk, then
+update as soon as you can. These do not fully protect you:
+<ul>
+<li>Set <code>session.upload_progress.enabled = 0</code> in php.ini or
+the PHP-FPM pool (not <code>.htaccess</code> or <code>ini_set</code>),
+then restart every PHP worker. ExpTix does not need it.</li>
+<li>Cap request size: <code>post_max_size = 32M</code> and
+<code>upload_max_filesize = 20M</code> (ExpTix photo uploads need far
+less).</li>
+<li>On PHP 8.5, also set <code>fatal_error_backtraces = 0</code>.</li>
+<li>Put the PHP-FPM pool under a memory limit that kills only the worker
+that runs out.</li>
+</ul></li>
+<li><strong>Look for signs of attack</strong> in the PHP and web server
+error logs: fatal errors, out-of-memory errors or timeouts on large
+<code>multipart/form-data</code> POSTs, and PHP workers that crash.</li>
+</ol>
+<p>PHP 8.1 and older get no fix from the PHP project. Move to 8.2 or
+newer.</p>
 <h2 id="backups-and-restore">Backups and restore</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php backup</span></code></pre></div>
 <p>writes <code>app/data/backups/exptix-YYYYMMDD-HHMMSS.sqlite</code>
@@ -1026,7 +1084,10 @@ the audit chain is intact.</p>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> app/bin/cli.php backup</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php migrate</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl reload php8.2-fpm</span></code></pre></div>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> www-data php app/bin/cli.php check-php</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl reload php8.2-fpm</span></code></pre></div>
+<p>Upgrade PHP itself too. ExpTix supports every PHP branch that still
+gets security fixes.</p>
 <p>Read <code>CHANGELOG.md</code> before upgrading. Browsers pick up new
 JavaScript and CSS on the next page load. The service worker refreshes
 on its own.</p>
@@ -1156,6 +1217,11 @@ the secrets</td>
 <tr>
 <td><code>php app/bin/cli.php verify-audit</code></td>
 <td>Check the hash chain of the audit log</td>
+</tr>
+<tr>
+<td><code>php app/bin/cli.php check-php</code></td>
+<td>Check that PHP has the latest critical security fixes. Exits 1 if it
+needs updating, so it can run from monitoring</td>
 </tr>
 <tr>
 <td><code>php app/bin/cli.php token &lt;username&gt; &lt;name&gt; &lt;scopes&gt;</code></td>

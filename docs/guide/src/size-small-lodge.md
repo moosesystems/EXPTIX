@@ -32,7 +32,7 @@ Without a PMS, the board is only as accurate as your taps. Make "tap the room wh
 
 ## Hosting: keep it simple
 
-Use SQLite on ordinary shared web hosting that offers PHP 8.1 and cron. SQLite needs no database setup and is fine for a small property with a few dozen staff. The deployment guide walks through shared hosting in about an hour.
+Use SQLite on ordinary shared web hosting that offers an up-to-date PHP 8.2+ and cron. SQLite needs no database setup and is fine for a small property with a few dozen staff. The deployment guide walks through shared hosting in about an hour.
 
 You need three things whatever you pick: HTTPS, the cron job running every minute, and `demo_mode` set to `false`. Without cron, SLA timers and reminders stall overnight.
 

@@ -15,10 +15,11 @@
 <div class="chips"><span class="chip k">FAQ</span><span class="chip">For: Hotel IT and IT providers</span></div></div>
 <div class="dl"><a href="pdf/faq-it.pdf">⬇ PDF to print</a><a href="docx/faq-it.docx">⬇ Word</a><a href="src/faq-it.md">⬇ Markdown</a><button type="button" onclick="print()">🖨 Print</button></div>
 <div class="body"><h2 id="where-can-we-host-it">Where can we host it?</h2>
-<p>Any ordinary PHP 8.1+ host: your own Linux server (nginx or Apache
-with PHP-FPM) or shared hosting with PHP, MySQL and cron. HTTPS is
-required. Requirements and example configs are in the deployment
-guide.</p>
+<p>Any ordinary host with an up-to-date PHP 8.2+ (at least 8.2.35,
+8.3.36, 8.4.27 or 8.5.12, which fix the October 2026 PHP2Shell flaws):
+your own Linux server (nginx or Apache with PHP-FPM) or shared hosting
+with PHP, MySQL and cron. HTTPS is required. Requirements and example
+configs are in the deployment guide.</p>
 <h2 id="sqlite-or-mysql">SQLite or MySQL?</h2>
 <p>SQLite for a trial or a small property with a few dozen staff. MySQL
 8 or MariaDB 10.6+ for production. There is no built-in converter yet:
@@ -32,8 +33,10 @@ them.</p>
 database dump. After a restore, run <code>verify-audit</code>.</p>
 <h2 id="how-do-we-update">How do we update?</h2>
 <p>Read <code>CHANGELOG.md</code>, back up, pull the new code, run
-<code>php app/bin/cli.php migrate</code>, reload PHP. Migrate never
-drops or renames anything, so it is safe to repeat.</p>
+<code>php app/bin/cli.php migrate</code>, reload PHP. Keep PHP itself
+patched too: run <code>php app/bin/cli.php check-php</code> after any
+PHP or ExpTix update. Migrate never drops or renames anything, so it is
+safe to repeat.</p>
 <h2 id="does-it-need-cron">Does it need cron?</h2>
 <p>Yes, every minute. Cron runs SLA warnings and escalations, sends
 notifications, opens PM jobs and syncs integrations. Without it, timers

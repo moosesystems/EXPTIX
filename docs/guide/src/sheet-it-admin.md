@@ -48,7 +48,7 @@ The install, the users, the links to other systems, the backups and the updates.
 - Run **Verify integrity** on the **Audit log**, or schedule the weekly audit check.
 - Review **Users**: anyone who left still Active?
 - Review API tokens: revoke the ones nobody uses.
-- Apply security updates to PHP, the web server and the database.
+- Apply security updates to PHP, the web server and the database. Check PHP with `cli.php check-php` or control SI-2 on **Security and compliance**.
 
 ## Updates
 

@@ -20,7 +20,7 @@ php -S localhost:8080 -t public public/index.php
 
 ## Code style
 
-- PHP 8.1+, `declare(strict_types=1)`, no framework and no Composer dependencies in the core. Keep it deployable by copying files.
+- PHP 8.2+, `declare(strict_types=1)`, no framework and no Composer dependencies in the core. Keep it deployable by copying files.
 - Front end: plain JavaScript, no build step.
 - All SQL goes through `Db` with bound parameters and backtick identifiers, so it runs on both SQLite and MySQL.
 - New tables and columns go in `Schema::tables()`. `migrate` only ever adds; never write a migration that drops or renames.

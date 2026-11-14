@@ -10,7 +10,7 @@ lang: en
 
 ## Where can we host it?
 
-Any ordinary PHP 8.1+ host: your own Linux server (nginx or Apache with PHP-FPM) or shared hosting with PHP, MySQL and cron. HTTPS is required. Requirements and example configs are in the deployment guide.
+Any ordinary host with an up-to-date PHP 8.2+ (at least 8.2.35, 8.3.36, 8.4.27 or 8.5.12, which fix the October 2026 PHP2Shell flaws): your own Linux server (nginx or Apache with PHP-FPM) or shared hosting with PHP, MySQL and cron. HTTPS is required. Requirements and example configs are in the deployment guide.
 
 ## SQLite or MySQL?
 
@@ -22,7 +22,7 @@ Run `php app/bin/cli.php backup` daily from cron and copy `app/data/backups/` of
 
 ## How do we update?
 
-Read `CHANGELOG.md`, back up, pull the new code, run `php app/bin/cli.php migrate`, reload PHP. Migrate never drops or renames anything, so it is safe to repeat.
+Read `CHANGELOG.md`, back up, pull the new code, run `php app/bin/cli.php migrate`, reload PHP. Keep PHP itself patched too: run `php app/bin/cli.php check-php` after any PHP or ExpTix update. Migrate never drops or renames anything, so it is safe to repeat.
 
 ## Does it need cron?
 
