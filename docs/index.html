@@ -163,6 +163,17 @@ nav.top .links a.gh{color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:
 footer{background:#0A1418;color:#86A1A6;padding:34px 0;font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
 footer a{color:#C9DDDF}
+.madeby{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:6px 16px 6px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#C9DDDF;text-decoration:none;font-size:.92rem;transition:background .2s,border-color .2s}
+.madeby:hover{background:rgba(255,255,255,.1);border-color:rgba(229,185,60,.6)}
+.madeby img{height:26px;width:auto}
+.madeby b{color:#E5B93C;font-weight:700}
+.tudlik{margin:56px auto 0;max-width:640px;display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:44px;border-top:1px solid rgba(255,255,255,.1)}
+.tudlik img{width:220px;height:auto}
+.tudlik p{margin:0;color:#B5CCD0;font-size:1rem}
+.tudlik a{color:#E5B93C;font-weight:700;text-decoration:none}
+.tudlik a:hover{text-decoration:underline}
+footer .by{display:inline-flex;align-items:center;gap:8px}
+footer .by img{height:20px;width:auto}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.reveal{opacity:1;transform:none}.btn:hover,.card:hover{transform:none}}
@@ -193,6 +204,7 @@ footer a{color:#C9DDDF}
         <a class="btn ghost" href="https://github.com/moosesystems/EXPTIX">View on GitHub</a>
       </div>
       <div class="hero-meta"><span>No licence fees</span><span>Runs on any PHP host</span><span>Your data stays on your server</span></div>
+      <a class="madeby" href="https://tudliktech.ca"><img src="images/tudlik-loon.png" alt=""><span>Brought to you by the <b>Nunavut Nerds</b> at tudliktech.ca</span></a>
     </div>
     <div class="stage">
       <div class="browser">
@@ -390,12 +402,16 @@ php -S localhost:8080 -t public public/index.php</pre>
       <a class="btn primary" href="https://github.com/moosesystems/EXPTIX">★ Star on GitHub</a>
       <a class="btn ghost" href="https://github.com/moosesystems/EXPTIX/blob/main/CONTRIBUTING.md">Contribute</a>
     </div>
+    <div class="tudlik">
+      <a href="https://tudliktech.ca" aria-label="Tudlik Technologies"><img src="images/tudlik-logo.png" alt="Tudlik Technologies: Technology, Communications, Cybersecurity. tudliktech.ca"></a>
+      <p>ExpTix is brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a>.</p>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>ExpTix · Expert Tickets · GNU AGPL v3</span>
+    <span class="by"><img src="images/tudlik-loon.png" alt=""><span>ExpTix · brought to you by the Nunavut Nerds at <a href="https://tudliktech.ca">tudliktech.ca</a> · GNU AGPL v3</span></span>
     <span><a href="https://github.com/moosesystems/EXPTIX">Source</a> · <a href="DEPLOYMENT.html">Deployment guide</a> · <a href="https://github.com/moosesystems/EXPTIX/blob/main/SECURITY.md">Security</a></span>
     <span style="flex-basis:100%;font-size:.8rem;opacity:.75">Screens show the built-in demo hotel; all names are fictional. Oracle, Opera, Canary, Microsoft Teams, Slack, Twilio and other names are trademarks of their owners; ExpTix is not affiliated with them.</span>
   </div>
