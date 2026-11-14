@@ -46,22 +46,25 @@
 
 ## 📸 Tour
 
-<table>
-  <tr>
-    <td width="50%"><img src="docs/images/housekeeping.png" alt="Housekeeping board"><br><sub><b>Housekeeping board:</b> every room, colour coded, with auto-assign and workload</sub></td>
-    <td width="50%"><img src="docs/images/ticket.png" alt="Ticket detail"><br><sub><b>Ticket:</b> checklist, SLA clock, guest tracking link, labour and parts</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><img src="docs/images/food-safety.png" alt="Food safety"><br><sub><b>Food safety:</b> HACCP points with safe ranges and overdue checks</sub></td>
-    <td width="50%"><img src="docs/images/reports.png" alt="Reports"><br><sub><b>Reports:</b> volume, response, SLA misses, ratings, labour and parts</sub></td>
-  </tr>
-  <tr>
-    <td width="50%"><img src="docs/images/security.png" alt="Security and compliance"><br><sub><b>Security and compliance:</b> live NIST control map</sub></td>
-    <td width="50%">
-      <table><tr>
-        <td><img src="docs/images/mobile-housekeeping.png" alt="Housekeeping on a phone"></td>
-        <td><img src="docs/images/mobile-guest-portal.png" alt="Guest portal on a phone"></td>
-      </tr></table>
+<p align="center">
+  <img src="docs/images/housekeeping.png" alt="Housekeeping board" width="49%">
+  <img src="docs/images/ticket.png" alt="Ticket detail" width="49%">
+</p>
+<p align="center"><sub><b>Housekeeping board:</b> every room colour coded, with auto-assign and workload &nbsp;·&nbsp; <b>Ticket:</b> checklist, SLA clock, guest tracking link, labour and parts</sub></p>
+
+<p align="center">
+  <img src="docs/images/food-safety.png" alt="Food safety" width="49%">
+  <img src="docs/images/reports.png" alt="Reports" width="49%">
+</p>
+<p align="center"><sub><b>Food safety:</b> HACCP points with safe ranges and overdue checks &nbsp;·&nbsp; <b>Reports:</b> volume, response, SLA misses, ratings, labour and parts</sub></p>
+
+<p align="center">
+  <img src="docs/images/security.png" alt="Security and compliance" width="49%">
+  <img src="docs/images/mobile-housekeeping.png" alt="Housekeeping on a phone" width="23%">
+  <img src="docs/images/mobile-guest-portal.png" alt="Guest portal on a phone" width="23%">
+</p>
+<p align="center"><sub><b>Security and compliance:</b> live NIST control map &nbsp;·&nbsp; <b>Mobile:</b> the staff app and the guest QR portal</sub></p>
+
       <sub><b>Mobile:</b> staff app and the guest QR portal</sub>
     </td>
   </tr>
