@@ -59,11 +59,18 @@
 <p align="center"><sub><b>Food safety:</b> HACCP points with safe ranges and overdue checks &nbsp;·&nbsp; <b>Reports:</b> volume, response, SLA misses, ratings, labour and parts</sub></p>
 
 <p align="center">
+  <img src="docs/images/roles/engineering-pm.jpg" alt="Preventive maintenance" width="49%">
   <img src="docs/images/security.png" alt="Security and compliance" width="49%">
-  <img src="docs/images/mobile-housekeeping.png" alt="Housekeeping on a phone" width="23%">
-  <img src="docs/images/mobile-guest-portal.png" alt="Guest portal on a phone" width="23%">
 </p>
-<p align="center"><sub><b>Security and compliance:</b> live NIST control map &nbsp;·&nbsp; <b>Mobile:</b> the staff app and the guest QR portal</sub></p>
+<p align="center"><sub><b>Preventive maintenance:</b> schedules that open their own jobs &nbsp;·&nbsp; <b>Security and compliance:</b> live NIST control map</sub></p>
+
+<p align="center">
+  <img src="docs/images/mobile-housekeeping.png" alt="Housekeeping board on a phone" width="24%">
+  <img src="docs/images/roles/kitchen-mobile-food.jpg" alt="Food safety on a phone" width="24%">
+  <img src="docs/images/mobile-guest-portal.png" alt="Guest QR portal" width="24%">
+  <img src="docs/images/roles/frontdesk-guest-tracking.jpg" alt="Guest tracking page" width="24%">
+</p>
+<p align="center"><sub><b>On the phone:</b> housekeeping board &nbsp;·&nbsp; temperature checks &nbsp;·&nbsp; the guest QR portal &nbsp;·&nbsp; the guest's live tracking page</sub></p>
 
       <sub><b>Mobile:</b> staff app and the guest QR portal</sub>
     </td>
